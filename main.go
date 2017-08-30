@@ -31,8 +31,7 @@ func hiKenny(temp int) {
 func canBoikeHang(hang bool){
 	if hang{
 		fmt.Println("Sweet Boike can hang")
-	}
-	else{
+	}else{
 		fmt.Println("I knew it, Boike can't hang")
 	}
 }
