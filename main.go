@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+var boikeHang bool
+
 func main() {
 
 	fmt.Println("Kenny test again, and matt test")
@@ -14,4 +16,15 @@ func main() {
 	fmt.Println("Hello ")
 	fmt.Println("Hey Boike")
 	fmt.Println("Boike is smart and cool")
+	boikeHang = false
+	canBoikeHang(boikeHang)
+}
+
+func canBoikeHang(hang bool){
+	if hang{
+		fmt.Println("Sweet Boike can hang")
+	}
+	else{
+		fmt.Println("I knew it, Boike can't hang")
+	}
 }
