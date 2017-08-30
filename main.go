@@ -1,4 +1,4 @@
-package main 
+package main
 
 import (
 	"fmt"
@@ -16,8 +16,16 @@ func main() {
 	fmt.Println("Hello ")
 	fmt.Println("Hey Boike")
 	fmt.Println("Boike is smart and cool")
+
 	boikeHang = false
 	canBoikeHang(boikeHang)
+
+	hiKenny(1)
+}
+
+func hiKenny(temp int) {
+	fmt.Println("Hi Derf")
+
 }
 
 func canBoikeHang(hang bool){
