@@ -13,4 +13,5 @@ func main() {
 	fmt.Println("Boike commit a test buddy guy pal")
 	fmt.Println("Hello ")
 	fmt.Println("Hey Boike")
+	fmt.Println("Boike is smart and cool")
 }
