@@ -14,6 +14,7 @@ func main() {
 	canBoikeHang(boikeHang)
 
 	testNewBranch()
+
 }
 
 func canBoikeHang(hang bool) {
