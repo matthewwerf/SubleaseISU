@@ -1,14 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-
+	"os"
 	"unicode/utf8"
 )
 
 func main() {
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	fmt.Println(scanner.Text())
 
-	drawPyramid("ISU", 5)
+	//drawPyramid("ISU", 5)
 }
 
 func drawPyramid(blocks string, base int) {
