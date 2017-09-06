@@ -8,30 +8,24 @@ var boikeHang bool
 
 func main() {
 
-	fmt.Println("Kenny test again, and matt test")
-	fmt.Println("Matt made a new Println")
-	fmt.Println("Kenny test again, and matt test, hi matt")
-	fmt.Println("This is Jack's test")
-	fmt.Println("Boike commit a test buddy guy pal")
-	fmt.Println("Hello ")
-	fmt.Println("Hey Boike")
-	fmt.Println("Boike is smart and cool")
+	fmt.Println("Kenny's test:")
 
 	boikeHang = false
 	canBoikeHang(boikeHang)
 
-	hiKenny(1)
+	testNewBranch()
 }
 
-func hiKenny(temp int) {
-	fmt.Println("Hi Derf")
-
-}
-
-func canBoikeHang(hang bool){
-	if hang{
+func canBoikeHang(hang bool) {
+	if hang {
 		fmt.Println("Sweet Boike can hang")
-	}else{
+	} else {
 		fmt.Println("I knew it, Boike can't hang")
+	}
+}
+
+func testNewBranch() {
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
 	}
 }
