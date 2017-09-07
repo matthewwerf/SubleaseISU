@@ -21,6 +21,7 @@ func main() {
 	canBoikeHang(boikeHang)
 
 	hiKenny(1)
+	JackTempFunction("*")
 }
 
 func hiKenny(temp int) {
@@ -28,10 +29,10 @@ func hiKenny(temp int) {
 
 }
 
-func canBoikeHang(hang bool){
-	if hang{
+func canBoikeHang(hang bool) {
+	if hang {
 		fmt.Println("Sweet Boike can hang")
-	}else{
+	} else {
 		fmt.Println("I knew it, Boike can't hang")
 	}
 }
