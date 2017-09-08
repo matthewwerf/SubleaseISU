@@ -26,6 +26,7 @@ func main() {
 	hiKenny(1)
 	JackTempFunction("*")
 
+	// This is where we load the web-app
 	port := flag.Int("port", 4200, "port to serve on")
 	dir := flag.String("directory", "web/", "directory of web files")
 	flag.Parse()
