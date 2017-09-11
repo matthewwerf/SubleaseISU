@@ -1,9 +1,10 @@
-package test
+package main
 
 import (
 	"fmt"
 	"bufio"
 	"os"
+	
 )
 
 type account struct{
@@ -12,10 +13,8 @@ type account struct{
 
 func main() {
 
-	a =: new(account)
-	scan := bufio.NewReader(os.Stdin)
-	fmt.Println("How Much Money do you have?")
-	a.bal, _ := scan.ReadInt()
+	a := new(account)
+	a.bal = 5000
 
 	fmt.Println("Press 'c' to check balance")
 	fmt.Println("Press 'w' to withdraw money")
@@ -23,37 +22,42 @@ func main() {
 	fmt.Println("Press 'q' to quit")
 
 	for {
-		manageInput()
+		manageInput(*a)
 	}
 	
 }
-func checkBalance(){
-
+func checkBalance(a account){
+	fmt.Println(a.bal)
 }
-func withdraw(x int) {
-	
-}
-
-func deposit(x int) {
-	
+func withdraw(x int, a account) {
+	a.bal = a.bal - x
 }
 
-func manageInput() {
+func deposit(x int, a account) {
+	a.bal = a.bal + x
+}
+
+func manageInput(a account) {
 
 	reader := bufio.NewReader(os.Stdin)
-    input, _ := reader.ReadString('\n')
+  	char, _, err:= reader.ReadRune()
+  	err = err
 
-    var s := string([]byte(input)[0])
 
-    switch s{
-    case c:
-    	checkBalance()
-    case w:
-    	withdraw()
-    case d:
-    	deposit()
+    switch char {
+    case 'c':
+    	checkBalance(a)
+    case 'w':
+    	fmt.Println("How much would you like to withdraw?")
+    	var i int
+    	fmt.Scan(&i)
+    	withdraw(i,a)
+    case 'd':
+    	fmt.Println("How much would you like to deposit?")
+    	var i int
+    	fmt.Scan(&i)
+    	deposit(i,a)
+    case 'q':
 
     }
-
-
 }
