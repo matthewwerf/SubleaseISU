@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <html ng-app>
 <head>
   <title>Tutorial</title>
@@ -18,8 +12,14 @@
     </p>
   </div>
   <div class="container">
-    <input type="text" placeholder="type here" ng-model="yes">
-    <p>Is Angular working? <span ng-bind="yes"></span></p>
+    <h3>Sign Up:</h3>
+    <input type="text" placeholder="Type Username Here" ng-model="username">
+    <p>Entered Username: <span ng-bind="username"></span></p>
+    <input type="text" placeholder="Type Password Here" ng-model="password">
+    <p>Entered Password: <span ng-bind="password"></span></p>
+    <input type="text" placeholder="Confirm Password Here" ng-model="passwordConfirmation">
+    <p>Confirm Password: <span ng-bind="passwordConfirmation"></span></p>
+    <input type="button" name="Submit" value="Submit">
   </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
 </body>
