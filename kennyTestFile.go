@@ -8,11 +8,30 @@ import (
 )
 
 func main() {
+	var baseSize int
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	fmt.Println(scanner.Text())
 
-	//drawPyramid("ISU", 5)
+	//User input to determine building blocks of pyramid
+	fmt.Print("Enter in string to build pyramid: ")
+	scanner.Scan()
+	symbol := scanner.Text()
+	//fmt.Println(symbol)
+
+	//User input to determine base size of pyramid
+	fmt.Print("Enter size of pyramid base: ")
+	_, err := fmt.Scanf("%d", &baseSize)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	//fmt.Println(baseSize)
+
+	// scanner.Scan()
+	// baseSize := scanner.Text()
+	// fmt.Println(baseSize)
+
+	drawPyramid(symbol, baseSize)
+
 }
 
 func drawPyramid(blocks string, base int) {
