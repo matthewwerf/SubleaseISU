@@ -15,6 +15,7 @@ func main() {
 	a := new(account)
 	a.bal = 5000
 
+	fmt.println("this is a test")
 	fmt.Println("Press 'c' to check balance")
 	fmt.Println("Press 'w' to withdraw money")
 	fmt.Println("Press 'd' to deposit money")
