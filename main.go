@@ -24,7 +24,7 @@ func main() {
 	canBoikeHang(boikeHang)
 
 	hiKenny(1)
-	JackTempFunction("*")
+	//JackTempFunction("*")
 
 	// This is where we load the web-app
 	port := flag.Int("port", 4200, "port to serve on")
