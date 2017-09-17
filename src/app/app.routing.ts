@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { MyNewComponentComponent }   from './my-new-component/my-new-component.component';
-import { LinkTestComponentComponent} from './link-test-component/link-test-component.component';
+import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import { SignUpComponent} from './sign-up-component/sign-up-component.component';
 
 
 
@@ -20,12 +21,13 @@ export const ROUTES: Routes = [
     },
     {
         path: 'login', 
-        component: LoginComponentComponent
+        component: LogInComponentComponent,
+        data:{title: 'Log In'}
     },
     {
-        path: 'link', 
-        component: LinkTestComponentComponent,
-        data: { title: 'Link Test'}
+        path: 'signup', 
+        component: SignUpComponentComponent,
+        data:{title: 'Sign Up'}
     },
     {
     	path: '',
