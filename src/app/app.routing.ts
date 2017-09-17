@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { MyNewComponentComponent }   from './my-new-component/my-new-component.component';
+import { LinkTestComponentComponent} from './link-test-component/link-test-component.component';
+import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 // This is the router module where you add routes to components (Pages)
 export const ROUTES: Routes = [
@@ -15,13 +17,18 @@ export const ROUTES: Routes = [
         component: MyNewComponentComponent
     },
     {
+        path: 'link', 
+        component: LinkTestComponentComponent,
+        data: { title: 'Link Test'}
+    },
+    {
     	path: '',
     	redirectTo: '/home',
     	pathMatch: 'full'
   	},
   	{ 
   		path: '**',
-  		component: HomeComponent
+  		component: PageNotFoundComponent
   	}
 ];
 
