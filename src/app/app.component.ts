@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   <nav>
   	<a routerLink="/home" routerLinkActive="active">Home</a>
     <a routerLink="/new" routerLinkActive="active">My New Component</a>
-    <a routerLink="/link" routerLinkActive="active">Link Test</a>
+    <a routerLink="/login" routerLinkActive="active">Log In</a>
   </nav>
   <router-outlet></router-outlet>
 `
