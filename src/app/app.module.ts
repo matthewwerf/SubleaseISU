@@ -7,7 +7,7 @@ import { MyNewComponentComponent } from './my-new-component/my-new-component.com
 import { HomeComponent } from './home/home.component';
 import { LinkTestComponentComponent} from './link-test-component/link-test-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
-
+import { LoginComponentComponent } from './login-component/login-component.component';
 import { Router } from './app.routing';
 
 @NgModule({
@@ -16,7 +16,8 @@ import { Router } from './app.routing';
     HomeComponent, 
     MyNewComponentComponent,
     LinkTestComponentComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginComponentComponent,
   ],
   imports: [
     BrowserModule,

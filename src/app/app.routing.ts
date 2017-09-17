@@ -6,6 +6,8 @@ import { MyNewComponentComponent }   from './my-new-component/my-new-component.c
 import { LinkTestComponentComponent} from './link-test-component/link-test-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
+
+
 // This is the router module where you add routes to components (Pages)
 export const ROUTES: Routes = [
     {
@@ -15,6 +17,10 @@ export const ROUTES: Routes = [
     {
         path: 'new', 
         component: MyNewComponentComponent
+    },
+    {
+        path: 'login', 
+        component: LoginComponentComponent
     },
     {
         path: 'link', 
