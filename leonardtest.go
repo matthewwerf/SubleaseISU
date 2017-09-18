@@ -20,24 +20,20 @@ func main() {
 	fmt.Println("Press 'd' to deposit money")
 	fmt.Println("Press 'q' to quit")
 
-	reader := bufio.NewReader(os.Stdin)
-	char, _, err := reader.ReadRune()
-	err = err
-
 	for {
 		manageInput(*a)
 	}
 
 }
-func checkBalance(a account) {
-	fmt.Println(a.bal)
+func checkBalance(a *account) {
+	fmt.Println(*a.bal)
 }
 func withdraw(x int, a account) {
-	fmt.println("%d", a.bal-x)
+	a.bal = a.bal - x
 }
 
-func deposit(x int, a account) {
-	*a.bal = a.bal + x
+func deposit(x int, a *account) {
+	*a.bal = *a.bal + x
 }
 
 func manageInput(a account) {
@@ -48,7 +44,7 @@ func manageInput(a account) {
 
 	switch char {
 	case 'c':
-		checkBalance(a)
+		checkBalance(*a)
 	case 'w':
 		fmt.Println("How much would you like to withdraw?")
 		var i int
