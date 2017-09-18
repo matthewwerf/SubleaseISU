@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { MyNewComponentComponent }   from './my-new-component/my-new-component.component';
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
-import { SignUpComponent} from './sign-up-component/sign-up-component.component';
+import { SignUpComponentComponent} from './sign-up-component/sign-up-component.component';
 
 
 
