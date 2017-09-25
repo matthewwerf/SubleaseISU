@@ -12,6 +12,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { Router } from './app.routing';
 
+import { AgmCoreModule } from '@agm/core';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,10 @@ import { Router } from './app.routing';
     BrowserModule,
     Router,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'YAIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
