@@ -1,8 +1,20 @@
-<form ng-submit = "submit()" ng-controller= "ExampleController">
-	Log In
-	<input type="text" ng-model = "text" name="Username">
-	<input type="text" ng-model = "text" name="Password">
-	<input type="submit" id="submit" value="Submit" />
-	
-</form>
-      <router-outlet></router-outlet>
+<div class="container">
+    <h1>Log In</h1>
+    <form novalidate [formGroup]="logInForm">
+      <div class="form-group"
+        [ngClass]="{
+        'has-danger': logInForm.controls.username.invalid && logInForm.controls.username.dirty,
+        'has-success': logInForm.controls.username.valid && logInForm.controls.username.dirty}">
+        <label>Username</label>
+        <input type="text" class="form-control" formControlName="username" required>
+      </div>
+      <div class="form-group" [ngClass]="{
+        'has-danger': logInForm.controls.password.invalid && logInForm.controls.password.dirty,
+        'has-success': logInForm.controls.password.valid && logInForm.controls.password.dirty}">
+        <label>Password</label>
+        <input type="Password" class="form-control" formControlName="password" required>
+      </div>
+    </form>
+</div>
+<pre>{{logInForm.value | json}}</pre>
+  }    <router-outlet></router-outlet>
