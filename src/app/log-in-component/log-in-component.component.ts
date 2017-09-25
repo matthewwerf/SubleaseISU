@@ -5,4 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './log-in-component.component.html',
   styleUrls: ['./log-in-component.component.css']
 })
-export class LogInComponentComponent { }
+export class LogInComponentComponent {}
