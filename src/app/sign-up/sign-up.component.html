@@ -1,26 +1,30 @@
 <div class="container">
     <h1>Sign Up</h1>
-    <form novalidate [formGroup]="signUpForm">
+    <form (ngSubmit)="onSubmit()" novalidate [formGroup]="signUpForm">
     	<div class="form-group"
     		[ngClass]="{
-    		'has-danger': signUpForm.controls.username.invalid && signUpForm.controls.username.dirty,
-    		'has-success': signUpForm.controls.username.valid && signUpForm.controls.username.dirty}">
+    		'has-danger': username.invalid && username.dirty,
+    		'has-success': valid && username.dirty}">
     		<label>Username</label>
     		<input type="text" class="form-control" formControlName="username" required>
-            
+    		<div class="form-control-feedback" *ngIf=" username.invalid && username.dirty">Field is invalid</div>
+
     	</div>
     	<div class="form-group" [ngClass]="{
-    		'has-danger': signUpForm.controls.password.invalid && signUpForm.controls.password.dirty,
-    		'has-success': signUpForm.controls.password.valid && signUpForm.controls.password.dirty}">
+    		'has-danger': password.invalid && password.dirty,
+    		'has-success': password.valid && password.dirty}">
     		<label>Password</label>
     		<input type="Password" class="form-control" formControlName="password" required>
+    		<div class="form-control-feedback" *ngIf=" password.invalid && password.dirty">Field is invalid</div>
     	</div>
     	<div class="form-group" [ngClass]="{
-    		'has-danger': signUpForm.controls.phonenumber.invalid && signUpForm.controls.phonenumber.dirty,
-    		'has-success': signUpForm.controls.phonenumber.valid && signUpForm.controls.phonenumber.dirty}">
+    		'has-danger': phonenumber.invalid && phonenumber.dirty,
+    		'has-success': phonenumber.valid && phonenumber.dirty}">
     		<label>Phone Number</label>
     		<input type="text" class="form-control" formControlName="phonenumber" required>
+    		<div class="form-control-feedback" *ngIf=" phonenumber.invalid && phonenumber.dirty">Field is invalid</div>
     	</div>
+    	<button type="submit" class="btn btn-primary" >Submit</button>
     </form>
 </div>
 <pre>{{signUpForm.value | json}}</pre>
