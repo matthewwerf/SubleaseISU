@@ -1,0 +1,19 @@
+{
+  "name": "backend_rest",
+  "version": "1.0.0",
+  "description": "Backend for SubleaseISU built in NodeJS",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon main.js"
+  },
+  "author": "Matthew Vanderwerf and Kenneth Ho",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.15.4",
+    "mongoose": "^4.11.12"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}

@@ -1,5 +1,12 @@
+# binaries
 SD_B_1_ProjectName
+# logs
 .log
+# libraries
+REST/pkg/*
+REST/src/* 
+src/github.com/
+REST/node_modules
 
 # The following is for angular. Please do not modify
 
