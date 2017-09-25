@@ -18,6 +18,7 @@ export class SignUpComponent implements OnInit {
 			password: new FormControl(),
 			phonenumber: new FormControl()
 		});
+	
 	}
 }
 

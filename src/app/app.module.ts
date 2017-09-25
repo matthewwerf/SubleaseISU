@@ -11,6 +11,8 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { Router } from './app.routing';
+import { FormTestComponent } from './form-test/form-test.component';
+
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { Router } from './app.routing';
     MyNewComponentComponent,
     LogInComponentComponent,
     PageNotFoundComponent,
-    SignUpComponent
+    SignUpComponent,
+    FormTestComponent,
+    
   ],
   imports: [
     BrowserModule,
