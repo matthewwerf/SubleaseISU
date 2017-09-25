@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>Sign Up</h1>
+    <form novalidate [formGroup]="signUpForm">
+    	<div class="form-group"
+    		[ngClass]="{
+    		'has-danger': signUpForm.controls.username.invalid && signUpForm.controls.username.dirty,
+    		'has-success': signUpForm.controls.username.valid && signUpForm.controls.username.dirty}">
+    		<label>Username</label>
+    		<input type="text" class="form-control" formControlName="username" required>
+    	</div>
+    	<div class="form-group" [ngClass]="{
+    		'has-danger': signUpForm.controls.password.invalid && signUpForm.controls.password.dirty,
+    		'has-success': signUpForm.controls.password.valid && signUpForm.controls.password.dirty}">
+    		<label>Password</label>
+    		<input type="Password" class="form-control" formControlName="password" required>
+    	</div>
+    	<div class="form-group" [ngClass]="{
+    		'has-danger': signUpForm.controls.phonenumber.invalid && signUpForm.controls.phonenumber.dirty,
+    		'has-success': signUpForm.controls.phonenumber.valid && signUpForm.controls.phonenumber.dirty}">
+    		<label>Phone Number</label>
+    		<input type="text" class="form-control" formControlName="phonenumber" required>
+    	</div>
+    </form>
+</div>
+<pre>{{signUpForm.value | json}}</pre>
+      <router-outlet></router-outlet>
