@@ -9,7 +9,7 @@ SD_B_1_ProjectName
 /out-tsc
 
 # dependencies
-/node_modules
+Front/node_modules
 
 # IDEs and editors
 /.idea
