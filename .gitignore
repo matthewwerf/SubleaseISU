@@ -7,6 +7,8 @@ REST/pkg/*
 REST/src/* 
 src/github.com/
 REST/node_modules
+.angular-cli.json
+.editorconfig
 
 # The following is for angular. Please do not modify
 
