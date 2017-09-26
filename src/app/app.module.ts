@@ -13,6 +13,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { Router } from './app.routing';
 
 import { AgmCoreModule } from '@agm/core';
+import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AgmCoreModule } from '@agm/core';
     MyNewComponentComponent,
     LogInComponentComponent,
     PageNotFoundComponent,
-    SignUpComponent
+    SignUpComponent,
+    GooglemapsComponent
   ],
   imports: [
     BrowserModule,

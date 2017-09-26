@@ -6,6 +6,7 @@ import { MyNewComponentComponent }   from './my-new-component/my-new-component.c
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
+import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 
 
 
@@ -28,6 +29,10 @@ export const ROUTES: Routes = [
         path: 'signup', 
         component: SignUpComponent,
         data:{title: 'Sign Up'}
+    },
+    {
+        path: 'map',
+        component: GooglemapsComponent
     },
     {
     	path: '',

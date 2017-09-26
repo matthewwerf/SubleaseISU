@@ -12,10 +12,6 @@ export class LogInComponentComponent implements OnInit{
 	
 	logInForm: FormGroup;
 
-  title: string = 'Google Maps';
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-
   ngOnInit() {
       this.logInForm = new FormGroup ({
       username: new FormControl(),
