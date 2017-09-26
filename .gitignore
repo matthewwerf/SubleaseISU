@@ -1,6 +1,6 @@
 SD_B_1_ProjectName
 .log
-<<<<<<< HEAD
+
 
 # The following is for angular. Please do not modify
 
@@ -44,6 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-=======
+
 REST/node_modules/*
->>>>>>> b1a8c857ec4de71280ab685de5ca6810c1e1daf3
+
