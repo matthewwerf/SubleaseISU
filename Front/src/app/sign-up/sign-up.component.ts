@@ -13,6 +13,7 @@ export class SignUpComponent implements OnInit {
 	signUpForm: FormGroup;
 	username: FormControl;
 	password: FormControl;
+	email: FormControl;
 	phonenumber: FormControl;
 
 	ngOnInit() {
@@ -23,13 +24,15 @@ export class SignUpComponent implements OnInit {
 	createFormControls() {
 		this.username = new FormControl('', Validators.required);
 		this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-		this.phonenumber = new FormControl('', [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]);
+		this.email = new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$")]);
+		this.phonenumber = new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]);
 	}
 
 	createForm() {
 		this.signUpForm = new FormGroup ({
 			username: this.username,
 			password: this.password,
+			email: this.email,
 			phonenumber: this.phonenumber
 		});
 	}
