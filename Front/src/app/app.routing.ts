@@ -20,11 +20,6 @@ export const ROUTES: Routes = [
         component: MyNewComponentComponent
     },
     {
-        path: 'form', 
-        component: FormTestComponent,
-        data:{title: 'Form Test'}
-    },
-    {
         path: 'login', 
         component: LogInComponentComponent,
         data:{title: 'Log In'}

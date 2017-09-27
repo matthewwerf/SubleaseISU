@@ -22,8 +22,7 @@ import { FormTestComponent } from './form-test/form-test.component';
     MyNewComponentComponent,
     LogInComponentComponent,
     PageNotFoundComponent,
-    SignUpComponent,
-    FormTestComponent,
+    SignUpComponent
     
   ],
   imports: [
