@@ -11,7 +11,8 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { Router } from './app.routing';
-import { FormTestComponent } from './form-test/form-test.component';
+import { CreatePropertyComponent } from './create-property/create-property.component';
+
 
 
 
@@ -22,7 +23,8 @@ import { FormTestComponent } from './form-test/form-test.component';
     MyNewComponentComponent,
     LogInComponentComponent,
     PageNotFoundComponent,
-    SignUpComponent
+    SignUpComponent,
+    CreatePropertyComponent
     
   ],
   imports: [

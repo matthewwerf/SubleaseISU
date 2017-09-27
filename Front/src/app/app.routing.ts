@@ -6,7 +6,7 @@ import { MyNewComponentComponent }   from './my-new-component/my-new-component.c
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
-import { FormTestComponent} from './form-test/form-test.component';
+import { CreatePropertyComponent } from './create-property/create-property.component';
 
 
 // This is the router module where you add routes to components (Pages)
@@ -18,6 +18,11 @@ export const ROUTES: Routes = [
     {
         path: 'new', 
         component: MyNewComponentComponent
+    },
+    {
+        path: 'createproperty', 
+        component: CreatePropertyComponent,
+        data:{title: 'Create Property'}
     },
     {
         path: 'login', 
