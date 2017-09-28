@@ -1,3 +1,44 @@
-<p>
-  create-property works!
-</p>
+<div class="container">
+	<h1>Create New Property Listing</h1>
+	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newPropertyForm">
+		<label>Address: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': address.invalid && address.dirty,
+			'has-success': address.valid && address.dirty}">
+			<input type="text" class="form-control" formControlName="address" required placeholder="Enter address">
+			
+		</div>
+
+		<label>Leasing Agency: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': leasingAgency.invalid && leasingAgency.dirty,
+			'has-success': leasingAgency.valid && leasingAgency.dirty}">
+			<input type="text" class="form-control" formControlName="leasingAgency" required placeholder="Enter leasing agency (i.e 23Twenty)">
+			
+		</div>
+
+		<label>Requested Rent: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': rentValue.invalid && rentValue.dirty,
+			'has-success': rentValue.valid && rentValue.dirty}">	
+			<input required class="form-control" formControlName="rentValue" type="number" step="0.01"  placeholder="Enter desired rent amount">
+			
+		</div>
+
+		<label>Give a short description of the property: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': postingMessage.invalid && postingMessage.dirty,
+			'has-success': postingMessage.valid && postingMessage.dirty}">
+			
+			<textarea required class="txt-area" formControlName="postingMessage" type="text" placeholder="Description" rows="5" cols="80"></textarea>
+			
+		</div>
+
+		<div>
+			<span id="errorMsg"></span>
+		</div>
+		<button type="submit" class="btn btn-primary" >Submit</button>
+	</form>
+</div>
+
+      <router-outlet></router-outlet>

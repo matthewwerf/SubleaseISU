@@ -5,7 +5,7 @@
 	align-items: center;
 }
 
-div.input {
+/*div.input {
 	position: relative;
 }
 
@@ -25,5 +25,18 @@ div.input input {
 }
 
 div.input {
-	margin-top: 20px;
+	margin-top: 40px;
+}*/
+
+.form-control {
+	text-align: left;
+    padding: 0.4em 0.4em 0.4em 0;
+    margin: 0px  0px 10px 0px;
+	width: 200px;
+}
+
+.txt-area {
+	text-align: left;
+    padding: 0.4em 0.4em 0.4em 0;
+	
 }
