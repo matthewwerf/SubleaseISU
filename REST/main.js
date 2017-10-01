@@ -6,7 +6,8 @@ var express = require("express"),
 	bodyParser = require("body-parser");
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/SubleaseISU');
+/* SubleaseISU is name of Mongo Docker Container and its respective Database */
+mongoose.connect('mongodb://SubleaseISU/SubleaseISU');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
