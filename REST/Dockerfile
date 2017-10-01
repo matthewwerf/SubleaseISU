@@ -25,7 +25,9 @@ RUN	/script.sh
 
 # Install Dependencies
 WORKDIR SD_B_1_ProjectName/REST/
-RUN npm install
+RUN npm install && \
+	npm install body-parser
+
 
 # Start REST API
 EXPOSE 8080
