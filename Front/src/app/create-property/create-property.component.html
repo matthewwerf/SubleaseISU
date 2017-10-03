@@ -1,18 +1,47 @@
 <div class="container">
 	<h1>Create New Property Listing</h1>
-	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newPropertyForm">
-		<label>Address: </label>
+	
+	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newAddressForm">	
+		
+		<label>Street Address: </label>
 		<div class="form-group" [ngClass]="{
-			'has-danger': address.invalid && address.dirty,
-			'has-success': address.valid && address.dirty}">
-			<input type="text" class="form-control" formControlName="address" required placeholder="Enter address">
+			'has-danger': streetAddress.invalid && streetAddress.dirty,
+			'has-success': streetAddress.valid && streetAddress.dirty}">
+			<input type="text" class="form-control" formControlName="streetAddress" required placeholder="Enter Street Address">
 			
 		</div>
+
+		<label>City: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': city.invalid && city.dirty,
+			'has-success': city.valid && city.dirty}">
+			<input type="text" class="form-control" formControlName="city" required placeholder="Enter City">
+			
+		</div>
+
+		<label>State: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': state.invalid && state.dirty,
+			'has-success': state.valid && state.dirty}">
+			<input type="text" class="form-control" formControlName="state" required placeholder="Enter State (i.e MN, IA, Ca)">
+			
+		</div>
+
+		<label>Zip Code: </label>
+		<div class="form-group" [ngClass]="{
+			'has-danger': zip.invalid && zip.dirty,
+			'has-success': zip.valid && zip.dirty}">
+			<input type="text" class="form-control" formControlName="zip" required placeholder="Enter Zip Code">
+			
+		</div>
+	</form>	
+	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newPropertyForm">
 
 		<label>Leasing Agency: </label>
 		<div class="form-group" [ngClass]="{
 			'has-danger': leasingAgency.invalid && leasingAgency.dirty,
 			'has-success': leasingAgency.valid && leasingAgency.dirty}">
+
 			<input type="text" class="form-control" formControlName="leasingAgency" required placeholder="Enter leasing agency (i.e 23Twenty)">
 			
 		</div>
@@ -37,6 +66,7 @@
 		<div>
 			<span id="errorMsg"></span>
 		</div>
+		
 		<button type="submit" class="btn btn-primary" >Submit</button>
 	</form>
 </div>
