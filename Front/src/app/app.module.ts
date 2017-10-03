@@ -32,7 +32,7 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
     FormsModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'YAIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c'
+      apiKey: 'AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c'
     })
   ],
   providers: [],

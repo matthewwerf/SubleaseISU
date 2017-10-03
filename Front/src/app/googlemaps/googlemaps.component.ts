@@ -10,8 +10,9 @@ export class GooglemapsComponent implements OnInit {
   constructor() { }
 
   title: string = 'Google Maps';
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  lat: number = 42.0308;
+  lng: number = -93.6319;
+
 
   ngOnInit() {
   }
