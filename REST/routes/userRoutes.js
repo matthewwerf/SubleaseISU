@@ -10,5 +10,8 @@
 			.get(user.getSpecificUser)
 			.put(user.updateSpecificUser)
 			.delete(user.deleteSpecificUser);
+
+		app.route('/login/:username')
+			.post(user.authAndReturnCookie);
 	};
 }());
