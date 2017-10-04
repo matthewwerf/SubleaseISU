@@ -33,7 +33,6 @@ export class CreatePropertyComponent implements OnInit {
 
   ngOnInit() {
     this.createFormControls();
-    this.getAddress();
     this.getPosterUsername();
     this.createPicures();
     this.createPropertyID();
@@ -43,7 +42,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   createFormControls() {
-    
+    this.address = new FormControl();
     this.streetAddress = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
     this.state = new FormControl('', Validators.required);
@@ -56,7 +55,7 @@ export class CreatePropertyComponent implements OnInit {
   getAddress(){
     //this.streetAddress.value, this.city.value, this.state.value, and this.zip.value
     //are not saving any values, they remain empty for some reason, however in the onSubmit() method they have values in them
-    this.address = new FormControl();
+    
     this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value
     //this.addressValue is empty for some reason
     this.address.setValue(this.addressValue);
@@ -106,11 +105,12 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.newPropertyForm.valid) {
+    if (this.newPropertyForm.valid && this.newAddressForm.valid) {
       console.log("New Property Request Submitted");
+      this.getAddress();
       console.log(this.newPropertyForm.value);
       //For some reason this.streetAddress logs a value here but not in the code above
-      console.log(this.streetAddress.value);
+      this.newAddressForm.reset();
       this.newPropertyForm.reset();
       this.errorMessage = "";
       document.getElementById("errorMsg").innerText = this.errorMessage;
