@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { User } from '../User';
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user';
 
 
 @Component({
@@ -15,6 +16,11 @@ export class SignUpComponent implements OnInit {
 	password: FormControl;
 	email: FormControl;
 	phonenumber: FormControl;
+
+	user: User = new User();
+	constructor(private auth: AuthService) {
+
+	}
 
 	ngOnInit() {
 		this.createFormControls();
@@ -38,9 +44,16 @@ export class SignUpComponent implements OnInit {
 	}
 	onSubmit() {
   		if (this.signUpForm.valid) {
-    	console.log("Form Submitted!");
-    	this.signUpForm.reset();
-  	}
-}
+  			this.auth.register(this.user).then((user) => {
+      			localStorage.setItem('token', user.json().auth_token);
+      			console.log(user.json());
+    		}).catch((err) => {
+      			console.log(err);
+    		});
+  			// HTTP POST method goes here
+    		console.log("Form Submitted!");
+    		this.signUpForm.reset();
+  		}
+	}
 }
 
