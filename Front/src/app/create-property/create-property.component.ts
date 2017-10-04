@@ -10,69 +10,77 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CreatePropertyComponent implements OnInit {
 
-    constructor() { }
+  constructor() { 
 
-    newPropertyForm: FormGroup;
-    newAddressForm: FormGroup;
-    posterUsername: FormControl;
-    leasingAgency: FormControl;
-    rentValue: FormControl;
-    address: FormControl;
-    streetAddress: FormControl;
-    city: FormControl;
-    state: FormControl;
-    zip: FormControl;
-    postingMessage: FormControl;
-    linkedPictureIDs: FormControl;
-    propertyID: FormControl;
-    errorMessage: string;
-    testStr: string;
-    addressValue: string; 
+  }
 
-    ngOnInit() {
-      this.createFormControls();
-      this.getAddress();
-      this.getPosterUsername();
-      this.createPicures();
-      this.createPropertyID();
-      this.createAddressForm();
-      this.createForm();
+  newPropertyForm: FormGroup;
+  newAddressForm: FormGroup;
+  posterUsername: FormControl;
+  leasingAgency: FormControl;
+  rentValue: FormControl;
+  address: FormControl;
+  streetAddress: FormControl;
+  city: FormControl;
+  state: FormControl;
+  zip: FormControl;
+  postingMessage: FormControl;
+  linkedPictureIDs: FormControl;
+  propertyID: FormControl;
+  errorMessage: string;
+  testStr: string;
+  addressValue: string; 
+
+  ngOnInit() {
+    this.createFormControls();
+    this.getAddress();
+    this.getPosterUsername();
+    this.createPicures();
+    this.createPropertyID();
+    this.createAddressForm();
+    this.createForm();
+    console.log(this.streetAddress.value);
   }
 
   createFormControls() {
-    //this.posterUsername = new FormControl('', Validators.required);
-    //this.address = new FormControl('', Validators.required);
+    
     this.streetAddress = new FormControl('', Validators.required);
-    //console.log(this.streetAddress.value);
     this.city = new FormControl('', Validators.required);
     this.state = new FormControl('', Validators.required);
     this.zip = new FormControl('', Validators.required);
     this.leasingAgency = new FormControl('', Validators.required);
-    this.rentValue = new FormControl('', Validators.required);//[Validators.required, Validators.pattern("[0-9]*")]);
+    this.rentValue = new FormControl('', Validators.required);
     this.postingMessage = new FormControl();
-    
-
   }
 
   getAddress(){
+    //this.streetAddress.value, this.city.value, this.state.value, and this.zip.value
+    //are not saving any values, they remain empty for some reason, however in the onSubmit() method they have values in them
     this.address = new FormControl();
     this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value
-    console.log(this.streetAddress.value);
+    //this.addressValue is empty for some reason
     this.address.setValue(this.addressValue);
   }
 
   getPosterUsername() {
-    //Retrieve poster's username via http GET method
+    //How do we retrieve the poster's username?
     this.posterUsername = new FormControl();
   }
   createPicures() {
-    //Figure out how to upload images
+    //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
   }
 
   createPropertyID() {
     //Figure out how to generate unique propertyID
+    //Sha1 hash not working, referencing from these websites:
+    //https://www.npmjs.com/package/sha1
+    //https://www.npmjs.com/package/@types/sha1
+    
     this.propertyID = new FormControl();
+    // var sha1 = require('sha1');
+    // this.testStr = sha1('message');
+    // console.log(this.testStr);
   }
 
 
@@ -96,10 +104,12 @@ export class CreatePropertyComponent implements OnInit {
       propertyID: this.propertyID
     });
   }
+
   onSubmit() {
     if (this.newPropertyForm.valid) {
       console.log("New Property Request Submitted");
       console.log(this.newPropertyForm.value);
+      //For some reason this.streetAddress logs a value here but not in the code above
       console.log(this.streetAddress.value);
       this.newPropertyForm.reset();
       this.errorMessage = "";
@@ -109,8 +119,17 @@ export class CreatePropertyComponent implements OnInit {
     else {
       this.errorMessage = "Invalid entries at: \n";
       
-      if(this.address.invalid) {
-        this.errorMessage = this.errorMessage + "*Address \n";
+      if(this.streetAddress.invalid) {
+        this.errorMessage = this.errorMessage + "*Street Address \n";
+      }
+      if(this.city.invalid) {
+        this.errorMessage = this.errorMessage + "*City \n";
+      }
+      if(this.state.invalid) {
+        this.errorMessage = this.errorMessage + "*State \n";
+      }
+      if(this.zip.invalid) {
+        this.errorMessage = this.errorMessage + "*Zip Code \n";
       }
       if(this.leasingAgency.invalid) {
         this.errorMessage = this.errorMessage + "*Leasing Agency \n";
