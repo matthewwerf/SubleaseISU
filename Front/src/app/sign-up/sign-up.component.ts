@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { User } from '../User';
+
 
 
 @Component({
@@ -14,6 +14,7 @@ export class SignUpComponent implements OnInit {
 	username: FormControl;
 	password: FormControl;
 	phonenumber: FormControl;
+	
 
 	ngOnInit() {
 		this.createFormControls();
@@ -32,6 +33,7 @@ export class SignUpComponent implements OnInit {
 			password: this.password,
 			phonenumber: this.phonenumber
 		});
+	
 	}
 	onSubmit() {
   		if (this.signUpForm.valid) {

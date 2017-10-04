@@ -7,7 +7,7 @@ import { LogInComponentComponent} from './log-in-component/log-in-component.comp
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
-
+import { CreatePropertyComponent } from './create-property/create-property.component';
 
 
 // This is the router module where you add routes to components (Pages)
@@ -21,6 +21,11 @@ export const ROUTES: Routes = [
         component: MyNewComponentComponent
     },
     {
+        path: 'createproperty', 
+        component: CreatePropertyComponent,
+        data:{title: 'Create Property'}
+    },
+    {
         path: 'login', 
         component: LogInComponentComponent,
         data:{title: 'Log In'}
@@ -31,7 +36,7 @@ export const ROUTES: Routes = [
         data:{title: 'Sign Up'}
     },
     {
-        path: 'map',
+        path: 'googlemaps',
         component: GooglemapsComponent
     },
     {

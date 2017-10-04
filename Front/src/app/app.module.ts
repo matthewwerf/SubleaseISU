@@ -9,8 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-
 import { Router } from './app.routing';
+import { CreatePropertyComponent } from './create-property/create-property.component';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
@@ -24,7 +24,8 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
     LogInComponentComponent,
     PageNotFoundComponent,
     SignUpComponent,
-    GooglemapsComponent
+    GooglemapsComponent,
+    CreatePropertyComponent
   ],
   imports: [
     BrowserModule,
