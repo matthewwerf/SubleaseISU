@@ -1,10 +1,8 @@
-
 (function () {'use strict';
 
 	var mongoose = require("mongoose");
-	var schema = mongoose.schema;
 
-	var propertySchema = new Schema({
+	var propertySchema = new mongoose.Schema({
 		posterUsername: String,
 		leasingAgency: String,
 		rentValue: Number,
@@ -16,6 +14,6 @@
 		propertyID: String
 	});
 
-module.exports = mongoose.model('Property', propertySchema);
+	module.exports = mongoose.model('Property', propertySchema);
 }());
 
