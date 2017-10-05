@@ -53,7 +53,7 @@
 			}
 			if (user.hashedPassword == req.body.hashedPassword){
 				res.json({
-					"subleaseISUcookie": sha1(req.params.username + req.hashedPassword + config.salt)
+					"subleaseISUcookie": sha1(req.params.username + req.body.hashedPassword + config.salt)
 				});
 			} else {
 				res.json({
