@@ -27,6 +27,7 @@ export class CreatePropertyComponent implements OnInit {
   postingMessage: FormControl;
   linkedPictureIDs: FormControl;
   propertyID: FormControl;
+  pictureTest: FormControl;
   errorMessage: string;
   hashMe: string;
   addressValue: string;
