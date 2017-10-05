@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import * as sha1 from 'js-sha1'
 
 
 @Component({
@@ -28,8 +28,9 @@ export class CreatePropertyComponent implements OnInit {
   linkedPictureIDs: FormControl;
   propertyID: FormControl;
   errorMessage: string;
-  testStr: string;
-  addressValue: string; 
+  hashMe: string;
+  addressValue: string;
+  sha1hash: string; 
 
   ngOnInit() {
     this.createFormControls();
@@ -42,6 +43,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   createFormControls() {
+    this.propertyID = new FormControl();
     this.address = new FormControl();
     this.streetAddress = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
@@ -53,11 +55,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   getAddress(){
-    //this.streetAddress.value, this.city.value, this.state.value, and this.zip.value
-    //are not saving any values, they remain empty for some reason, however in the onSubmit() method they have values in them
-    
-    this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value
-    //this.addressValue is empty for some reason
+    this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value;
     this.address.setValue(this.addressValue);
   }
 
@@ -71,15 +69,10 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   createPropertyID() {
-    //Figure out how to generate unique propertyID
-    //Sha1 hash not working, referencing from these websites:
-    //https://www.npmjs.com/package/sha1
-    //https://www.npmjs.com/package/@types/sha1
-    
-    this.propertyID = new FormControl();
     // var sha1 = require('sha1');
-    // this.testStr = sha1('message');
-    // console.log(this.testStr);
+    this.hashMe = this.address.value + ", " + this.posterUsername;
+    this.sha1hash = sha1(this.hashMe);
+    this.propertyID.setValue(this.sha1hash);
   }
 
 
@@ -108,6 +101,7 @@ export class CreatePropertyComponent implements OnInit {
     if (this.newPropertyForm.valid && this.newAddressForm.valid) {
       console.log("New Property Request Submitted");
       this.getAddress();
+      this.createPropertyID();
       console.log(this.newPropertyForm.value);
       //For some reason this.streetAddress logs a value here but not in the code above
       this.newAddressForm.reset();
