@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
     		var hashedPassword = crypto.SHA1(this.password.value);
   			
   			// POST the user to the backend
-    		const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
+    		const req = this.http.post('127.0.0.1:8080/users', {
 	    		username: this.username.value,
 				password: hashedPassword.toString(),
 				email: this.email.value,
