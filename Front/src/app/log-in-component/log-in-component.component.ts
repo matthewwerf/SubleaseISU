@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { User } from '../models/user';
 
@@ -19,7 +20,7 @@ export class LogInComponentComponent {
   Password: FormControl;
 
 	user: User = new User();
-	constructor(private auth: AuthService, private http: HttpClient) {
+	constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
 
 	}
 
@@ -43,8 +44,8 @@ export class LogInComponentComponent {
 	onSubmit(form: any): void{
     if (this.signInForm.valid) {
 
-    // Hash the password with SHA1
-        var hashedPassword = crypto.SHA1(this.Password);
+        // Hash the password with SHA1
+        var hashedPassword = crypto.SHA1(this.Password.value);
         
         // POST the user to the backend
         const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
@@ -53,21 +54,12 @@ export class LogInComponentComponent {
         }).subscribe(
             res => {
               console.log(res);
+              this.router.navigate(['main']);
             },
             err => {
               console.log(err);
             }
         );
-
-
-
-
-    	// this.auth.login(this.user).then((user) => {
-    	// 	localStorage.setItem('token', user.json().auth_token);
-     //  		console.log(user.json());
-    	// 	}).catch((err) => {
-     //  			console.log(err);
-    	// 	});
-    }
+      }
 		}
 }

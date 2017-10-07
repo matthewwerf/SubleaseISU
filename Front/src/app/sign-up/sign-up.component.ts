@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 import { User } from '../models/user';
 
 import * as crypto from 'crypto-js';
@@ -21,7 +22,7 @@ export class SignUpComponent implements OnInit {
 	phonenumber: FormControl;
 
 	user: User;
-	constructor(private auth: AuthService, private http: HttpClient) {
+	constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
 
 	}
 
@@ -52,7 +53,7 @@ export class SignUpComponent implements OnInit {
   			this.user = new User(this.username, this.password, this.email, this.phonenumber);
 
   			// Hash the password with SHA1
-    		var hashedPassword = crypto.SHA1(this.password);
+    		var hashedPassword = crypto.SHA1(this.password.value);
   			
   			// POST the user to the backend
     		const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
@@ -62,23 +63,14 @@ export class SignUpComponent implements OnInit {
 				phonenumber: this.phonenumber.value
 		    }).subscribe(
 		        res => {
-		          console.log(res);
+		          	console.log(res);
+		           	// Redirect to the login page after you sign up
+ 					this.router.navigate(['login']);
 		        },
 		        err => {
 		          console.log(err);
 		        }
 		      );
-
-		    // Log in the user and save the data to the local storage
-  			// this.auth.register(this.user).then((user) => {
-     //  			localStorage.setItem('token', user.json().auth_token);
-     //  			console.log(user.json());
-    	// 	}).catch((err) => {
-     //  			console.log(err);
-    	// 	});
- 			
- 			// Reset the form
-    		this.signUpForm.reset();
   		}
 	}
 }
