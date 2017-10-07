@@ -6,6 +6,10 @@
 	var config = require("../config.js");
 
 	exports.createUser = function(req, res) {
+		// Logging
+		console.log("User creation request: POST");
+
+
 		var newUser = new User(req.body);
 
 		User.findOne({username: req.body.username}, function (err, user) {
