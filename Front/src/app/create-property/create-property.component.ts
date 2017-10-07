@@ -43,6 +43,10 @@ export class CreatePropertyComponent implements OnInit {
     console.log(this.streetAddress.value);
   }
 
+  // upload() {
+    
+  // }
+  
   createFormControls() {
     this.propertyID = new FormControl();
     this.address = new FormControl();
