@@ -31,18 +31,18 @@
 	exports.getSpecificUser = function(req, res) {
 		User.findOne({username: req.params.username}, function (err, user) {
 			if (err) {
-				res.send(err);
+				res.status(500).send(err);
 			}
-			res.json(user);
+			res.status(200).json(user);
 		});
 	};
 
 	exports.updateSpecificUser = function(req, res) {
 		User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function (err, user){
 			if (err) {
-				res.send(err);
+				res.status(500).send(err);
 			}
-			res.json(user);
+			res.status(200).json(user);
 		});
 	};
 
@@ -51,9 +51,9 @@
 			username: req.params.username
 		}, function(err, user){
 			if (err) {
-				res.send(err);
+				res.status(500).send(err);
 			}
-			res.json({message: 'User successfully deleted'});
+			res.status(200).json({message: 'User successfully deleted'});
 		});
 	};
 
@@ -61,19 +61,17 @@
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 
 			if (err) {
-				res.send(err);
+				res.status(500).send(err);
 			}
 			if (user.hashedPassword == req.body.hashedPassword){
-				res.json({
+				res.status(200).json({
 					"subleaseISUcookie": sha1(req.params.username + req.body.hashedPassword + config.salt)
 				});
 			} else {
-				res.json({
+				res.status(400).json({
 					"error": "Incorrect password."
 				});
 			}
-
-			//res.json(user);
 		});
 	};
 
