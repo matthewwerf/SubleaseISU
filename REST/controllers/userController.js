@@ -8,11 +8,23 @@
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
 
-		newUser.save(function (err, user) {
+		User.findOne({username: req.body.username}, function (err, user) {
 			if (err) {
-				res.send(err);
+				res.status(500).send(err);
+			} else {
+				if(user.username) {
+					res.status(400).json({
+						"error": "Username already exists"
+					});
+				} else {
+					newUser.save(function (err, user) {
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(201).json(user);
+					});
+				}
 			}
-			res.json(user);
 		});
 	};
 
