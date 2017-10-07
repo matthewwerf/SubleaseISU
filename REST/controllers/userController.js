@@ -12,7 +12,14 @@
 			if (err) {
 				res.status(500).send(err);
 			} else {
-				if(user.username) {
+				if(user == null){
+					newUser.save(function (err, user) {
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(201).json(user);
+					});
+				}else if(user.username != null) {
 					res.status(400).json({
 						"error": "Username already exists"
 					});
