@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Headers } from '@angular/http';
 
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -55,20 +56,23 @@ export class SignUpComponent implements OnInit {
   			// Hash the password with SHA1
     		var hashedPassword = crypto.SHA1(this.password.value);
   			
+
+		let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
-    		const req = this.http.post('127.0.0.1:8080/users', {
+    		this.http.post('http://localhost:8080/users', {
 	    		username: this.username.value,
 				password: hashedPassword.toString(),
 				email: this.email.value,
 				phonenumber: this.phonenumber.value
-		    }).subscribe(
+		    }, headers).subscribe(
 		        res => {
 		          	console.log(res);
 		           	// Redirect to the login page after you sign up
- 					this.router.navigate(['login']);
+ 					//this.router.navigate(['login']);
 		        },
 		        err => {
-		          console.log(err);
+		    		console.log("there was an error");
+				console.log(err);
 		        }
 		      );
   		}

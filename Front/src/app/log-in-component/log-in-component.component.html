@@ -5,10 +5,12 @@
 	    <div class="form-group"
 	    		[ngClass]="{
 	    		'has-danger': Username.invalid && Username.dirty,
-	    		'has-success': Username.valid && Username.dirty}">
+	    		'has-success': Username.valid && Username.dirty}"> 
+
 	    		<label>Username</label>
 	    		<input type="text" class="form-control" formControlName="Username" required>
 		</div>
+
 		<div class="form-control-feedback" *ngIf=" Username.invalid && Username.dirty">
 			Field is invalid
 		</div>
