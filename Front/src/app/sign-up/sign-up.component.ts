@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit {
 
 		let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
-    		this.http.post('http://localhost:8080/users', {
+    		this.http.post('/users', {
 	    		username: this.username.value,
 				password: hashedPassword.toString(),
 				email: this.email.value,
