@@ -63,13 +63,7 @@
 			
 		</div>
 
-		<label>Upload some pictures:</label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': linkedPictureIDs.invalid && linkedPictureIDs.dirty,
-			'has-success': linkedPictureIDs.valid && linkedPictureIDs.dirty}">
-			<input type="file" #fileInput class="form-control" formControlName="linkedPictureIDs" placeholder="Upload file..." />
-			<button type="button" (click)="createPicures()">Upload</button>
-		</div>
+		
 
 		<div>
 			<span id="errorMsg"></span>

@@ -37,15 +37,12 @@ export class CreatePropertyComponent implements OnInit {
     this.createFormControls();
     this.getPosterUsername();
     this.createPicures();
-    this.createPropertyID();
+    //this.createPropertyID();
     this.createAddressForm();
     this.createForm();
     console.log(this.streetAddress.value);
   }
 
-  // upload() {
-    
-  // }
   
   createFormControls() {
     this.propertyID = new FormControl();
@@ -71,6 +68,7 @@ export class CreatePropertyComponent implements OnInit {
   createPicures() {
     //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
+    console.log(this.linkedPictureIDs.value);
   }
 
   createPropertyID() {
