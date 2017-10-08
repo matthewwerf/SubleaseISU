@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { MyNewComponentComponent }   from './my-new-component/my-new-component.component';
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
+import { MainPageComponent } from './main-page/main-page.component';
+
+
 
 
 // This is the router module where you add routes to components (Pages)
@@ -16,8 +18,8 @@ export const ROUTES: Routes = [
         component: HomeComponent
     },
     {
-        path: 'new', 
-        component: MyNewComponentComponent
+        path: 'main',
+        component: MainPageComponent
     },
     {
         path: 'createproperty', 
