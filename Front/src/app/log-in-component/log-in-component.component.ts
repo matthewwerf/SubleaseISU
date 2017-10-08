@@ -48,13 +48,14 @@ export class LogInComponentComponent {
         var hashedPassword = crypto.SHA1(this.Password.value);
         
         // POST the user to the backend
-        const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
+	var link = '/login/' + this.Username.value;
+	this.http.post(link, {
           username: this.Username.value,
-          password: hashedPassword.toString(),
+          hashedPassword: hashedPassword.toString(),
         }).subscribe(
             res => {
               console.log(res);
-              this.router.navigate(['main']);
+              //this.router.navigate(['main']);
             },
             err => {
               console.log(err);

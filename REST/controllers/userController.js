@@ -69,6 +69,7 @@
 	};
 
 	exports.authAndReturnCookie = function(req, res){
+		console.log(req);
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 
 			if (err) {

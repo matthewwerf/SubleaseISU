@@ -122,5 +122,35 @@
 	};
 
 
+	exports.listAllProperties = function(req, res){
+		
+		if (!req.body.subleaseISUcookie || !req.body.username){
+			res.status(401).send({
+				"error": "not authenticated"
+			});
+			return;
+		} else {
+			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
+				var localCookieToCheck = sha1(req.body.username + req.body.hashedPassword + config.salt);
+				if(localCookieToCheck != req.body.subleaseISUcookie) {
+					res.status(401).send({
+						"error": "authentication rejected"
+					});
+				} else {
+					Property.find({}, function(err, properties){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(properties);
+					});
+				}
+			});
+		}
+
+		
+
+
+	};
+
 
 }());
