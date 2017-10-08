@@ -59,15 +59,20 @@ export class SignUpComponent implements OnInit {
 
 		let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
-    		this.http.post('http://localhost:8080/users', {
+    		this.http.post('/users', {
 	    		username: this.username.value,
-				password: hashedPassword.toString(),
+				hashedPassword: hashedPassword.toString(),
 				email: this.email.value,
-				phonenumber: this.phonenumber.value
+				phoneNumber: this.phonenumber.value
 		    }, headers).subscribe(
 		        res => {
 		          	console.log(res);
-		           	// Redirect to the login page after you sign up
+		           	if(!res['error']){
+					console.log("no error");
+					this.router.navigate(['login']);
+				} else {
+					console.log(res['error']);
+				}
  					//this.router.navigate(['login']);
 		        },
 		        err => {
