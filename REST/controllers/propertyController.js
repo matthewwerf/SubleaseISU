@@ -136,17 +136,18 @@
 					res.status(401).send({
 						"error": "authentication rejected"
 					});
-					return;
+				} else {
+					Property.find({}, function(err, properties){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(properties);
+					});
 				}
 			});
 		}
 
-		Property.find({}, function(err, properties){
-			if (err) {
-				res.status(500).send(err);
-			}
-			res.status(200).json(properties);
-		});
+		
 
 
 	};
