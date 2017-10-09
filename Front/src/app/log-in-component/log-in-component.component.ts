@@ -54,8 +54,16 @@ export class LogInComponentComponent {
           hashedPassword: hashedPassword.toString(),
         }).subscribe(
             res => {
-              console.log(res);
-              //this.router.navigate(['main']);
+		if(!res['error']){
+			localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie']);
+			localStorage.setItem('username', this.Username.value);
+		} else if(res['error'] == 'Username already exists'){
+			console.log("Username already in use");
+		} else {
+			console.log(res['error']);
+		}
+		//console.log(res);
+            	//this.router.navigate(['main']);
             },
             err => {
               console.log(err);
@@ -64,3 +72,4 @@ export class LogInComponentComponent {
       }
     }
 }
+

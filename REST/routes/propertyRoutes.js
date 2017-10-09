@@ -3,7 +3,7 @@
 	module.exports = function(app) {
 		var property = require("../controllers/propertyController");
 
-		app.route('/property')
+		app.route('/properties')
 			.post(property.createProperty);
 
 		app.route('/listAllProperties')

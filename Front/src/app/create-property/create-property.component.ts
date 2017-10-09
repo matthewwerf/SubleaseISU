@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+//import * as sha1 from 'js-sha1'
 
+import { HttpClient } from '@angular/common/http';
+import { Headers } from '@angular/http';
+import { Router } from '@angular/router';
 
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-create-property',
@@ -10,10 +15,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CreatePropertyComponent implements OnInit {
 
-  constructor() { 
+  constructor(private http: HttpClient, private router: Router) { 
 
   }
-
+  
+  
   newPropertyForm: FormGroup;
   newAddressForm: FormGroup;
   posterUsername: FormControl;
@@ -27,23 +33,26 @@ export class CreatePropertyComponent implements OnInit {
   postingMessage: FormControl;
   linkedPictureIDs: FormControl;
   propertyID: FormControl;
+  pictureTest: FormControl;
   errorMessage: string;
-  testStr: string;
-  addressValue: string; 
+  hashMe: string;
+  addressValue: string;
+  sha1hash: string; 
 
   ngOnInit() {
     this.createFormControls();
-    this.getAddress();
     this.getPosterUsername();
     this.createPicures();
-    this.createPropertyID();
+    //this.createPropertyID();
     this.createAddressForm();
     this.createForm();
-    console.log(this.streetAddress.value);
+    
   }
 
+  
   createFormControls() {
-    
+    this.propertyID = new FormControl();
+    this.address = new FormControl();
     this.streetAddress = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
     this.state = new FormControl('', Validators.required);
@@ -54,11 +63,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   getAddress(){
-    //this.streetAddress.value, this.city.value, this.state.value, and this.zip.value
-    //are not saving any values, they remain empty for some reason, however in the onSubmit() method they have values in them
-    this.address = new FormControl();
-    this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value
-    //this.addressValue is empty for some reason
+    this.addressValue = this.streetAddress.value + ", " + this.city.value + ", " + this.state.value + " " + this.zip.value;
     this.address.setValue(this.addressValue);
   }
 
@@ -69,18 +74,14 @@ export class CreatePropertyComponent implements OnInit {
   createPicures() {
     //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
+    //console.log(this.linkedPictureIDs.value);
   }
 
   createPropertyID() {
-    //Figure out how to generate unique propertyID
-    //Sha1 hash not working, referencing from these websites:
-    //https://www.npmjs.com/package/sha1
-    //https://www.npmjs.com/package/@types/sha1
-    
-    this.propertyID = new FormControl();
     // var sha1 = require('sha1');
-    // this.testStr = sha1('message');
-    // console.log(this.testStr);
+    this.hashMe = this.address.value + " " + localStorage.getItem('username');
+    this.sha1hash = crypto.SHA1(this.hashMe);
+    this.propertyID.setValue(this.sha1hash);
   }
 
 
@@ -106,15 +107,49 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.newPropertyForm.valid) {
+    if (this.newPropertyForm.valid && this.newAddressForm.valid) {
       console.log("New Property Request Submitted");
+      this.getAddress();
+      this.createPropertyID();
       console.log(this.newPropertyForm.value);
+      let headers = new Headers({'Content-Type' : 'application/json'});
+      var localUsername = localStorage.getItem('username');
+      var d = new Date();
+      var shaPropertyID = crypto.SHA1(localUsername + d.getTime()).toString();
+      console.log(shaPropertyID);
+      this.http.post('/properties', {
+	  username: localUsername,
+          posterUsername: localUsername,
+          leasingAgency: this.leasingAgency.value,
+          rentValue: this.rentValue.value,
+          address: this.address.value,
+          postingMessage: this.postingMessage.value,
+          //linkedPictureIDs: this.linkedPictureIDs.value,
+          propertyID: shaPropertyID, //change back to use function later
+	  subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
+        }, headers).subscribe(
+            res => {
+                console.log(res);
+                 if(!res['error']){
+          console.log("no error");
+          this.router.navigate(['main']);
+        } else {
+          console.log(res['error']);
+        }
+           //this.router.navigate(['login']);
+            },
+            err => {
+            console.log("there was an error");
+        console.log(err);
+            }
+          );
       //For some reason this.streetAddress logs a value here but not in the code above
-      console.log(this.streetAddress.value);
+      this.newAddressForm.reset();
       this.newPropertyForm.reset();
       this.errorMessage = "";
       document.getElementById("errorMsg").innerText = this.errorMessage;
       //send json to server via http POST method
+
     }
     else {
       this.errorMessage = "Invalid entries at: \n";
