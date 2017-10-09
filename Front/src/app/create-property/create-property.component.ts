@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import * as sha1 from 'js-sha1'
+//import * as sha1 from 'js-sha1'
+
 import { HttpClient } from '@angular/common/http';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
+
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-create-property',
@@ -77,7 +80,7 @@ export class CreatePropertyComponent implements OnInit {
   createPropertyID() {
     // var sha1 = require('sha1');
     this.hashMe = this.address.value + ", " + this.posterUsername;
-    this.sha1hash = sha1(this.hashMe);
+    this.sha1hash = crypto.SHA1(this.hashMe);
     this.propertyID.setValue(this.sha1hash);
   }
 
