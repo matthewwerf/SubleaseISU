@@ -4,7 +4,7 @@
     	<div class="form-group"
     		[ngClass]="{
     		'has-danger': username.invalid && username.dirty,
-    		'has-success': valid && username.dirty}">
+    		'has-success': username.valid && username.dirty}">
     		<label>Username</label>
     		<input type="text" class="form-control" formControlName="username" required>
     		<div class="form-control-feedback" *ngIf=" username.invalid && username.dirty">Field is invalid</div>
@@ -18,14 +18,21 @@
     		<div class="form-control-feedback" *ngIf=" password.invalid && password.dirty">Field is invalid</div>
     	</div>
     	<div class="form-group" [ngClass]="{
-    		'has-danger': phonenumber.invalid && phonenumber.dirty,
-    		'has-success': phonenumber.valid && phonenumber.dirty}">
-    		<label>Phone Number</label>
-    		<input type="text" class="form-control" formControlName="phonenumber" required>
-    		<div class="form-control-feedback" *ngIf=" phonenumber.invalid && phonenumber.dirty">Field is invalid</div>
+    		'has-danger': email.invalid && email.dirty,
+    		'has-success': email.valid && email.dirty}">
+    		<label>E-Mail</label>
+    		<input type="email" class="form-control" formControlName="email" required>
+    		<div class="form-control-feedback" *ngIf=" email.invalid && email.dirty">Field is invalid</div>
     	</div>
+        <div class="form-group"
+            [ngClass]="{
+            'has-danger': phonenumber.invalid && phonenumber.dirty,
+            'has-success': phonenumber.valid && phonenumber.dirty}">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" formControlName="phonenumber" required>
+            <div class="form-control-feedback" *ngIf=" phonenumber.invalid && phonenumber.dirty">Field is invalid</div>
+        </div>
     	<button type="submit" class="btn btn-primary" >Submit</button>
     </form>
 </div>
-<pre>{{signUpForm.value | json}}</pre>
       <router-outlet></router-outlet>
