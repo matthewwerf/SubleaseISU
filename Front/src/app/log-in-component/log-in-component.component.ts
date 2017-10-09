@@ -56,6 +56,7 @@ export class LogInComponentComponent {
             res => {
 		if(!res['error']){
 			localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie']);
+			localStorage.setItem('username', this.Username.value);
 		} else if(res['error'] == 'Username already exists'){
 			console.log("Username already in use");
 		} else {
