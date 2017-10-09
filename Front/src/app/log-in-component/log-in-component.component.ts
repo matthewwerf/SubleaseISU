@@ -19,10 +19,10 @@ export class LogInComponentComponent {
   Username: FormControl;
   Password: FormControl;
 
-	user: User = new User();
-	constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
+  user: User = new User();
+  constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
 
-	}
+  }
 
   ngOnInit() {
     this.createFormControls();
@@ -41,25 +41,26 @@ export class LogInComponentComponent {
      });
   }
 
-	onSubmit(form: any): void{
+  onSubmit(form: any): void{
     if (this.signInForm.valid) {
 
         // Hash the password with SHA1
         var hashedPassword = crypto.SHA1(this.Password.value);
         
         // POST the user to the backend
-        const req = this.http.post('http://jsonplaceholder.typicode.com/posts', {
+  var link = '/login/' + this.Username.value;
+  this.http.post(link, {
           username: this.Username.value,
-          password: hashedPassword.toString(),
+          hashedPassword: hashedPassword.toString(),
         }).subscribe(
             res => {
               console.log(res);
-              this.router.navigate(['main']);
+              //this.router.navigate(['main']);
             },
             err => {
               console.log(err);
             }
         );
       }
-		}
+    }
 }

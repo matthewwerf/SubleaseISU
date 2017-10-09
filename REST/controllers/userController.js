@@ -6,13 +6,24 @@
 	var config = require("../config.js");
 
 	exports.createUser = function(req, res) {
+		// Logging
+		console.log("User creation request: POST");
+
+
 		var newUser = new User(req.body);
 
 		User.findOne({username: req.body.username}, function (err, user) {
 			if (err) {
 				res.status(500).send(err);
 			} else {
-				if(user.username) {
+				if(user == null){
+					newUser.save(function (err, user) {
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(201).json(user);
+					});
+				}else if(user.username != null) {
 					res.status(400).json({
 						"error": "Username already exists"
 					});
@@ -58,6 +69,7 @@
 	};
 
 	exports.authAndReturnCookie = function(req, res){
+		console.log(req);
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 
 			if (err) {

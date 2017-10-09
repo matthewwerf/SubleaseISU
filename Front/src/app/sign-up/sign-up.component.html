@@ -8,6 +8,7 @@
     		<label>Username</label>
     		<input type="text" class="form-control" formControlName="username" required>
     		<div class="form-control-feedback" *ngIf=" username.invalid && username.dirty">Field is invalid</div>
+
     	</div>
     	<div class="form-group" [ngClass]="{
     		'has-danger': password.invalid && password.dirty,

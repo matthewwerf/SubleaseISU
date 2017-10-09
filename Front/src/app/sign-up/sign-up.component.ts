@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Headers } from '@angular/http';
 
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -55,23 +56,36 @@ export class SignUpComponent implements OnInit {
   			// Hash the password with SHA1
     		var hashedPassword = crypto.SHA1(this.password.value);
   			
+
+		let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
-    		const req = this.http.post('http://localhost:8080/users', {
+
+    		this.http.post('/users', {
 	    		username: this.username.value,
-				password: hashedPassword.toString(),
+				hashedPassword: hashedPassword.toString(),
 				email: this.email.value,
-				phonenumber: this.phonenumber.value
-		    }).subscribe(
+				phoneNumber: this.phonenumber.value
+		    }, headers).subscribe(
 		        res => {
-		          	console.log(res);
-		           	// Redirect to the login page after you sign up
- 					this.router.navigate(['login']);
+		           	if(!res['error']){
+						console.log("no error");
+						localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie'].value )
+						this.router.navigate(['login']);
+					} else {
+						if(res['error'].status == '400') {
+							console.log("Username is already in use");
+						}
+						console.log(res['error']);
+					}
 		        },
 		        err => {
-		          console.log(err);
+		    		console.log("there was an error");
+					console.log(err);
 		        }
 		      );
   		}
 	}
 }
+
+
 

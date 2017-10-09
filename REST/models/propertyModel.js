@@ -7,8 +7,6 @@
 		leasingAgency: String,
 		rentValue: Number,
 		address: String,
-		longitude: String,
-		latitude: String,
 		postingMessage: String,
 		linkedPictureIDs: Array,
 		propertyID: String

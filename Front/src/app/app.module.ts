@@ -12,8 +12,11 @@ import { LogInComponentComponent} from './log-in-component/log-in-component.comp
 import { MainPageComponent } from './main-page/main-page.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-
 import { Router } from './app.routing';
+import { CreatePropertyComponent } from './create-property/create-property.component';
+
+import { AgmCoreModule } from '@agm/core';
+import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 
 
 @NgModule({
@@ -23,11 +26,16 @@ import { Router } from './app.routing';
     LogInComponentComponent,
     PageNotFoundComponent,
     SignUpComponent,
+    GooglemapsComponent,
+    CreatePropertyComponent,
     MainPageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c'
+    }),
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,

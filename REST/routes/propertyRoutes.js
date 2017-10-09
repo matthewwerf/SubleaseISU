@@ -6,6 +6,9 @@
 		app.route('/property')
 			.post(property.createProperty);
 
+		app.route('/listAllProperties')
+			.post(property.listAllProperties);
+
 		app.route('/property/:propertyID')
 			.get(property.getSpecificProperty)
 			.put(property.updateSpecificProperty)

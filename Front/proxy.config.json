@@ -1,7 +1,17 @@
 {
-  "/test-route": {
-    "target": "http://localhost:8080",
-    "secure": false,
-    "logLevel": "debug"
-  }
+	"/users" : {
+		"target" : "http://localhost:8080",
+		"secure" : false,
+		"logLevel" : "debug"
+	},
+	"/login" : {
+		"target" : "http://localhost:8080",
+		"secure" : false,
+		"logLevel" : "debug"
+	},
+	"/listAllProperties": {
+		"target" : "http://localhost:8080",
+		"secure" : false,
+		"logLevel" : "debug"
+	}
 }

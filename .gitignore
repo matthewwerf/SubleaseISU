@@ -10,6 +10,7 @@ REST/node_modules
 .angular-cli.json
 .editorconfig
 
+
 # The following is for angular. Please do not modify
 
 # compiled output
@@ -53,3 +54,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+<<<<<<< HEAD
+REST/node_modules/*
+
+=======
+>>>>>>> 712cabef3c718a50399009eef446541e503fb451
