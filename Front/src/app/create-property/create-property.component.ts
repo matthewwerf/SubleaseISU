@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as sha1 from 'js-sha1'
-
+import { HttpClient } from '@angular/common/http';
+import { Headers } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-property',
@@ -10,10 +12,11 @@ import * as sha1 from 'js-sha1'
 })
 export class CreatePropertyComponent implements OnInit {
 
-  constructor() { 
+  constructor(private http: HttpClient, private router: Router) { 
 
   }
-
+  
+  
   newPropertyForm: FormGroup;
   newAddressForm: FormGroup;
   posterUsername: FormControl;
@@ -40,7 +43,7 @@ export class CreatePropertyComponent implements OnInit {
     //this.createPropertyID();
     this.createAddressForm();
     this.createForm();
-    console.log(this.streetAddress.value);
+    
   }
 
   
@@ -68,7 +71,7 @@ export class CreatePropertyComponent implements OnInit {
   createPicures() {
     //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
-    console.log(this.linkedPictureIDs.value);
+    //console.log(this.linkedPictureIDs.value);
   }
 
   createPropertyID() {
@@ -106,12 +109,38 @@ export class CreatePropertyComponent implements OnInit {
       this.getAddress();
       this.createPropertyID();
       console.log(this.newPropertyForm.value);
+      let headers = new Headers({'Content-Type' : 'application/json'});
+      this.http.post('/properties', {
+          posterUsername: this.posterUsername.value,
+          leasingAgency: this.leasingAgency.value,
+          rentValue: this.rentValue.value,
+          address: this.address.value,
+          postingMessage: this.postingMessage.value,
+          linkedPictureIDs: this.linkedPictureIDs.value,
+          propertyID: this.propertyID.value
+        }, headers).subscribe(
+            res => {
+                console.log(res);
+                 if(!res['error']){
+          console.log("no error");
+          this.router.navigate(['main']);
+        } else {
+          console.log(res['error']);
+        }
+           //this.router.navigate(['login']);
+            },
+            err => {
+            console.log("there was an error");
+        console.log(err);
+            }
+          );
       //For some reason this.streetAddress logs a value here but not in the code above
       this.newAddressForm.reset();
       this.newPropertyForm.reset();
       this.errorMessage = "";
       document.getElementById("errorMsg").innerText = this.errorMessage;
       //send json to server via http POST method
+
     }
     else {
       this.errorMessage = "Invalid entries at: \n";
