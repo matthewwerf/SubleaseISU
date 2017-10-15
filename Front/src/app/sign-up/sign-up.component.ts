@@ -74,6 +74,7 @@ export class SignUpComponent implements OnInit {
 					} else {
 						if(res['error'].status == '400') {
 							console.log("Username is already in use");
+							window.alert("Username is already in use, please select a new username.");
 						}
 						console.log(res['error']);
 					}

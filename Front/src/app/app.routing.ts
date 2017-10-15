@@ -9,6 +9,7 @@ import { SignUpComponent} from './sign-up/sign-up.component';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { AuthService } from './Services/auth.service';
 
 
 
@@ -41,7 +42,8 @@ export const ROUTES: Routes = [
     },
     {
         path: 'googlemaps',
-        component: GooglemapsComponent
+        component: GooglemapsComponent,
+        //canActivate: [AuthService]
     },
     {
     	path: '',
