@@ -4,6 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { Ng4FilesModule } from 'angular4-files-upload/src/app/ng4-files';
 
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
@@ -36,7 +37,8 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-    Router
+    Router,
+    Ng4FilesModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

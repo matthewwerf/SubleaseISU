@@ -63,7 +63,23 @@
 			
 		</div>
 
-		
+		<label>Test Pic upload</label>
+		<div>
+		<ng4-files-click (filesSelect)="filesSelect($event)">
+  		<span>Click me to upload</span>
+		</ng4-files-click>
+		</div>
+
+		<label>Test Pic drag upload</label>
+		<div>
+		<ng4-files-drop (filesSelect)="filesSelect($event)">
+  		<div style="display: inline-block; height: 100px; width: 100px; background-color: gray">
+    	{{selectedFiles}}
+  		</div>
+		</ng4-files-drop>
+		</div>
+		<!-- <input type="file" #fileInput placeholder="Upload file..." />
+		<button type="button" (click)="upload()">Upload</button> -->
 
 		<div>
 			<span id="errorMsg"></span>

@@ -4,18 +4,35 @@ import * as sha1 from 'js-sha1'
 import { HttpClient } from '@angular/common/http';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
 
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
   styleUrls: ['./create-property.component.css']
 })
+
+
 export class CreatePropertyComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) { 
-
+    
   }
   
+  public selectedFiles;
+  filesSelect(selectedFiles: Ng4FilesSelected): void {
+    if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
+      this.selectedFiles = selectedFiles.status;
+      
+      
+      // Hnadle error statuses here
+      
+      return;
+    }
+ 
+    this.selectedFiles = Array.from(selectedFiles.files).map(file => file.name);
+    console.log(this.selectedFiles);
+  }
   
   newPropertyForm: FormGroup;
   newAddressForm: FormGroup;
