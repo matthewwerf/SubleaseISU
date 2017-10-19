@@ -18,6 +18,7 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
+import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
     SignUpComponent,
     GooglemapsComponent,
     CreatePropertyComponent,
-    MainPageComponent
+    MainPageComponent,
+    BrowseListingsComponent
   ],
   imports: [
     BrowserModule,
