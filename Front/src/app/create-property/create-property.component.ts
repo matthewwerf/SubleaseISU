@@ -19,20 +19,7 @@ export class CreatePropertyComponent implements OnInit {
     
   }
   
-  public selectedFiles;
-  filesSelect(selectedFiles: Ng4FilesSelected): void {
-    if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
-      this.selectedFiles = selectedFiles.status;
-      
-      
-      // Hnadle error statuses here
-      
-      return;
-    }
- 
-    this.selectedFiles = Array.from(selectedFiles.files).map(file => file.name);
-    console.log(this.selectedFiles);
-  }
+  
   
   newPropertyForm: FormGroup;
   newAddressForm: FormGroup;
@@ -52,6 +39,26 @@ export class CreatePropertyComponent implements OnInit {
   hashMe: string;
   addressValue: string;
   sha1hash: string; 
+  selectedFiles: any;
+  public imageFolder: Array<File>;
+  imageFolderSize: number;
+
+  filesSelect(selectedFiles: Ng4FilesSelected): void {
+    if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
+      this.selectedFiles = selectedFiles.status;
+      console.log('Error during file uploaded');
+      
+      // Hnadle error statuses here
+      
+      return;
+    }
+ 
+    this.selectedFiles = Array.from(selectedFiles.files).map(file => file);
+    console.log(this.selectedFiles);
+    this.imageFolderSize = this.imageFolder.push(this.selectedFiles);
+    console.log('Number of Images:' + this.imageFolderSize + 'Images:' + this.imageFolder);
+  }
+
 
   ngOnInit() {
     this.createFormControls();
@@ -122,6 +129,7 @@ export class CreatePropertyComponent implements OnInit {
 
   onSubmit() {
     if (this.newPropertyForm.valid && this.newAddressForm.valid) {
+      console.log(this.selectedFiles);
       console.log("New Property Request Submitted");
       this.getAddress();
       this.createPropertyID();
