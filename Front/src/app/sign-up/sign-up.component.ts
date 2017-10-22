@@ -67,7 +67,7 @@ export class SignUpComponent implements OnInit {
 				phoneNumber: this.phonenumber.value
 		    }, headers).subscribe(
 		        res => {
-		           	if(!res['error']){
+		           	if(!res['error']) {
 						console.log("no error");
 						localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie'].value )
 						this.router.navigate(['login']);
