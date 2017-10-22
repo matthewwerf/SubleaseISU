@@ -15,8 +15,10 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { Router } from './app.routing';
-import { CreatePropertyComponent } from './create-property/create-property.component';
 
+import { CreatePropertyComponent } from './create-property/create-property.component';
+import { PictureTestComponent } from './picture-test/picture-test.component';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 
@@ -29,7 +31,9 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
     PageNotFoundComponent,
     SignUpComponent,
     CreatePropertyComponent,
-    MainPageComponent
+    MainPageComponent,
+    PictureTestComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,

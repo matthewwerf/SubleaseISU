@@ -7,7 +7,7 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent} from './sign-up/sign-up.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { MainPageComponent } from './main-page/main-page.component';
-
+import { PictureTestComponent } from './picture-test/picture-test.component';
 
 
 
@@ -25,6 +25,11 @@ export const ROUTES: Routes = [
         path: 'createproperty', 
         component: CreatePropertyComponent,
         data:{title: 'Create Property'}
+    },
+    {
+        path: 'picturetest', 
+        component: PictureTestComponent,
+        data:{title: 'Picture Test'}
     },
     {
         path: 'login', 

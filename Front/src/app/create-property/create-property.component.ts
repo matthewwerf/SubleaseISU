@@ -56,11 +56,13 @@ export class CreatePropertyComponent implements OnInit {
     this.selectedFiles = Array.from(selectedFiles.files).map(file => file);
     console.log(this.selectedFiles);
     this.imageFolderSize = this.imageFolder.push(this.selectedFiles);
-    console.log('Number of Images:' + this.imageFolderSize + 'Images:' + this.imageFolder);
+    console.log('Number of Images: ' + this.imageFolderSize);
+    console.log(this.imageFolder);
   }
 
 
   ngOnInit() {
+    this.imageFolder = [];
     this.createFormControls();
     this.getPosterUsername();
     this.createPicures();
@@ -96,6 +98,7 @@ export class CreatePropertyComponent implements OnInit {
     //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
     //console.log(this.linkedPictureIDs.value);
+    this.linkedPictureIDs.setValue(this.imageFolder);
   }
 
   createPropertyID() {
@@ -133,6 +136,7 @@ export class CreatePropertyComponent implements OnInit {
       console.log("New Property Request Submitted");
       this.getAddress();
       this.createPropertyID();
+      this.createPicures();
       console.log(this.newPropertyForm.value);
       let headers = new Headers({'Content-Type' : 'application/json'});
       this.http.post('/properties', {

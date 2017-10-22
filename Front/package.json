@@ -25,6 +25,7 @@
     "angular-crypto-js": "^1.0.7",
     "angular4-files-upload": "^1.0.2",
     "core-js": "^2.4.1",
+    "ng2-file-upload": "^1.2.1",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"
   },
