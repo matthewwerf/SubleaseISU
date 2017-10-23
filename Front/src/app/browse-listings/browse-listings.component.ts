@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ListingInfo } from '../models/listing-basic';
+import { Headers, Http } from '@angular/http';
 
 @Component({
   selector: 'app-browse-listings',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowseListingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   ngOnInit() {
+
+  }
+
+  getListings() {
+  	this.http.get('/listAllProperties', )
   }
 
 }
