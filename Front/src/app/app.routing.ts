@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
+import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
@@ -41,6 +42,11 @@ export const ROUTES: Routes = [
         path: 'signup', 
         component: SignUpComponent,
         data:{title: 'Sign Up'}
+    },
+    {
+        path: 'browse',
+        component: BrowseListingsComponent,
+        //canActivate: [AuthService]
     },
     {
         path: 'googlemaps',
