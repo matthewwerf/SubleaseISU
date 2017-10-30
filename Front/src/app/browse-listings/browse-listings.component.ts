@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListingInfo } from '../models/listing-basic';
+import { ListingInfo } from '../models/listing';
 import { Headers, Http } from '@angular/http';
 
 @Component({
@@ -16,7 +16,7 @@ export class BrowseListingsComponent implements OnInit {
   }
 
   getListings() {
-  	this.http.get('/listAllProperties', )
+  	//this.http.get('/listAllProperties', )
   }
 
 }
