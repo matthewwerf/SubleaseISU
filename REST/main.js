@@ -22,13 +22,12 @@ app.use(function(req, res, next) { // allow CORS
   next();
 });
 
-/*
-app.use(function(req, res, next) { // request debugging
-	console.log(req);
+
+app.use(function(req, res, next) {
+	//console.log(req);
 	console.log("=============REQ===============");
 	next();
 });
-*/
 
 //var routes = require('./routes/userRoutes')(app); // depreciated method
 var messageRoutes = require('./routes/messageRoutes'); // importing routes to messaging sockets
