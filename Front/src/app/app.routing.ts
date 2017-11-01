@@ -8,7 +8,7 @@ import { SignUpComponent} from './sign-up/sign-up.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { PictureTestComponent } from './picture-test/picture-test.component';
-
+import { ViewProfileComponent } from './view-profile/view-profile.component';
 
 
 // This is the router module where you add routes to components (Pages)
@@ -16,6 +16,10 @@ export const ROUTES: Routes = [
     {
         path: 'home', 
         component: HomeComponent
+    },
+    {
+        path: 'viewprofile',
+        component: ViewProfileComponent
     },
     {
         path: 'main',

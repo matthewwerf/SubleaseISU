@@ -19,6 +19,7 @@ import { Router } from './app.routing';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
 
 
 
@@ -33,7 +34,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     CreatePropertyComponent,
     MainPageComponent,
     PictureTestComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,
