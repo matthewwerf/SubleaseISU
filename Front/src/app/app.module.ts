@@ -1,10 +1,11 @@
-  import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CanActivate } from '@angular/router';
+import { Ng4FilesModule } from 'angular4-files-upload/src/app/ng4-files';
 
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
@@ -14,12 +15,18 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { Router } from './app.routing';
+
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { BrowseListingsService } from './browse-listings/browse-listings-service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
+
+import { CreatePropertyComponent } from './create-property/create-property.component';
+import { PictureTestComponent } from './picture-test/picture-test.component';
+import { FileSelectDirective } from 'ng2-file-upload';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
 
 
 @NgModule({
@@ -33,6 +40,9 @@ import { BrowseListingsComponent } from './browse-listings/browse-listings.compo
     CreatePropertyComponent,
     MainPageComponent,
     BrowseListingsComponent
+    PictureTestComponent,
+    FileSelectDirective,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +53,8 @@ import { BrowseListingsComponent } from './browse-listings/browse-listings.compo
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-    Router
+    Router,
+    Ng4FilesModule
   ],
   providers: [AuthService,
     BrowseListingsService],
