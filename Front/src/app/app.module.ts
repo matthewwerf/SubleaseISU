@@ -15,6 +15,7 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { Router } from './app.routing';
 import { CreatePropertyComponent } from './create-property/create-property.component';
+import { BrowseListingsService } from './browse-listings/browse-listings-service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
@@ -44,7 +45,8 @@ import { BrowseListingsComponent } from './browse-listings/browse-listings.compo
     ReactiveFormsModule,
     Router
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    BrowseListingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
