@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ListingInfo } from '../models/listing';
-import { Headers, Http } from '@angular/http';
+import { BrowseListingsService } from './browse-listings-service';
 
 @Component({
   selector: 'app-browse-listings',
   templateUrl: './browse-listings.component.html',
   styleUrls: ['./browse-listings.component.css']
 })
+
 export class BrowseListingsComponent implements OnInit {
 
-  constructor(private http: Http) { }
+	private ListingList: ListingInfo[] = [];
+
+  constructor(private browseListingsService: BrowseListingsService) { }
 
   ngOnInit() {
-
+  	this.getListings();
   }
 
   getListings() {
-  	//this.http.get('/listAllProperties', )
+  	this.browseListingsService.getListings().subscribe( ListingInfo => { this.ListingList = ListingInfo});
   }
 
 }
