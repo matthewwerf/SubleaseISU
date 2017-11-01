@@ -1,11 +1,10 @@
 var mongoose = require("mongoose");
-var schema = mongoose.schema;
 
-var messageSchema = new Schema({
+var messageSchema = new mongoose.Schema({
 	senderUsername: String,
 	receiverUsername: String,
 	message: String,
-	timeSent: String
+	lastMessage: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Message', messageSchema);
