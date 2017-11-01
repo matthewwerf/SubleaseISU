@@ -23,7 +23,6 @@ import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
-import { CreatePropertyComponent } from './create-property/create-property.component';
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
@@ -39,7 +38,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
     GooglemapsComponent,
     CreatePropertyComponent,
     MainPageComponent,
-    BrowseListingsComponent
+    BrowseListingsComponent,
     PictureTestComponent,
     FileSelectDirective,
     ViewProfileComponent
