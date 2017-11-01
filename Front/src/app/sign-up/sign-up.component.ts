@@ -59,6 +59,7 @@ export class SignUpComponent implements OnInit {
 
 		let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
+
     		this.http.post('/users', {
 	    		username: this.username.value,
 				hashedPassword: hashedPassword.toString(),
@@ -66,18 +67,21 @@ export class SignUpComponent implements OnInit {
 				phoneNumber: this.phonenumber.value
 		    }, headers).subscribe(
 		        res => {
-		          	console.log(res);
-		           	if(!res['error']){
-					console.log("no error");
-					this.router.navigate(['login']);
-				} else {
-					console.log(res['error']);
-				}
- 					//this.router.navigate(['login']);
+		           	if(!res['error']) {
+						console.log("no error");
+						localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie'].value )
+						this.router.navigate(['login']);
+					} else {
+						if(res['error'].status == '400') {
+							console.log("Username is already in use");
+							window.alert("Username is already in use, please select a new username.");
+						}
+						console.log(res['error']);
+					}
 		        },
 		        err => {
 		    		console.log("there was an error");
-				console.log(err);
+					console.log(err);
 		        }
 		      );
   		}

@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { LogInComponentComponent} from './log-in-component/log-in-component.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent} from './sign-up/sign-up.component';
+import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -22,12 +24,14 @@ export const ROUTES: Routes = [
     },
     {
         path: 'main',
-        component: MainPageComponent
+        component: MainPageComponent,
+        canActivate: [AuthService]
     },
     {
         path: 'createproperty', 
         component: CreatePropertyComponent,
-        data:{title: 'Create Property'}
+        data:{title: 'Create Property'},
+        canActivate: [AuthService]
     },
     {
         path: 'login', 
@@ -40,8 +44,14 @@ export const ROUTES: Routes = [
         data:{title: 'Sign Up'}
     },
     {
+        path: 'browse',
+        component: BrowseListingsComponent,
+        //canActivate: [AuthService]
+    },
+    {
         path: 'googlemaps',
-        component: GooglemapsComponent
+        component: GooglemapsComponent,
+        canActivate: [AuthService]
     },
     {
     	path: '',

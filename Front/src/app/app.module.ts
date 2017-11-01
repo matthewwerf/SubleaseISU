@@ -1,9 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+  import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { CanActivate } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
@@ -14,9 +15,11 @@ import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { Router } from './app.routing';
 import { CreatePropertyComponent } from './create-property/create-property.component';
+import { BrowseListingsService } from './browse-listings/browse-listings-service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
+import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
 
 @NgModule({
@@ -28,7 +31,8 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
     SignUpComponent,
     GooglemapsComponent,
     CreatePropertyComponent,
-    MainPageComponent
+    MainPageComponent,
+    BrowseListingsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,8 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
     ReactiveFormsModule,
     Router
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    BrowseListingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
