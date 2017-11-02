@@ -23,7 +23,7 @@ export class BrowseListingsService {
   	return this.http.post('/listAllProperties', {
   		username: localStorage.getItem('username'),
 		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
-  	}).map( res => {
+  	}).do(res => console.log(res)).map( res => {
         res.json().results.map(item => {
           return new ListingInfo(
             item._id,
