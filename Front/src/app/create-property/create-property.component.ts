@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
 
 import * as crypto from 'crypto-js';
 
@@ -13,11 +14,14 @@ import * as crypto from 'crypto-js';
   templateUrl: './create-property.component.html',
   styleUrls: ['./create-property.component.css']
 })
+
+
 export class CreatePropertyComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router) { 
-
+    
   }
+  
   
   
   newPropertyForm: FormGroup;
@@ -38,8 +42,30 @@ export class CreatePropertyComponent implements OnInit {
   hashMe: string;
   addressValue: string;
   sha1hash: string; 
+  selectedFiles: any;
+  public imageFolder: Array<File>;
+  imageFolderSize: number;
+
+  filesSelect(selectedFiles: Ng4FilesSelected): void {
+    if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
+      this.selectedFiles = selectedFiles.status;
+      console.log('Error during file uploaded');
+      
+      // Hnadle error statuses here
+      
+      return;
+    }
+ 
+    this.selectedFiles = Array.from(selectedFiles.files).map(file => file);
+    console.log(this.selectedFiles);
+    this.imageFolderSize = this.imageFolder.push(this.selectedFiles);
+    console.log('Number of Images: ' + this.imageFolderSize);
+    console.log(this.imageFolder);
+  }
+
 
   ngOnInit() {
+    this.imageFolder = [];
     this.createFormControls();
     this.getPosterUsername();
     this.createPicures();
@@ -75,6 +101,7 @@ export class CreatePropertyComponent implements OnInit {
     //Still need to figure out how to upload images
     this.linkedPictureIDs = new FormControl();
     //console.log(this.linkedPictureIDs.value);
+    this.linkedPictureIDs.setValue(this.imageFolder);
   }
 
   createPropertyID() {
@@ -108,9 +135,11 @@ export class CreatePropertyComponent implements OnInit {
 
   onSubmit() {
     if (this.newPropertyForm.valid && this.newAddressForm.valid) {
+      console.log(this.selectedFiles);
       console.log("New Property Request Submitted");
       this.getAddress();
       this.createPropertyID();
+      this.createPicures();
       console.log(this.newPropertyForm.value);
       let headers = new Headers({'Content-Type' : 'application/json'});
       var localUsername = localStorage.getItem('username');

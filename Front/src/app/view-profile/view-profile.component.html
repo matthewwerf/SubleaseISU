@@ -1,0 +1,22 @@
+<div class="container">
+	<h1>{{title}}</h1>
+	
+	<label>Profile Picture</label>
+	<div>
+		<img src="assets/myImage.jpg">
+	</div>
+	
+	<input type="file" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
+	<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+      Upload Your File
+	</button>
+
+	<div>
+		<header>Drag to upload file</header>
+		<ng4-files-drop (filesSelect)="uploadMe($event)">
+	  		<div style="display: inline-block; height: 100px; width: 250px; background-color: red">
+	    	{{selectedFiles}}
+	  		</div>
+		</ng4-files-drop>
+	</div>
+</div>
