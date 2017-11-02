@@ -31,7 +31,32 @@ export class AuthService implements CanActivate {
 		}
 	}
 
-	isLoggedIn(): boolean {//Observable<boolean> {
+	isLoggedIn(): Observable<boolean> {//Observable<boolean> {
+		return this.http.post('/users/' + localStorage.getItem('username'), {
+				username: localStorage.getItem('username'),
+				subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
+			}).map(res => {
+					console.log(res);
+					let jsonResponse = res.json();
+					// If no errors, return true
+					if(!res['error']) {
+						console.log("You're logged in");
+						return true;
+						//return Observable.of(false);
+					}
+					// otherwise please log-in
+					else {
+						console.log('Please log in');
+						return false;
+						//return Observable.of(false);
+					}
+				}).map(obs => {
+					console.log(obs);
+					return true;
+					});
+
+
+		/*
 		// If there exists a username and cookie in the local storage
 		if(localStorage.getItem('username') && localStorage.getItem('subleaseISUcookie')) {
 			//Post to the server to see if it is valid
@@ -52,9 +77,12 @@ export class AuthService implements CanActivate {
 					return false;
 					//return Observable.of(false);
 				}
-			})
+			});
+		} else {
+			return false;
 		}
-		return false;
+		//return false;
 		//return Observable.of(false);
+		*/
 	}
 }
