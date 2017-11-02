@@ -30,7 +30,8 @@ export class AuthService implements CanActivate {
 		// If there exists a username and cookie in the local storage
 		if(localStorage.getItem('username') && localStorage.getItem('subleaseISUcookie')) {
 			//Post to the server to see if it is valid
-			this.http.post('/users', {
+			var url = '/users/' + localStorage.getItem('username');
+			this.http.post(url, {
 				username: localStorage.getItem('username'),
 				subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
 			}).subscribe(res => {
