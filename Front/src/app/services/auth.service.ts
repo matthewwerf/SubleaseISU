@@ -38,7 +38,8 @@ export class AuthService implements CanActivate {
 			this.http.post('/users/'+ localStorage.getItem('username'), {
 				username: localStorage.getItem('username'),
 				subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
-			}).map(res => {
+			}).subscribe(res => {
+				console.log(res);
 				// If no errors, return true
 				if(!res['error']) {
 					console.log("You're logged in");
@@ -51,7 +52,7 @@ export class AuthService implements CanActivate {
 					return false;
 					//return Observable.of(false);
 				}
-			}).catch( () => {return Observable.of(false)});
+			})
 		}
 		return false;
 		//return Observable.of(false);
