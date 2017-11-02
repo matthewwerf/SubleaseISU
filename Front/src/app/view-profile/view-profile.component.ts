@@ -15,10 +15,11 @@ export class ViewProfileComponent implements OnInit {
   title: string;
   previewImage: any;
   tempImage: any;
-  //source: string;
+  firstLoad: boolean = true;
 
   imagePreview(input) 
   {
+      document.getElementById("previewLabel").style.display = 'block';
       console.log("Image is selected")
       var source = (<HTMLInputElement>document.getElementById("previewImage")).files[0];
       var reader = new FileReader();
@@ -35,11 +36,15 @@ export class ViewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.firstLoad){
+          document.getElementById("previewLabel").style.display = 'none';
+          this.firstLoad = false
+    }
   	this.title = 'View or Update Your Profile';
   	this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
   	this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
         console.log("ImageUpload:uploaded:", item, status, response);
-    //this.imagePreview();
+    
 
 
     };

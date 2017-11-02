@@ -7,3 +7,6 @@
    	height: auto; 
    	width: 100%;
 }
+.container label{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
