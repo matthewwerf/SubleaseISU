@@ -10,6 +10,9 @@ REST/node_modules
 .angular-cli.json
 .editorconfig
 
+# the proxy file
+*proxy.conf.json*
+*proxy.config.json*
 
 # The following is for angular. Please do not modify
 

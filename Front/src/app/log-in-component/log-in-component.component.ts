@@ -48,14 +48,24 @@ export class LogInComponentComponent {
         var hashedPassword = crypto.SHA1(this.Password.value);
         
         // POST the user to the backend
-	var link = '/login/' + this.Username.value;
-	this.http.post(link, {
+  var link = '/login/' + this.Username.value;
+  this.http.post(link, {
           username: this.Username.value,
           hashedPassword: hashedPassword.toString(),
         }).subscribe(
             res => {
-              console.log(res);
-              //this.router.navigate(['main']);
+		if(!res['error']){
+			localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie']);
+			localStorage.setItem('username', this.Username.value);
+      window.alert("Youre logged in");
+
+		} else if(res['error'] == 'Username already exists'){
+			console.log("Username already in use");
+		} else {
+			console.log(res['error']);
+		}
+		//console.log(res);
+            	//this.router.navigate(['main']);
             },
             err => {
               console.log(err);

@@ -131,7 +131,7 @@
 			return;
 		} else {
 			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
-				var localCookieToCheck = sha1(req.body.username + req.body.hashedPassword + config.salt);
+				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
 				if(localCookieToCheck != req.body.subleaseISUcookie) {
 					res.status(401).send({
 						"error": "authentication rejected"

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import * as sha1 from 'js-sha1'
+//import * as sha1 from 'js-sha1'
+
 import { HttpClient } from '@angular/common/http';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
+
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-create-property',
@@ -103,8 +106,8 @@ export class CreatePropertyComponent implements OnInit {
 
   createPropertyID() {
     // var sha1 = require('sha1');
-    this.hashMe = this.address.value + ", " + this.posterUsername;
-    this.sha1hash = sha1(this.hashMe);
+    this.hashMe = this.address.value + " " + localStorage.getItem('username');
+    this.sha1hash = crypto.SHA1(this.hashMe);
     this.propertyID.setValue(this.sha1hash);
   }
 
@@ -139,14 +142,20 @@ export class CreatePropertyComponent implements OnInit {
       this.createPicures();
       console.log(this.newPropertyForm.value);
       let headers = new Headers({'Content-Type' : 'application/json'});
+      var localUsername = localStorage.getItem('username');
+      var d = new Date();
+      var shaPropertyID = crypto.SHA1(localUsername + d.getTime()).toString();
+      console.log(shaPropertyID);
       this.http.post('/properties', {
-          posterUsername: this.posterUsername.value,
+	  username: localUsername,
+          posterUsername: localUsername,
           leasingAgency: this.leasingAgency.value,
           rentValue: this.rentValue.value,
           address: this.address.value,
           postingMessage: this.postingMessage.value,
-          linkedPictureIDs: this.linkedPictureIDs.value,
-          propertyID: this.propertyID.value
+          //linkedPictureIDs: this.linkedPictureIDs.value,
+          propertyID: shaPropertyID, //change back to use function later
+	  subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
         }, headers).subscribe(
             res => {
                 console.log(res);

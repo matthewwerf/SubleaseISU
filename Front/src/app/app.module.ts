@@ -4,6 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { CanActivate } from '@angular/router';
 import { Ng4FilesModule } from 'angular4-files-upload/src/app/ng4-files';
 
 import { AppComponent } from './app.component';
@@ -13,15 +14,18 @@ import { LogInComponentComponent} from './log-in-component/log-in-component.comp
 import { MainPageComponent } from './main-page/main-page.component';
 import { PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-
 import { Router } from './app.routing';
 
 import { CreatePropertyComponent } from './create-property/create-property.component';
+import { BrowseListingsService } from './browse-listings/browse-listings-service';
+
+import { AgmCoreModule } from '@agm/core';
+import { GooglemapsComponent } from './googlemaps/googlemaps.component';
+import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
+
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
-
-
 
 
 @NgModule({
@@ -31,8 +35,10 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
     LogInComponentComponent,
     PageNotFoundComponent,
     SignUpComponent,
+    GooglemapsComponent,
     CreatePropertyComponent,
     MainPageComponent,
+    BrowseListingsComponent,
     PictureTestComponent,
     FileSelectDirective,
     ViewProfileComponent
@@ -40,13 +46,17 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
   imports: [
     BrowserModule,
     FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c'
+    }),
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
     Router,
     Ng4FilesModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    BrowseListingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
