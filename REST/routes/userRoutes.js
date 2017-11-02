@@ -8,6 +8,7 @@
 
 		app.route('/users/:username')
 			.get(user.getSpecificUser)
+			.post(user.allowRouting)
 			.put(user.updateSpecificUser)
 			.delete(user.deleteSpecificUser);
 
