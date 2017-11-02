@@ -76,6 +76,6 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [ RouterModule.forRoot(ROUTES) ],
   exports: [ RouterModule ],
-  providers: []
+  providers: [ AuthService ]
 })
 export class Router { }
