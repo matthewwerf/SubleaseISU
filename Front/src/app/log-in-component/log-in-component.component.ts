@@ -57,6 +57,8 @@ export class LogInComponentComponent {
 		if(!res['error']){
 			localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie']);
 			localStorage.setItem('username', this.Username.value);
+      window.alert("Youre logged in");
+
 		} else if(res['error'] == 'Username already exists'){
 			console.log("Username already in use");
 		} else {
