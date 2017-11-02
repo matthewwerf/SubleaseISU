@@ -1,17 +1,19 @@
-<div class="container">
+<div class="general">
 	<h1>{{title}}</h1>
 	
 	<div>
 
 		<input type="file" id="previewImage" (change)="imagePreview(this);" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
+		
 		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
 	      Upload Your File
 		</button>
 	</div>
 
-
-	<label>Profile Picture</label>
-	<div>
-		<img src="" id="previewImage" />
+	
+	
+	<div class="container">
+		<label>Profile Picture</label>
+		<img src="" id="preview" />
 	</div>
 </div>

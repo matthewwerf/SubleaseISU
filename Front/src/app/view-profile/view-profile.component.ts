@@ -15,24 +15,23 @@ export class ViewProfileComponent implements OnInit {
   title: string;
   previewImage: any;
   tempImage: any;
-  source: string;
+  //source: string;
 
   imagePreview(input) 
   {
-      document.getElementById("previewImage").style.display="block";
+      console.log("Image is selected")
+      var source = (<HTMLInputElement>document.getElementById("previewImage")).files[0];
+      var reader = new FileReader();
+       
       
-        console.log("Image is selected")
-        this.previewImage = document.getElementById("previewImage");
-        console.log(this.previewImage);
-        
-        this.source = (<HTMLImageElement>document.getElementById('previewImage')).src
-        console.log("Image Source: " + this.source + " Should be inbetween here");
-        
-      
-      //var reader = new FileReader();
-        
-        //console.log(this.previewImage);
-      
+      if(source){
+        reader.readAsDataURL(source);
+      }
+      else{
+      }
+      reader.onload = function(){
+        (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
+      } 
   }
 
   ngOnInit() {
