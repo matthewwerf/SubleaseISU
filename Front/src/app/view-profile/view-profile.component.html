@@ -8,6 +8,8 @@
 		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
 	      Upload Your File
 		</button>
+
+		<button type="button" onclick="clearUpload()">Clear</button>
 	</div>
 
 	
@@ -15,5 +17,6 @@
 	<div class="container">
 		<label id="previewLabel" >Profile Picture Preview:</label>
 		<img src="" id="preview" />
+		<img src="" id="preview2"/>
 	</div>
 </div>

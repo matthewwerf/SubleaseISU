@@ -16,23 +16,31 @@ export class ViewProfileComponent implements OnInit {
   previewImage: any;
   tempImage: any;
   firstLoad: boolean = true;
+  public fileSize;
+  public source: Array<File>;
 
   imagePreview(input) 
   {
       document.getElementById("previewLabel").style.display = 'block';
       console.log("Image is selected")
-      var source = (<HTMLInputElement>document.getElementById("previewImage")).files[0];
+      this.fileSize = (<HTMLInputElement>document.getElementById("previewImage")).files;
+      console.log(this.fileSize);
+      this.source[0] = ((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
       var reader = new FileReader();
-       
+
+      // if(){
+
+      // } 
       
-      if(source){
-        reader.readAsDataURL(source);
+      if(this.source){
+        reader.readAsDataURL(this.source[0]);
       }
       else{
       }
       reader.onload = function(){
         (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
-      } 
+      }
+
   }
 
   ngOnInit() {
