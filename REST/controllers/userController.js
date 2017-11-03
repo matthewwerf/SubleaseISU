@@ -41,6 +41,13 @@
 
 	exports.getSpecificUser = function(req, res) {
 		User.findOne({username: req.params.username}, function (err, user) {
+			if(user == null) { // don't forget to check this is all functions
+				res.status(401).send({
+					"error": "username not recognized"
+				});
+				return;
+			}
+				
 			if (err) {
 				res.status(500).send(err);
 			}
@@ -50,6 +57,13 @@
 
 	exports.updateSpecificUser = function(req, res) {
 		User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function (err, user){
+			if(user == null) { // don't forget to check this is all functions
+				res.status(401).send({
+					"error": "username not recognized"
+				});
+				return;
+			}
+
 			if (err) {
 				res.status(500).send(err);
 			}
@@ -71,6 +85,12 @@
 	exports.authAndReturnCookie = function(req, res){
 		console.log(req);
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
+			if(user == null) { // don't forget to check this is all functions
+				res.status(401).send({
+					"error": "username not recognized"
+				});
+				return;
+			}
 
 			if (err) {
 				res.status(500).send(err);
@@ -95,6 +115,13 @@
 			return;
 		} else {
 			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
+				if(user == null) { // don't forget to check this is all functions
+					res.status(401).send({
+						"error": "username not recognized"
+					});
+					return;
+				}
+
 				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
 				if(localCookieToCheck != req.body.subleaseISUcookie) {
 					res.status(401).send({
