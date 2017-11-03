@@ -16,16 +16,16 @@ export class ViewProfileComponent implements OnInit {
   previewImage: any;
   tempImage: any;
   firstLoad: boolean = true;
-  public fileSize;
+  public fileSize: number;
   public source: Array<File>;
 
   imagePreview(input) 
   {
       document.getElementById("previewLabel").style.display = 'block';
       console.log("Image is selected")
-      this.fileSize = (<HTMLInputElement>document.getElementById("previewImage")).files;
-      console.log(this.fileSize);
-      this.source[0] = ((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
+      //this.fileSize = (<HTMLInputElement>document.getElementById("previewImage")).files;
+      //console.log(this.fileSize);
+      this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
       var reader = new FileReader();
 
       // if(){
@@ -46,8 +46,9 @@ export class ViewProfileComponent implements OnInit {
   ngOnInit() {
     if(this.firstLoad){
           document.getElementById("previewLabel").style.display = 'none';
-          this.firstLoad = false
+          this.firstLoad = false;
     }
+    this.source = [];
   	this.title = 'View or Update Your Profile';
   	this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
   	this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
