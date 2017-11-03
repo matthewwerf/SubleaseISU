@@ -5,6 +5,20 @@
 	var sha1 = require("sha1");
 	var config = require("../config.js");
 
+	// Photo Upload
+	var multer = require('multer'),
+		Storage = multer.diskStorage({
+			destination: function(req, file, callback) {
+				callback(null, './Images');
+			},
+			filename: function(req, file, callback) {
+				callback(null, filename.fieldname + '_' + Date.now() + '_' + file.originalname);
+			}
+		}),
+		upload = multer({
+			storage: Storage
+		}).array("imgUploader", 3);
+
 	exports.createUser = function(req, res) {
 		// Logging
 		console.log("User creation request: POST");
@@ -134,6 +148,23 @@
 				}
 			});
 		}
+	};
+
+	exports.uploadProfilePicture = function(req, res) {
+		upload(req, res, function(err){
+			if(err){
+				return res.status(500).send({
+					"err": "file could not be saved"
+				});
+			}
+			return res.status(201).send({
+				"msg": "file was uploaded"
+			});
+		});
+	};
+
+	exports.retrieveProfilePic = function(req, res) {
+
 	};
 
 }());

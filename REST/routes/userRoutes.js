@@ -14,5 +14,11 @@
 
 		app.route('/login/:username')
 			.post(user.authAndReturnCookie);
+
+		app.route('/uploadProfilePicture/:username')
+			.post(user.uploadProfilePicture);
+
+		app.route('/retrieveProfilePic/:username')
+			.post(user.retrieveProfilePic);
 	};
 }());
