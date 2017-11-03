@@ -23,18 +23,18 @@ export class BrowseListingsService {
   	return this.http.post('/listAllProperties', {
   		username: localStorage.getItem('username'),
 		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
-  	}).map( res => {
-        res.json().results.map(item => {
-          return new ListingInfo(
+  	}).map(res => {
+        return res.json().map(item => {
+          return new ListingInfo( // Create new listing objects
             item._id,
             item.posterUsername,
             item.leasingAgency,
             item.rentValue,
             item.address,
             item.postingMessage,
-            item.propertyId);
+            item.propertyID);
         });
-      }).catch(this.handleError);
+      });
   }
 
       private handleError(error: any): Promise<any> {
