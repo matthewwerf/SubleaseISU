@@ -25,7 +25,7 @@ export class UserInfoService {
   		//username: localStorage.getItem('username'),
 		//subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
   	}).map(res => {
-      console.log(res.json());
+      
         return new UserInfo( // Create new listing objects
           res.json().username,
           res.json().email,

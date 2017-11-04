@@ -1,20 +1,34 @@
 <div class="general">
 	<h1>{{title}}</h1>
 	
-	<ul *ngIf="UserInfoList">
-		<li>Username: {{UserInfoList.username}}</li>
-		<li>Email: {{UserInfoList.email}}</li>
-		<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
-		<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
-		<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
-	</ul>
+	<div class="row">
+	  	<div class="column">
+	  		<ul *ngIf="UserInfoList">
+				<li>Username: {{UserInfoList.username}}</li>
+				<li>Email: {{UserInfoList.email}}</li>
+				<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
+				<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
+				<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
+			</ul>
+	  	</div>
+	  	<div class="column">
+	  		<ul *ngIf="UserInfoList">
+				<li>Username: {{UserInfoList.username}}</li>
+				<li>Email: {{UserInfoList.email}}</li>
+				<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
+				<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
+				<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
+			</ul>
+	  	</div>
+	</div>
+	
 
 	<div>
 
 		<input type="file" id="previewImage" (change)="imagePreview();" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
 		
 		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-	      Upload Your File
+	      Change Profile Picture
 		</button>
 
 		<button type="button" onclick="clearUpload()">Clear</button>

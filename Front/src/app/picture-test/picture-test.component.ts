@@ -17,12 +17,7 @@ export class PictureTestComponent implements OnInit {
   title: string
   ngOnInit() {
   	this.title = 'Picture Test';
-    //Overide property of uploader so it doesn't authenticate with credentials
-  	this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
-    //Overide onCompleteItem property so that we can handle any server response
-  	this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-        console.log("ImageUpload:uploaded:", item, status, response);
-    };
+    
   }
 
 }
