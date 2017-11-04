@@ -14,6 +14,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AuthService } from './services/auth.service';
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { ViewListingComponent } from './view-listing/view-listing.component';
 
 
 // This is the router module where you add routes to components (Pages)
@@ -41,6 +42,10 @@ export const ROUTES: Routes = [
         path: 'picturetest', 
         component: PictureTestComponent,
         data:{title: 'Picture Test'}
+    },
+    {
+        path: 'viewListing/:propertyId',
+        component: ViewListingComponent
     },
     {
         path: 'login', 
