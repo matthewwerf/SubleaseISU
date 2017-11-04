@@ -1,10 +1,15 @@
 <body>
-<div class="selectContainer">
+<div class="selectContainer" style="float: left;">
 	<div class="selectRect">
 	<h5 id="searchAddress" class="dropSelectors">Search Address:</h5>
-        <input type="text" [(ngModel)]="searchString"><br/><br/>
+        <input type="text" [(ngModel)]="searchString" placeholder="Address"><br/><br/>
+
+    <h5 id="priceRange" class="dropSelectors">Price Range:</h5>
+        <input type="text" [(ngModel)]="lowPrice"  placeholder="Low"><br/><br/>
+        <input type="text" [(ngModel)]="highPrice"  placeholder="High"><br/><br/>
 	</div>
 </div>
+<div style="float: right;">
 <table>
 	<tr>
     	<th>Address</th>
@@ -12,12 +17,13 @@
     	<th>Leasing Agency</th>
     	<th>Description</th>
 
-  		<tr *ngFor="let data of ListingList | addressSearch: searchString">
+  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice">
   			<td> {{data.address}}</td>
   			<td> {{data.rentValue}}</td>
   			<td> {{data.leasingAgency}}</td>
   			<td> {{data.postingMessage}}</td>
 		</tr>
 </table>
+<div>
 
       <router-outlet></router-outlet>
