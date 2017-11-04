@@ -14,7 +14,7 @@ REST/node_modules
 *proxy.conf.json*
 *proxy.config.json*
 
-# files
+# files uploaded to server
 Images/*
 
 # The following is for angular. Please do not modify
