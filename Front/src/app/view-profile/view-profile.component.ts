@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {  FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
-const URL = 'http://localhost:4200/api/upload';
+import { UserInfo } from '../models/userInfo';
+import { UserInfoService } from './user-info-service';
+
+const URL = 'http://uploadProfilePicture/' + localStorage.getItem('username');
 
 @Component({
   selector: 'app-view-profile',
@@ -10,13 +13,18 @@ const URL = 'http://localhost:4200/api/upload';
 })
 export class ViewProfileComponent implements OnInit {
 
-  constructor() { }
-  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
+  constructor(private userInfoService: UserInfoService) { }
   title: string;
-  
+
+  private UserInfoList: UserInfo;
+  private isLoaded: boolean;
+
+  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
   firstLoad: boolean = true;
   fileSize: number;
   source: Array<File>;
+
+
 
   imagePreview() 
   {
@@ -43,6 +51,13 @@ export class ViewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.isLoaded = false;
+    this.userInfoService.getUserInfo().subscribe( UserInfo => {
+      this.UserInfoList = UserInfo;
+      this.isLoaded = true;
+    });
+
     if(this.firstLoad){
           document.getElementById("previewLabel").style.display = 'none';
           this.firstLoad = false;

@@ -18,10 +18,12 @@ import { Router } from './app.routing';
 
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { BrowseListingsService } from './browse-listings/browse-listings-service';
+import { UserInfoService } from './view-profile/user-info-service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
+
 
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
@@ -56,7 +58,8 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
     Ng4FilesModule
   ],
   providers: [AuthService,
-    BrowseListingsService],
+    BrowseListingsService,
+    UserInfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
