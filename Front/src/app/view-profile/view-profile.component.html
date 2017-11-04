@@ -1,6 +1,14 @@
 <div class="general">
 	<h1>{{title}}</h1>
 	
+	<ul *ngIf="UserInfoList">
+		<li>Username: {{UserInfoList.username}}</li>
+		<li>Email: {{UserInfoList.email}}</li>
+		<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
+		<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
+		<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
+	</ul>
+
 	<div>
 
 		<input type="file" id="previewImage" (change)="imagePreview();" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
@@ -17,6 +25,6 @@
 	<div class="container">
 		<label id="previewLabel" >Profile Picture Preview:</label>
 		<img src="" id="preview" />
-		<img src="" id="preview2"/>
+		
 	</div>
 </div>

@@ -21,22 +21,19 @@ export class UserInfoService {
   requestString: string = '/users/' + this.currUser;
   getUserInfo(): Observable<UserInfo> {
   	// Get the json data string
-  	return this.http.post( this.requestString , {
-  		username: localStorage.getItem('username'),
-		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
+  	return this.http.get( this.requestString , {
+  		//username: localStorage.getItem('username'),
+		//subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
   	}).map(res => {
-        return res.json().map(item => {
-          return new UserInfo( // Create new listing objects
-            item.username,
-            item.email,
-            item.phoneNumber,
-            item.venmoUsername,
-            item.paypalUsername);  
-            
-        });
+      console.log(res.json());
+        return new UserInfo( // Create new listing objects
+          res.json().username,
+          res.json().email,
+          res.json().phoneNumber,
+          res.json().venmoUsername,
+          res.json().paypalUsername);  
       });
   }
-
       private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);

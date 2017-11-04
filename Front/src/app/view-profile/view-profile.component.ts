@@ -4,7 +4,7 @@ import {  FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
 
-const URL = 'http://uploadProfilePicture/' + localStorage.getItem('username');
+const URL = '/uploadProfilePicture/' + localStorage.getItem('username');
 
 @Component({
   selector: 'app-view-profile',
@@ -29,15 +29,10 @@ export class ViewProfileComponent implements OnInit {
   imagePreview() 
   {
       document.getElementById("previewLabel").style.display = 'block';
-      console.log("Image is selected")
-      //this.fileSize = (<HTMLInputElement>document.getElementById("previewImage")).files;
-      //console.log(this.fileSize);
+      
       this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
       var reader = new FileReader();
       console.log(this.source);
-      // if(){
-
-      // } 
       
       if(this.source){
         reader.readAsDataURL(this.source[0]);
@@ -55,6 +50,7 @@ export class ViewProfileComponent implements OnInit {
     this.isLoaded = false;
     this.userInfoService.getUserInfo().subscribe( UserInfo => {
       this.UserInfoList = UserInfo;
+      console.log(this.UserInfoList)
       this.isLoaded = true;
     });
 
