@@ -10,3 +10,15 @@
 .container label{
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
