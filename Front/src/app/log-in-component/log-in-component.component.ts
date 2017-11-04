@@ -16,7 +16,7 @@ import * as crypto from 'crypto-js';
 export class LogInComponentComponent {
 
   signInForm: FormGroup;
-  Username: FormControl;
+  public Username: FormControl;
   Password: FormControl;
 
   user: User = new User();

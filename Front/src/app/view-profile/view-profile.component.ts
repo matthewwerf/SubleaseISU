@@ -11,15 +11,14 @@ const URL = 'http://localhost:4200/api/upload';
 export class ViewProfileComponent implements OnInit {
 
   constructor() { }
-  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
+  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
   title: string;
-  previewImage: any;
-  tempImage: any;
+  
   firstLoad: boolean = true;
-  public fileSize: number;
-  public source: Array<File>;
+  fileSize: number;
+  source: Array<File>;
 
-  imagePreview(input) 
+  imagePreview() 
   {
       document.getElementById("previewLabel").style.display = 'block';
       console.log("Image is selected")
@@ -27,7 +26,7 @@ export class ViewProfileComponent implements OnInit {
       //console.log(this.fileSize);
       this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
       var reader = new FileReader();
-
+      console.log(this.source);
       // if(){
 
       // } 

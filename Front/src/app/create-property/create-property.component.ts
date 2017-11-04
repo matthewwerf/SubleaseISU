@@ -44,7 +44,7 @@ export class CreatePropertyComponent implements OnInit {
   sha1hash: string; 
   selectedFiles: any;
   public imageFolder: Array<File>;
-  imageFolderSize: number;
+  public imageFolderSize: number;
 
   filesSelect(selectedFiles: Ng4FilesSelected): void {
     if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
@@ -57,8 +57,21 @@ export class CreatePropertyComponent implements OnInit {
     }
  
     this.selectedFiles = Array.from(selectedFiles.files).map(file => file);
+    var reader = new FileReader();  
+
     console.log(this.selectedFiles);
     this.imageFolderSize = this.imageFolder.push(this.selectedFiles);
+    
+    
+      reader.onload = function(){
+        (<HTMLImageElement>document.getElementById('image1')).src = reader.result;
+    }
+    if(this.imageFolder){
+        console.log("test")
+        reader.readAsDataURL(this.imageFolder[0]);
+    }
+    else{
+    }
     console.log('Number of Images: ' + this.imageFolderSize);
     console.log(this.imageFolder);
   }
@@ -72,7 +85,7 @@ export class CreatePropertyComponent implements OnInit {
     //this.createPropertyID();
     this.createAddressForm();
     this.createForm();
-    
+
   }
 
   

@@ -3,7 +3,7 @@
 	
 	<div>
 
-		<input type="file" id="previewImage" (change)="imagePreview(this);" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
+		<input type="file" id="previewImage" (change)="imagePreview();" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
 		
 		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
 	      Upload Your File
