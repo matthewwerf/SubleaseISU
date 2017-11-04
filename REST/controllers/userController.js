@@ -12,7 +12,7 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
-				callback(null, filename.fieldname + '_' + Date.now() + '_' + file.originalname);
+				callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
 			}
 		}),
 		upload = multer({
@@ -153,6 +153,7 @@
 	exports.uploadProfilePicture = function(req, res) {
 		upload(req, res, function(err){
 			if(err){
+				console.log(err);
 				return res.status(500).send({
 					"err": "file could not be saved"
 				});
