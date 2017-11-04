@@ -11,7 +11,7 @@ const URL = 'http://localhost:4200/api/upload';
 export class ViewProfileComponent implements OnInit {
 
   constructor() { }
-  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'fileName'});
   title: string
   ngOnInit() {
   	this.title = 'View or Update Your Profile';
