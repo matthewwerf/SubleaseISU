@@ -19,7 +19,7 @@ export class ViewProfileComponent implements OnInit {
   private UserInfoList: UserInfo;
   private isLoaded: boolean;
 
-  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'newProfilePicture'});
+  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'fileName'});
   firstLoad: boolean = true;
   fileSize: number;
   source: Array<File>;
