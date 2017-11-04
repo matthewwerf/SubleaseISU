@@ -18,6 +18,8 @@ import { Router } from './app.routing';
 
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { BrowseListingsService } from './browse-listings/browse-listings-service';
+import { PriceSearchPipe } from './browse-listings/price.search.pipe';
+import { AddressSearchPipe } from './browse-listings/address.search.pipe';
 import { UserInfoService } from './view-profile/user-info-service';
 
 import { AgmCoreModule } from '@agm/core';
@@ -43,7 +45,9 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
     BrowseListingsComponent,
     PictureTestComponent,
     FileSelectDirective,
-    ViewProfileComponent
+    ViewProfileComponent,
+    AddressSearchPipe,
+    PriceSearchPipe
   ],
   imports: [
     BrowserModule,
