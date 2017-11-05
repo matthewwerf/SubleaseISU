@@ -23,7 +23,7 @@
 	</div>
 	
 
-	<div>
+	<!-- <div>
 
 		<input type="file" id="previewImage" (change)="imagePreview();" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
 		
@@ -32,13 +32,18 @@
 		</button>
 
 		<button type="button" onclick="clearUpload()">Clear</button>
-	</div>
-
+	</div> -->
+	
+	
+	<input id="previewImage" type="file" (change)="imagePreview();" />
+	<button type="button" class="btn btn-success btn-s" (click)="uploadGang()">
+		Update Profile Picture
+	</button>
 	
 	
 	<div class="container">
 		<label id="previewLabel" >Profile Picture Preview:</label>
 		<img src="" id="preview" />
-		
+		<img src="" id="preview2" />
 	</div>
 </div>

@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Input} from '@angular/core';
 import {  FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
 import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
+
+import { Http, Response } from '@angular/http';
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
 
 const URL = '/uploadProfilePicture/' + localStorage.getItem('username');
 
@@ -13,7 +17,7 @@ const URL = '/uploadProfilePicture/' + localStorage.getItem('username');
 })
 export class ViewProfileComponent implements OnInit {
 
-  constructor(private userInfoService: UserInfoService) { }
+  constructor(private userInfoService: UserInfoService, private http: Http, private el: ElementRef) { }
   title: string;
 
   private UserInfoList: UserInfo;
@@ -23,26 +27,57 @@ export class ViewProfileComponent implements OnInit {
   firstLoad: boolean = true;
   fileSize: number;
   source: Array<File>;
-
-
+  currFile: File;
+  oldFile: File;
 
   imagePreview() 
   {
       document.getElementById("previewLabel").style.display = 'block';
       
+      if(this.source.length > 0){
+        this.oldFile = this.source.pop();
+      }
       this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
+      this.currFile = this.source[0];
       var reader = new FileReader();
       console.log(this.source);
       
       if(this.source){
-        reader.readAsDataURL(this.source[0]);
+        reader.readAsDataURL(this.currFile);
+        //reader.readAsDataURL(this.oldFile);
       }
       else{
       }
       reader.onload = function(){
         (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
       }
-
+  }
+  
+  uploadGang(){
+    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
+    
+    this.http.post(URL, {
+      username: localStorage.getItem('username'),
+      subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+      fileName: this.currFile
+    }).subscribe(
+        res => {
+          console.log(res);
+          if(!res['error'])
+          {
+            console.log("no error");
+          } 
+          else 
+          {
+            console.log(res['error']);
+          }
+           //this.router.navigate(['login']);
+        },
+          err => {
+          console.log("there was an error");
+          console.log(err);
+        }
+      );
   }
 
   ngOnInit() {
