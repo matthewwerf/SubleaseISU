@@ -12,7 +12,7 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
-				console.log(reqs);
+				console.log(req);
 				callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
 			}
 		}),
@@ -152,6 +152,7 @@
 	};
 
 	exports.uploadProfilePicture = function(req, res) {
+		console.log(req);
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"

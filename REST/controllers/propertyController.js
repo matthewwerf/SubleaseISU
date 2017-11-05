@@ -6,7 +6,7 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
-	var http = require('http');
+	var axios = require('axios');
 
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -35,18 +35,32 @@
 				var options = {
 					host: 'maps.googleapis.com',
 					port: 80,
-					path: '/maps/api/geocode/json?address=' + req.body.address + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c',
+					path: '/maps/api/geocode/json?address=' + encodeURIComponent(req.body.address) + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c',
 					method: 'GET'
 				};
 
-				http.request(options, function(res) {
-					console.log('STATUS: ' + res.statusCode);
-					console.log('HEADERS: ' + JSON.stringify(res.headers));
-					res.setEncoding('utf8');
-					res.on('data', function (chunk) {
-						console.log('BODY: ' + chunk);
+				var base_URL = 'https://maps.googleapis.com';
+				var full_URL = base_URL + '/maps/api/geocode/json?address=' + encodeURIComponent(req.body.address) + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c';
+
+
+				console.log("Hello");
+				
+				axios.get(full_URL)
+					.then(function(res) {
+						var longLat = res.data.results[0].geometry.location;
+						var newObj = req.body;
+						newObj.longitude = longLat.lng;
+						newObj.latitude = longLat.lat;
+						//console.log(newObj);
+						//newProperty.longitude = longLat.lng;
+						//newProperty.latitude = longLat.lat;
+						newProperty = new Property(newObj);
+						console.log(newProperty);
+					})
+					.catch(function(err) {
+						console.log(err);
 					});
-				});
+
 			}
 
 
