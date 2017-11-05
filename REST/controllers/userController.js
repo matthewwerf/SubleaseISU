@@ -17,7 +17,7 @@
 		}),
 		upload = multer({
 			storage: Storage
-		}).single('fileName');
+		}).single("fileName");
 
 	exports.createUser = function(req, res) {
 		// Logging
