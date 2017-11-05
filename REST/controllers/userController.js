@@ -12,8 +12,32 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
-				console.log(req);
-				callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
+				//console.log(req);
+
+				var filename = file.fieldname + '_' + Date.now() + '_' + file.originalname;
+
+				// Update photo location in user data
+				User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: filename}, {new: true}, function (err, user){
+					if(user == null) { // don't forget to check this is all functions
+						console.log("Username not found in file save");
+						/*
+						res.status(401).send({
+							"error": "username not recognized"
+						});
+						return;
+						*/
+					}
+
+					if (err) {
+						//res.status(500).send(err);
+						console.log("FROM FILE SAVE: " + err);
+					}
+					//res.status(200).json(user);
+					console.log("File saved");
+				});
+
+
+				callback(null, filename);
 			}
 		}),
 		upload = multer({
@@ -181,23 +205,6 @@
 								"err": "file could not be saved"
 							});
 						}
-
-						// Update photo location in user data
-						User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: data}, {new: true}, function (err, user){
-							if(user == null) { // don't forget to check this is all functions
-								res.status(401).send({
-									"error": "username not recognized"
-								});
-								return;
-							}
-
-							if (err) {
-								res.status(500).send(err);
-							}
-							res.status(200).json(user);
-						});
-
-
 
 						return res.status(201).send({
 							"msg": "file was uploaded"
