@@ -49,27 +49,41 @@
 					.then(function(res) {
 						var longLat = res.data.results[0].geometry.location;
 						var newObj = req.body;
+
 						newObj.longitude = longLat.lng;
 						newObj.latitude = longLat.lat;
-						//console.log(newObj);
-						//newProperty.longitude = longLat.lng;
-						//newProperty.latitude = longLat.lat;
 						newProperty = new Property(newObj);
-						console.log(newProperty);
+
+						//console.log(newProperty);
+
+						newProperty.save(function (err, property) {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.status(201).json(property);
+						});
 					})
 					.catch(function(err) {
 						console.log(err);
+						newProperty.save(function (err, property) {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.status(201).json(property);
+						});
 					});
 
 			}
 
 
+			/*
 			newProperty.save(function (err, property) {
 				if (err) {
 					res.status(500).send(err);
 				}
 				res.status(201).json(property);
 			});
+			*/
 		} else {
 			res.status(400).send({
 				"error": "username or propertyID missing"
