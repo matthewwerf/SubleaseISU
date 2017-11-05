@@ -155,12 +155,12 @@ export class CreatePropertyComponent implements OnInit {
       this.getAddress();
       this.createPropertyID();
       this.createPicures();
-      console.log(this.newPropertyForm.value);
+      //console.log(this.newPropertyForm.value);
       //let headers = new Headers({'Content-Type' : 'application/json'});
       var localUsername = localStorage.getItem('username');
       var d = new Date();
       var shaPropertyID = crypto.SHA1(localUsername + d.getTime()).toString();
-      console.log(shaPropertyID);
+      //console.log(shaPropertyID);
       this.http.post('/properties', {
 	  username: localUsername,
           posterUsername: localUsername,
@@ -173,7 +173,7 @@ export class CreatePropertyComponent implements OnInit {
 	  subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
         }, this.header).subscribe(
             res => {
-                console.log(res);
+                //console.log(res);
                  if(!res['error']){
           console.log("no error");
           this.router.navigate(['main']);
