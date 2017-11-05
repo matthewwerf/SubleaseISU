@@ -12,6 +12,7 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
+				console.log(reqs);
 				callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
 			}
 		}),
@@ -151,6 +152,63 @@
 	};
 
 	exports.uploadProfilePicture = function(req, res) {
+		if (!req.body.subleaseISUcookie || !req.body.username){
+			res.status(401).send({
+				"error": "not authenticated"
+			});
+			return;
+		} else {
+			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
+				if(user == null) { // don't forget to check this is all functions
+					res.status(401).send({
+						"error": "username not recognized"
+					});
+					return;
+				}
+
+				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
+				if(localCookieToCheck != req.body.subleaseISUcookie) {
+					res.status(401).send({
+						"error": "authentication rejected"
+					});
+				} else {
+
+					upload(req, res, function(err){
+						if(err){
+							console.log(err);
+							return res.status(500).send({
+								"err": "file could not be saved"
+							});
+						}
+
+						// Update photo location in user data
+						User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: data}, {new: true}, function (err, user){
+							if(user == null) { // don't forget to check this is all functions
+								res.status(401).send({
+									"error": "username not recognized"
+								});
+								return;
+							}
+
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.status(200).json(user);
+						});
+
+
+
+						return res.status(201).send({
+							"msg": "file was uploaded"
+						});
+					});
+				}
+			});
+		}
+
+
+
+		/*
 		upload(req, res, function(err){
 			if(err){
 				console.log(err);
@@ -162,6 +220,7 @@
 				"msg": "file was uploaded"
 			});
 		});
+		*/
 	};
 
 	exports.retrieveProfilePic = function(req, res) {

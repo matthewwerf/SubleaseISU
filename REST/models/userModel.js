@@ -12,7 +12,7 @@
 		paypalUsername: String,
 		paypalEncryptedPassword: String,
 		favoriteProperties: Object,
-		profilePicture: Object
+		profilePictureLocation: String
 	});
 
 	module.exports = mongoose.model('User', userSchema);
