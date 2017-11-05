@@ -5,6 +5,8 @@ import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
 
 import { Http, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 
@@ -17,7 +19,8 @@ const URL = '/uploadProfilePicture/' + localStorage.getItem('username');
 })
 export class ViewProfileComponent implements OnInit {
 
-  constructor(private userInfoService: UserInfoService, private http: Http, private el: ElementRef) { }
+  private header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  constructor(private userInfoService: UserInfoService, private http: HttpClient, private el: ElementRef) { }
   title: string;
 
   private UserInfoList: UserInfo;
@@ -54,13 +57,12 @@ export class ViewProfileComponent implements OnInit {
   }
   
   uploadGang(){
-    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
-    
-    this.http.post(URL, {
-      username: localStorage.getItem('username'),
-      subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
-      fileName: this.currFile
-    }).subscribe(
+    let formData: FormData = new FormData();
+    formData.append('username', localStorage.getItem('username'));
+    formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
+    formData.append('fileName', this.currFile);
+    console.log();
+    this.http.post(URL, formData, this.header).subscribe(
         res => {
           console.log(res);
           if(!res['error'])
