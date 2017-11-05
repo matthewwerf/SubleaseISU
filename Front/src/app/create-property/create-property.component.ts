@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 //import * as sha1 from 'js-sha1'
 
-import { HttpClient } from '@angular/common/http';
-import { Headers } from '@angular/http';
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+//import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
 
@@ -18,6 +19,7 @@ import * as crypto from 'crypto-js';
 
 export class CreatePropertyComponent implements OnInit {
 
+  private header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   constructor(private http: HttpClient, private router: Router) { 
     
   }
@@ -154,7 +156,7 @@ export class CreatePropertyComponent implements OnInit {
       this.createPropertyID();
       this.createPicures();
       console.log(this.newPropertyForm.value);
-      let headers = new Headers({'Content-Type' : 'application/json'});
+      //let headers = new Headers({'Content-Type' : 'application/json'});
       var localUsername = localStorage.getItem('username');
       var d = new Date();
       var shaPropertyID = crypto.SHA1(localUsername + d.getTime()).toString();
@@ -169,7 +171,7 @@ export class CreatePropertyComponent implements OnInit {
           //linkedPictureIDs: this.linkedPictureIDs.value,
           propertyID: shaPropertyID, //change back to use function later
 	  subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
-        }, headers).subscribe(
+        }, this.header).subscribe(
             res => {
                 console.log(res);
                  if(!res['error']){
