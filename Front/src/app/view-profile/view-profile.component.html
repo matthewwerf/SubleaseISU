@@ -1,31 +1,64 @@
 <div class="general">
 	<h1>{{title}}</h1>
 	
+	<ul>
+		<div class="container2">
+			<label id="profilePicLable"> Profile Picture:</label>
+			<div>
+				<img src="" id="profilePic" />
+			</div>
+		</div>
+	</ul>
 	<div class="row">
 	  	<div class="column">
-	  		<ul *ngIf="UserInfoList">
-				<li>Username: {{UserInfoList.username}}</li>
-				<li>Email: {{UserInfoList.email}}</li>
-				<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
-				<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
-				<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
+	  		<ul class="info" *ngIf="UserInfoList">
+				<div>Username: {{UserInfoList.username}}</div>
+				<div>Email: {{UserInfoList.email}}</div>
+				<div>Phone Number: {{UserInfoList.phoneNumber}}</div>
+				<div>Venmo Account: {{UserInfoList.venmoUsername}}</div>
+				<div>Paypal Account: {{UserInfoList.paypalUsername}}</div>
 			</ul>
 	  	</div>
 	  	<div class="column">
-	  		<ul *ngIf="UserInfoList">
-				<li>
-					<button type="button" (click)="showRow(1)">Change Username</button>
+	  		<ul class="editorButtons" *ngIf="UserInfoList">
+				<div>
+					<button id="b1" type="button" (click)="showRowOne()">Change Password</button>
 					<div id="rowOne" style="display: none;">
-						<button type="button" (click)="updateUsername()">
-						Update Username
+						<button type="button" (click)="updatePassword()">
+						Update Password, Check console
 						</button>
-						<input id="newUsername" type="text" required placeholder="New Username">
+						<input id="newPassword" type="text" required placeholder="New Password">
+						<button type="button" (click)="cancel()">
+						Cancel
+						</button>
 					</div>
-				</li>
-				<li>Email: {{UserInfoList.email}}</li>
-				<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
-				<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
-				<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
+				</div>
+				<div>
+					<button id="b2" type="button" (click)="showRowTwo()">Change Email</button>
+					<div id="rowTwo" style="display: none;">
+						<button type="button" (click)="updateEmail()">
+						Update Email
+						</button>
+						<input id="newEmail" type="text" required placeholder="New Email">
+						<button type="button" (click)="cancel()">
+						Cancel
+						</button>
+					</div>
+				</div>
+				<div>
+					<div>
+						<button id="b3" type="button" (click)="showRowThree()">Change Phone Number</button>
+						<div id="rowThree" style="display: none;">
+							<button type="button" (click)="updatePhone()">
+							Update Phone Number
+							</button>
+							<input id="newPhone" type="text" required placeholder="New Phone Number">
+							<button type="button" (click)="cancel()">
+							Cancel
+							</button>
+						</div>
+					</div>
+				</div>
 			</ul>
 	  	</div>
 	</div>

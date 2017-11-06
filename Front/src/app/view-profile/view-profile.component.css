@@ -10,6 +10,19 @@
 .container label{
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
+.container2{
+  width: 250px;
+  height: 150px;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+.container2 label{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.container2 img{
+    height: auto; 
+    width: 100%;
+}
 
 .column {
     float: left;
@@ -21,4 +34,20 @@
     content: "";
     display: table;
     clear: both;
+}
+
+.info{
+  background-image: url("border.png");
+  width: 50%;
+  height: 10%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.general {
+    background-image: url("cy.gif");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 70%;
 }
