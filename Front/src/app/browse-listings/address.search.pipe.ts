@@ -20,9 +20,9 @@ export class AddressSearchPipe implements PipeTransform {
 
     /**
      * Perform filtering
-     * @param {string} BrowserSpec the spec that is to be tested
+     * @param {string} Address the listing's address
      * @param {string} searchForString the string that the spec is being compared to
-     * @return {boolean} True if the BrowserSpec if equal to the searchForString or if the string is null/empty, false otherwise
+     * @return {boolean} True if the Address is equal to the searchForString or if the string is null/empty, false otherwise
      */
     applyFilter(Address: string, searchForString: string): boolean {
         if (!searchForString) {
