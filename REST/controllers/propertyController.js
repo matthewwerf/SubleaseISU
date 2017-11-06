@@ -6,7 +6,7 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
-	var http = require('http');
+	var axios = require('axios');
 
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -35,27 +35,40 @@
 				var options = {
 					host: 'maps.googleapis.com',
 					port: 80,
-					path: '/maps/api/geocode/json?address=' + req.body.address + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c',
+					path: '/maps/api/geocode/json?address=' + encodeURIComponent(req.body.address) + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c',
 					method: 'GET'
 				};
 
-				http.request(options, function(res) {
-					console.log('STATUS: ' + res.statusCode);
-					console.log('HEADERS: ' + JSON.stringify(res.headers));
-					res.setEncoding('utf8');
-					res.on('data', function (chunk) {
-						console.log('BODY: ' + chunk);
+				var base_URL = 'https://maps.googleapis.com';
+				var full_URL = base_URL + '/maps/api/geocode/json?address=' + encodeURIComponent(req.body.address) + '&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c';
+				
+				axios.get(full_URL)
+					.then(function(response) {
+						var longLat = response.data.results[0].geometry.location;
+						var newObj = req.body;
+
+						newObj.longitude = longLat.lng;
+						newObj.latitude = longLat.lat;
+						newProperty = new Property(newObj);
+
+						newProperty.save(function (err, property) {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.status(201).json(property);
+						});
+					})
+					.catch(function(err) {
+						console.log(err);
+						newProperty.save(function (err, property) {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.status(201).json(property);
+						});
 					});
-				});
+
 			}
-
-
-			newProperty.save(function (err, property) {
-				if (err) {
-					res.status(500).send(err);
-				}
-				res.status(201).json(property);
-			});
 		} else {
 			res.status(400).send({
 				"error": "username or propertyID missing"
@@ -97,7 +110,7 @@
 			return;
 		} else {
 			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
-				localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
+				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
 				if(localCookieToCheck != req.body.subleaseISUcookie) {
 					res.status(401).send({
 						"error": "authentication rejected"
