@@ -13,7 +13,15 @@
 	  	</div>
 	  	<div class="column">
 	  		<ul *ngIf="UserInfoList">
-				<li>Username: {{UserInfoList.username}}</li>
+				<li>
+					<button type="button" (click)="showRow(1)">Change Username</button>
+					<div id="rowOne" style="display: none;">
+						<button type="button" (click)="updateUsername()">
+						Update Username
+						</button>
+						<input id="newUsername" type="text" required placeholder="New Username">
+					</div>
+				</li>
 				<li>Email: {{UserInfoList.email}}</li>
 				<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
 				<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
@@ -42,7 +50,7 @@
 	
 	
 	<div class="container">
-		<label id="previewLabel" >Profile Picture Preview:</label>
+		<label id="previewLabel" style="display: none;">Profile Picture Preview:</label>
 		<img src="" id="preview" />
 		<img src="" id="preview2" />
 	</div>

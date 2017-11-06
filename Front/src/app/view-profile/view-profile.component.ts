@@ -33,6 +33,7 @@ export class ViewProfileComponent implements OnInit {
   currFile: File;
   oldFile: File;
 
+
   imagePreview() 
   {
       document.getElementById("previewLabel").style.display = 'block';
@@ -82,6 +83,16 @@ export class ViewProfileComponent implements OnInit {
       );
   }
 
+  updateUsername(){
+
+  }
+
+  showRow(this){
+    if(this ==  1){
+      console.log("Yeet");
+    }
+  }
+
   ngOnInit() {
 
     this.isLoaded = false;
@@ -91,10 +102,13 @@ export class ViewProfileComponent implements OnInit {
       this.isLoaded = true;
     });
 
-    if(this.firstLoad){
-          document.getElementById("previewLabel").style.display = 'none';
-          this.firstLoad = false;
-    }
+    // if(this.firstLoad){
+    //       document.getElementById("previewLabel").style.display = 'none';
+    //       //document.getElementById("rowOne").style.display = 'block';
+
+    //       this.firstLoad = false;
+    // }
+
     this.source = [];
   	this.title = 'View or Update Your Profile';
   	this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
