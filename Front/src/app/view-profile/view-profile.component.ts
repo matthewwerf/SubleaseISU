@@ -66,6 +66,7 @@ export class ViewProfileComponent implements OnInit {
       }
 
   }
+  
   clear(){
     document.getElementById("previewPic").style.display = 'none';
   }
