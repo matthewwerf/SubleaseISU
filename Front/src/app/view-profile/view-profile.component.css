@@ -36,14 +36,14 @@
     clear: both;
 }
 
-.info{
+/*.info{
   background-image: url("border.png");
   width: 50%;
   height: 10%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+}*/
 
 .general {
     background-image: url("cy.gif");
