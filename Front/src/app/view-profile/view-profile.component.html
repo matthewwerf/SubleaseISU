@@ -1,16 +1,19 @@
 <div class="general">
 	<h1>{{title}}</h1>
 	
-	<ul>
-		<div class="container2">
-			<label id="profilePicLable"> Profile Picture:</label>
-			<div>
-				<img src="" id="profilePic" />
-			</div>
-		</div>
-	</ul>
+	
 	<div class="row">
-	  	<div class="column">
+	  	<div class="columm">
+			<ul>
+				<div class="container2">
+					<label id="profilePicLable"> Profile Picture:</label>
+					<div>
+						<img src="" id="profilePic" />
+					</div>
+				</div>
+			</ul>
+		</div>
+		<div class="column">
 	  		<ul class="info" *ngIf="UserInfoList">
 				<div>Username: {{UserInfoList.username}}</div>
 				<div>Email: {{UserInfoList.email}}</div>
@@ -34,6 +37,9 @@
 					</div>
 				</div>
 				<div>
+					<label class="invalidPassword" id="invalidPassword" style="display: none;"> Invalid Password</label>
+				</div>
+				<div>
 					<button id="b2" type="button" (click)="showRowTwo()">Change Email</button>
 					<div id="rowTwo" style="display: none;">
 						<button type="button" (click)="updateEmail()">
@@ -45,6 +51,10 @@
 						</button>
 					</div>
 				</div>
+				<div>
+					<label class="invalidEmail" id="invalidEmail" style="display: none;"> Invalid Email</label>
+				</div>
+				
 				<div>
 					<div>
 						<button id="b3" type="button" (click)="showRowThree()">Change Phone Number</button>
@@ -58,6 +68,9 @@
 							</button>
 						</div>
 					</div>
+				</div>
+				<div>
+					<label class="invalidPhone" id="invalidPhone" style="display: none;"> Invalid Phone Number</label>
 				</div>
 			</ul>
 	  	</div>
@@ -80,9 +93,11 @@
 	<button type="button" class="btn btn-success btn-s" (click)="uploadGang()">
 		Update Profile Picture
 	</button>
+	<button type="button" class="btn btn-success btn-s" (click)="clear()">
+		Clear
+	</button>
 	
-	
-	<div class="container">
+	<div id="previewPic" class="container">
 		<label id="previewLabel" style="display: none;">Profile Picture Preview:</label>
 		<img src="" id="preview" />
 		<img src="" id="preview2" />

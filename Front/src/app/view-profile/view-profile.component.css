@@ -11,8 +11,8 @@
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .container2{
-  width: 250px;
-  height: 150px;
+  width: 200px;
+  height: 120px;
   margin-top: 20px;
   margin-bottom: 100px;
 }
@@ -34,16 +34,18 @@
     content: "";
     display: table;
     clear: both;
+    margin-bottom: 10px;
 }
 
-/*.info{
-  background-image: url("border.png");
-  width: 50%;
-  height: 10%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}*/
+.invalidPassword{
+  background-color: red
+}
+.invalidEmail{
+  background-color: red
+}
+.invalidPhone{
+  background-color: red
+}
 
 .general {
     background-image: url("cy.gif");

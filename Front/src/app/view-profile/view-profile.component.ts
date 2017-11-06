@@ -1,11 +1,12 @@
 import { Component, OnInit, ElementRef, Input} from '@angular/core';
-import {  FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Router } from '@angular/router';
 import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
 
 import { Http, Response } from '@angular/http';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import * as crypto from 'crypto-js';
 
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
@@ -61,11 +62,13 @@ export class ViewProfileComponent implements OnInit {
 
       reader.onload = function(){
         (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
-        
+        document.getElementById("previewPic").style.display = 'block';
       }
 
   }
-  
+  clear(){
+    document.getElementById("previewPic").style.display = 'none';
+  }
   uploadGang(){
     let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
     let fileCount: number = inputEl.files.length;
@@ -91,7 +94,7 @@ export class ViewProfileComponent implements OnInit {
           alert(success._body);
         },
           (error) => alert(error));
-          //console.log(formData) 
+          
     }
 
   }
@@ -101,48 +104,73 @@ export class ViewProfileComponent implements OnInit {
     console.log(this.newPassword);
     document.getElementById("rowOne").style.display = 'none';
     document.getElementById("b1").style.display = 'block';
-    // this.http.put(URL2, {username: localStorage.getItem('username'),
-    //                         subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
-    //                         hashedPassword: 
-    //                       }).map((res:Response) => res.json()).subscribe(
-    //     (success) => {
-    //       alert(success._body);
-    //     },
-    //       (error) => alert(error))
-    //       //console.log(formData)
+    if(this.newPassword.length > 8){
+      var hashedPassword = crypto.SHA1(this.newPassword);
+      console.log(hashedPassword.toString());
+      document.getElementById("invalidPassword").style.display = 'none';
+      // this.http.put(URL2, {username: localStorage.getItem('username'),
+      //                         subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+      //                         hashedPassword: hashedPassword.toString()
+      //                       }).subscribe(
+      //         res => {
+      //             //console.log(res);
+      //             if(!res['error']){
+      //               console.log("no error");
+      //               localStorage.setItem('subleaseISUcookie', res['subleaseISUcookie'].value )
+
+      //             } else {
+      //               console.log(res['error']);
+      //             }
+                     
+      //                 },
+      //                 err => {
+      //                 console.log("there was an error");
+      //             console.log(err);
+      //                 }
+      //               );
+    }else{
+      console.log("Invalid Password")
+      document.getElementById("invalidPassword").style.display = 'block';
+    }
   }
   updateEmail(){
     this.newEmail = (<HTMLInputElement>document.getElementById('newEmail')).value;
     console.log(this.newEmail);
     document.getElementById("rowTwo").style.display = 'none';
     document.getElementById("b2").style.display = 'block';
-    
-    this.http.put(URL2, {username: localStorage.getItem('username'),
-                            subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
-                            email: this.newEmail 
-                          }).subscribe(
-            res => {
-                //console.log(res);
-                 if(!res['error']){
-          console.log("no error");
-          this.isLoaded = false;
-          
-          this.userInfoService.getUserInfo().subscribe( UserInfo => {
-            this.UserInfoList = UserInfo;
-            console.log(this.UserInfoList)
-            this.isLoaded = true;
-          });
+    if(this.newEmail.includes('@') && this.newEmail.includes('.')){
+      document.getElementById("invalidEmail").style.display = 'none';
+      this.http.put(URL2, {username: localStorage.getItem('username'),
+                              subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+                              email: this.newEmail 
+                            }).subscribe(
+              res => {
+                  //console.log(res);
+                   if(!res['error']){
+            console.log("no error");
+            this.isLoaded = false;
+            
+            this.userInfoService.getUserInfo().subscribe( UserInfo => {
+              this.UserInfoList = UserInfo;
+              console.log(this.UserInfoList)
+              this.isLoaded = true;
+            });
 
-        } else {
-          console.log(res['error']);
-        }
-           //this.router.navigate(['login']);
-            },
-            err => {
-            console.log("there was an error");
-        console.log(err);
-            }
-          );
+          } else {
+            console.log(res['error']);
+          }
+             //this.router.navigate(['login']);
+              },
+              err => {
+              console.log("there was an error");
+          console.log(err);
+              }
+            );
+      }
+      else{
+        console.log("Invalid Email Address")
+        document.getElementById("invalidEmail").style.display = 'block';
+      }
   }
 
   updatePhone(){
@@ -150,33 +178,38 @@ export class ViewProfileComponent implements OnInit {
     console.log(this.newPhone);
     document.getElementById("rowThree").style.display = 'none';
     document.getElementById("b3").style.display = 'block';
-    
-    this.http.put(URL2, {username: localStorage.getItem('username'),
-                            subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
-                            phoneNumber: this.newPhone 
-                          }).subscribe(
-            res => {
-                //console.log(res);
-                 if(!res['error']){
-          console.log("no error");
-          this.isLoaded = false;
-          
-          this.userInfoService.getUserInfo().subscribe( UserInfo => {
-            this.UserInfoList = UserInfo;
-            console.log(this.UserInfoList)
-            this.isLoaded = true;
-          });
+    if(this.newPhone.length == 10 && !(isNaN(Number(this.newPhone)))){
+      document.getElementById("invalidPhone").style.display = 'none';
+      this.http.put(URL2, {username: localStorage.getItem('username'),
+                              subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+                              phoneNumber: this.newPhone 
+                            }).subscribe(
+              res => {
+                  //console.log(res);
+                   if(!res['error']){
+            console.log("no error");
+            this.isLoaded = false;
+            
+            this.userInfoService.getUserInfo().subscribe( UserInfo => {
+              this.UserInfoList = UserInfo;
+              console.log(this.UserInfoList)
+              this.isLoaded = true;
+            });
 
-        } else {
-          console.log(res['error']);
-        }
-           //this.router.navigate(['login']);
-            },
-            err => {
-            console.log("there was an error");
-        console.log(err);
-            }
-          );
+          } else {
+            console.log(res['error']);
+          }
+             //this.router.navigate(['login']);
+              },
+              err => {
+              console.log("there was an error");
+          console.log(err);
+              }
+            );
+      }else{
+        console.log("Invalid Phone Number");
+        document.getElementById("invalidPhone").style.display = 'block';
+      }
   }
 
   cancel(){
