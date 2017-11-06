@@ -12,18 +12,19 @@ import { ListingInfo } from '../models/listing';
 
 export class PriceSearchPipe implements PipeTransform {
     transform(listofAddresses: ListingInfo[], lowPrice: number, highPrice: number) {
-        if(lowPrice == null && highPrice == null) { // If neither of the values are entered return the list
-            return listofAddresses;
-        }
-        else if(highPrice == null && lowPrice) {
+        if(highPrice == null && lowPrice) {
             return listofAddresses.filter((Listing: ListingInfo) => this.applyFilter(Listing.rentValue, lowPrice, 9999999999));
         }
         else if(lowPrice == null && highPrice) {
             return listofAddresses.filter((Listing: ListingInfo) => this.applyFilter(Listing.rentValue, 0, highPrice));
         }
-        else {
+        else if(lowPrice && highPrice) {
             return listofAddresses.filter((Listing: ListingInfo) => this.applyFilter(Listing.rentValue, lowPrice, highPrice));
         }
+        else {
+            return listofAddresses;
+        }
+
     }
 
     /**
