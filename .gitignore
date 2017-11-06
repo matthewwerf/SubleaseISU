@@ -16,7 +16,7 @@ REST/node_modules
 
 # files uploaded to server
 Images/*
-
+REST/controllers/tmp/*
 # The following is for angular. Please do not modify
 
 # compiled output

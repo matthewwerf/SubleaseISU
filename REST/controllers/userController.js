@@ -5,6 +5,9 @@
 	var sha1 = require("sha1");
 	var config = require("../config.js");
 
+	// multipart/formdata
+	var formidable = require('formidable')
+
 	// Photo Upload
 	var multer = require('multer'),
 		Storage = multer.diskStorage({
@@ -12,20 +15,20 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
-				//console.log(req);
+				console.log(req);
 
-				var filename = file.fieldname + '_' + Date.now() + '_' + file.originalname;
+				var newFilename = file.fieldname + '_' + Date.now() + '_' + file.originalname;
 
+				console.log('FILENAME: ' + newFilewname);
+				/*
 				// Update photo location in user data
-				User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: filename}, {new: true}, function (err, user){
+				User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: filename}, function (err, user){
 					if(user == null) { // don't forget to check this is all functions
 						console.log("Username not found in file save");
-						/*
 						res.status(401).send({
 							"error": "username not recognized"
 						});
 						return;
-						*/
 					}
 
 					if (err) {
@@ -35,9 +38,9 @@
 					//res.status(200).json(user);
 					console.log("File saved");
 				});
+				*/
 
-
-				callback(null, filename);
+				callback(null, newFilename);
 			}
 		}),
 		upload = multer({
@@ -176,7 +179,42 @@
 	};
 
 	exports.uploadProfilePicture = function(req, res) {
-		console.log(req);
+		var form = formidable.IncomingForm();
+		form.uploadDir = __dirname + '/tmp';
+		form.encoding = 'binary';	
+	
+		form.addListener('file', function(name, file) {
+    			// do something with uploaded filei
+    			console.log(name);
+       			upload(req, res, function(err){
+                        	if(err){
+                                	console.log(err);
+                                	return res.status(500).send({
+                                        	"err": "file could not be saved"
+                                	});
+                        	}
+				
+                        	return res.status(201).send({
+                                	"msg": "file was uploaded"
+                        	});
+				
+                	});
+		});
+    
+         	form.addListener('end', function() {
+             		res.end();
+               	});
+
+
+		form.parse(req, function(err, fields, files){
+			console.log(fields);
+			console.log(files);
+		});
+		//console.log(req);
+		//console.log(form);
+
+		//var form = new multiparty.Form();
+
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"
@@ -198,7 +236,9 @@
 					});
 				} else {
 
-					upload(req, res, function(err){
+					upload(req, res, function(err, filename){
+						console.log(req.body);
+						console.log(filename);
 						if(err){
 							console.log(err);
 							return res.status(500).send({
