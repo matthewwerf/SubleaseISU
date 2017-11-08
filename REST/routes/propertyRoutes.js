@@ -10,7 +10,7 @@
 			.post(property.listAllProperties);
 
 		app.route('/property/:propertyID')
-			.get(property.getSpecificProperty)
+			.post(property.getSpecificProperty)
 			.put(property.updateSpecificProperty)
 			.delete(property.deleteSpecificProperty);
 	};

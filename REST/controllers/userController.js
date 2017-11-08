@@ -5,6 +5,9 @@
 	var sha1 = require("sha1");
 	var config = require("../config.js");
 
+	// multipart/formdata
+	var formidable = require('formidable');
+
 	// Photo Upload
 	var multer = require('multer'),
 		Storage = multer.diskStorage({
@@ -12,32 +15,7 @@
 				callback(null, './Images');
 			},
 			filename: function(req, file, callback) {
-				//console.log(req);
-
-				var filename = file.fieldname + '_' + Date.now() + '_' + file.originalname;
-
-				// Update photo location in user data
-				User.findOneAndUpdate({username: req.params.username}, {profilePictureLocation: filename}, {new: true}, function (err, user){
-					if(user == null) { // don't forget to check this is all functions
-						console.log("Username not found in file save");
-						/*
-						res.status(401).send({
-							"error": "username not recognized"
-						});
-						return;
-						*/
-					}
-
-					if (err) {
-						//res.status(500).send(err);
-						console.log("FROM FILE SAVE: " + err);
-					}
-					//res.status(200).json(user);
-					console.log("File saved");
-				});
-
-
-				callback(null, filename);
+				callback(null, file.fieldname + '-' + req.body.username  + '-' + Date.now());
 			}
 		}),
 		upload = multer({
@@ -95,19 +73,36 @@
 	};
 
 	exports.updateSpecificUser = function(req, res) {
-		User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function (err, user){
-			if(user == null) { // don't forget to check this is all functions
-				res.status(401).send({
-					"error": "username not recognized"
-				});
-				return;
-			}
+		if (!req.body.subleaseISUcookie || !req.body.username){
+			res.status(401).send({
+				"error": "not authenticated"
+			});
+			return;
+		} else {
+			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
+				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
+				if(localCookieToCheck != req.body.subleaseISUcookie) {
+					res.status(401).send({
+						"error": "authentication rejected"
+					});
+				} else {
 
-			if (err) {
-				res.status(500).send(err);
-			}
-			res.status(200).json(user);
-		});
+					User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function (err, user){
+						if(user == null) { // don't forget to check this is all functions
+							res.status(401).send({
+								"error": "username not recognized"
+							});
+							return;
+						}
+
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(user);
+					});
+				}
+			});
+		}
 	};
 
 	exports.deleteSpecificUser = function(req, res){
@@ -176,7 +171,40 @@
 	};
 
 	exports.uploadProfilePicture = function(req, res) {
-		console.log(req);
+		var form = formidable.IncomingForm();
+		form.uploadDir = __dirname + '/tmp';
+		form.encoding = 'binary';	
+	
+		form.addListener('file', function(name, file) {
+    			// do something with uploaded filei
+    			//console.log(name);
+       			upload(req, res, function(err){
+                        	if(err){
+                                	console.log(err);
+                                	return res.status(500).send({
+                                        	"err": "file could not be saved"
+                                	});
+                        	}
+				
+                        	return res.status(201).send({
+                                	"msg": "file was uploaded"
+                        	});
+				
+                	});
+		});
+    
+         	form.addListener('end', function() {
+             		res.end();
+               	});
+
+
+		form.parse(req, function(err, fields, files){
+			console.log(fields);
+			console.log(files);
+		});
+
+		//var form = new multiparty.Form();
+
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"
@@ -197,8 +225,10 @@
 						"error": "authentication rejected"
 					});
 				} else {
-
+					/*
 					upload(req, res, function(err){
+						console.log(req.file);
+						console.log(res.file);
 						if(err){
 							console.log(err);
 							return res.status(500).send({
@@ -210,25 +240,11 @@
 							"msg": "file was uploaded"
 						});
 					});
+					*/
+					upload.single("fileName");
 				}
 			});
 		}
-
-
-
-		/*
-		upload(req, res, function(err){
-			if(err){
-				console.log(err);
-				return res.status(500).send({
-					"err": "file could not be saved"
-				});
-			}
-			return res.status(201).send({
-				"msg": "file was uploaded"
-			});
-		});
-		*/
 	};
 
 	exports.retrieveProfilePic = function(req, res) {

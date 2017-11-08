@@ -7,13 +7,16 @@ var express = require("express"),
 	Message = require('./models/messageModel'),
 	bodyParser = require("body-parser");
 
+var formidable = require('express-formidable');
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/SubleaseISU')
 	.then(() => console.log('database connected'))
 	.catch((err) => console.error(err)); 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+//app.use(formidable());
 
 app.use(function(req, res, next) { // allow CORS
 	res.header("Access-Control-Allow-Origin", "*");
