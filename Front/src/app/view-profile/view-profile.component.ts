@@ -73,7 +73,7 @@ export class ViewProfileComponent implements OnInit {
   uploadGang(){
     let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
     let fileCount: number = inputEl.files.length;
-    let formData: FormData = new FormData();
+    //let formData: FormData = new FormData();
     var reader2 = new FileReader();
     this.profilePic = inputEl.files[0];
     if(this.profilePic){
@@ -85,16 +85,28 @@ export class ViewProfileComponent implements OnInit {
         (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
     }
 
-    formData.append('username', localStorage.getItem('username'));
-    formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
+    //formData.append('username', localStorage.getItem('username'));
+    //formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
     if(fileCount > 0){
-      formData.append('fileName', inputEl.files.item(0));
+      //formData.append('fileName', inputEl.files.item(0));
       //console.log(formData);
-      this.http.post(URL, formData).map((res:Response) => res.json()).subscribe(
-        (success) => {
-          alert(success._body);
-        },
-          (error) => alert(error));
+      this.http.post(URL, {username: localStorage.getItem('username'),
+                           subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+                           fileName: inputEl.files.item(0)}).subscribe(
+              res => {
+                  //console.log(res);
+                   if(!res['error']){
+            console.log("no error");
+          } else {
+            console.log(res['error']);
+          }
+             //this.router.navigate(['login']);
+              },
+              err => {
+              console.log("there was an error");
+          console.log(err);
+              }
+            );
           
     }
 
