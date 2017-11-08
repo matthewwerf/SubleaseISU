@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Headers } from '@angular/http';
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+//import { Headers } from '@angular/http';
 
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -23,6 +24,7 @@ export class SignUpComponent implements OnInit {
 	phonenumber: FormControl;
 
 	user: User;
+	private header = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 	constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
 
 	}
@@ -57,7 +59,7 @@ export class SignUpComponent implements OnInit {
     		var hashedPassword = crypto.SHA1(this.password.value);
   			
 
-		let headers = new Headers({'Content-Type' : 'application/json'});
+		//let headers = new Headers({'Content-Type' : 'application/json'});
   			// POST the user to the backend
 
     		this.http.post('/users', {
@@ -65,7 +67,7 @@ export class SignUpComponent implements OnInit {
 				hashedPassword: hashedPassword.toString(),
 				email: this.email.value,
 				phoneNumber: this.phonenumber.value
-		    }, headers).subscribe(
+		    }, this.header).subscribe(
 		        res => {
 		           	if(!res['error']) {
 						console.log("no error");

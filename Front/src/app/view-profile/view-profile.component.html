@@ -1,30 +1,105 @@
 <div class="general">
 	<h1>{{title}}</h1>
 	
-	<ul *ngIf="UserInfoList">
-		<li>Username: {{UserInfoList.username}}</li>
-		<li>Email: {{UserInfoList.email}}</li>
-		<li>Phone Number: {{UserInfoList.phoneNumber}}</li>
-		<li>Venmo Account: {{UserInfoList.venmoUsername}}</li>
-		<li>Paypal Account: {{UserInfoList.paypalUsername}}</li>
-	</ul>
+	
+	<div class="row">
+	  	<div class="columm">
+			<ul>
+				<div class="container2">
+					<label id="profilePicLable"> Profile Picture:</label>
+					<div>
+						<img src="" id="profilePic"/>
+					</div>
+				</div>
+			</ul>
+		</div>
+		<div class="column">
+	  		<ul class="info" *ngIf="UserInfoList">
+				<div>Username: {{UserInfoList.username}}</div>
+				<div>Email: {{UserInfoList.email}}</div>
+				<div>Phone Number: {{UserInfoList.phoneNumber}}</div>
+				<div>Venmo Account: {{UserInfoList.venmoUsername}}</div>
+				<div>Paypal Account: {{UserInfoList.paypalUsername}}</div>
+			</ul>
+	  	</div>
+	  	<div class="column">
+	  		<ul class="editorButtons" *ngIf="UserInfoList">
+				<div>
+					<button id="b1" type="button" (click)="showRowOne()">Change Password</button>
+					<div id="rowOne" style="display: none;">
+						<button type="button" (click)="updatePassword()">
+						Update Password, Check console
+						</button>
+						<input id="newPassword" type="text" required placeholder="New Password">
+						<button type="button" (click)="cancel()">
+						Cancel
+						</button>
+					</div>
+				</div>
+				<div>
+					<label class="invalidPassword" id="invalidPassword" style="display: none;"> Invalid Password</label>
+				</div>
+				<div>
+					<button id="b2" type="button" (click)="showRowTwo()">Change Email</button>
+					<div id="rowTwo" style="display: none;">
+						<button type="button" (click)="updateEmail()">
+						Update Email
+						</button>
+						<input id="newEmail" type="text" required placeholder="New Email">
+						<button type="button" (click)="cancel()">
+						Cancel
+						</button>
+					</div>
+				</div>
+				<div>
+					<label class="invalidEmail" id="invalidEmail" style="display: none;"> Invalid Email</label>
+				</div>
+				
+				<div>
+					<div>
+						<button id="b3" type="button" (click)="showRowThree()">Change Phone Number</button>
+						<div id="rowThree" style="display: none;">
+							<button type="button" (click)="updatePhone()">
+							Update Phone Number
+							</button>
+							<input id="newPhone" type="text" required placeholder="New Phone Number">
+							<button type="button" (click)="cancel()">
+							Cancel
+							</button>
+						</div>
+					</div>
+				</div>
+				<div>
+					<label class="invalidPhone" id="invalidPhone" style="display: none;"> Invalid Phone Number</label>
+				</div>
+			</ul>
+	  	</div>
+	</div>
+	
 
-	<div>
+	<!-- <div>
 
 		<input type="file" id="previewImage" (change)="imagePreview();" name="newProfilePicture" ng2FileSelect [uploader] ="uploader" />
 		
 		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-	      Upload Your File
+	      Change Profile Picture
 		</button>
 
 		<button type="button" onclick="clearUpload()">Clear</button>
-	</div>
-
+	</div> -->
 	
 	
-	<div class="container">
-		<label id="previewLabel" >Profile Picture Preview:</label>
+	<input id="previewImage" type="file" (change)="imagePreview();" />
+	<button type="button" class="btn btn-success btn-s" (click)="uploadGang()">
+		Update Profile Picture
+	</button>
+	<button type="button" class="btn btn-success btn-s" (click)="clear()">
+		Clear
+	</button>
+	
+	<div id="previewPic" class="container">
+		<label id="previewLabel" style="display: none;">Profile Picture Preview:</label>
 		<img src="" id="preview" />
-		
+		<img src="" id="preview2" />
 	</div>
 </div>

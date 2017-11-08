@@ -10,3 +10,46 @@
 .container label{
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
+.container2{
+  width: 200px;
+  height: 120px;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+.container2 label{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.container2 img{
+    height: auto; 
+    width: 70%;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+.invalidPassword{
+  background-color: red
+}
+.invalidEmail{
+  background-color: red
+}
+.invalidPhone{
+  background-color: red
+}
+
+.general {
+    background-image: url("cy.gif");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50%;
+}
