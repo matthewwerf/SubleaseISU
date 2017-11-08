@@ -172,56 +172,55 @@
 
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
+		var fileLocation = null;
 
-		var auth = false;
-		var reqDone = false;
-
-	
 		form.parse(req, function(err, fields, files) {
 			
 			if (!fields.subleaseISUcookie || !fields.username) {
-                res.status(401).send({
-	                "error": "not authenticated"
-                });
-                return;
-            } else {
-                User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
+				res.status(401).send({
+					"error": "not authenticated"
+				});
+				return;
+			} else {
+				User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
 
-	                if(user == null) { // don't forget to check this is all functions
-		                res.status(401).send({
-	                        "error": "username not recognized"
-	                    });
-	                    return;
-		            }
-		
-	                var localCookieToCheck = sha1(fields.username + user.hashedPassword + config.salt);
-	                if(localCookieToCheck != fields.subleaseISUcookie) {
-	                    res.status(401).send({
-	                        "error": "authentication rejected"
-	                    });
+					if(user == null) { // don't forget to check this is all functions
+						res.status(401).send({
+							"error": "username not recognized"
+						});
 						return;
-	            	} else {
+					}
+		
+					var localCookieToCheck = sha1(fields.username + user.hashedPassword + config.salt);
+					if(localCookieToCheck != fields.subleaseISUcookie) {
+						res.status(401).send({
+							"error": "authentication rejected"
+						});
+						return;
+					} else {
 						// if authentication is accepted add listeners to save file
 						console.log("Authentication Accepted");
 						auth = true;
 					}
-            	});
-    		}
+				});
+			}
 		});
 
 		form.addListener('fileBegin', function(name, file) {
 			console.log("FileBegin Detected");
 			file.path = __dirname + '/profilePictures/' + file.name + Date.now();
-        	console.log("File Path Created");
-        });
+			fileLocation = file.path;
+			console.log("File Path Created");
+		});
 
-        form.addListener('file', function(name, file) {
-        	console.log("File Detected");
-        });
+		form.addListener('file', function(name, file) {
+			console.log("File Detected");
+		});
 
-        form.addListener('end', function() {
-        	console.log('end');
-        });
+		form.addListener('end', function() {
+			console.log('end');
+			console.log(fileLocation);
+		});
 
 	};
 
