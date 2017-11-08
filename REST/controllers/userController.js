@@ -20,7 +20,7 @@
 		}),
 		upload = multer({
 			storage: Storage
-		}).single("fileName");
+		});
 
 	exports.createUser = function(req, res) {
 		// Logging
@@ -117,7 +117,7 @@
 	};
 
 	exports.authAndReturnCookie = function(req, res){
-		console.log(req);
+		//console.log(req);
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
 				res.status(401).send({
@@ -172,39 +172,72 @@
 
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
-		form.uploadDir = __dirname + '/tmp';
-		form.encoding = 'binary';	
+		var auth = false;
+		var reqDone = false;
+
+	
+		form.parse(req, function(err, fields, files) {
+			
+			if (!fields.subleaseISUcookie || !fields.username){
+	                        res.status(401).send({
+	                                "error": "not authenticated"
+	                        });
+	                        return;
+	                } else {
+	                        User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
+	                                if(user == null) { // don't forget to check this is all functions
+	                                        res.status(401).send({
+	                                                "error": "username not recognized"
+	                                        });
+	                                        return;
+	                                }
+	
+                	                var localCookieToCheck = sha1(fields.username + user.hashedPassword + config.salt);
+                	                if(localCookieToCheck != fields.subleaseISUcookie) {
+                	                        res.status(401).send({
+                	                                "error": "authentication rejected"
+                	                        });
+						return;
+                                	} else {
+						// if authentication is accepted add listeners to save file
+						console.log("Authentication Accepted");
+						auth = true;
+					}
+                        	});
+                	}
+
+		});
+
+		form.addListener('fileBegin', function(name, file) {
+    	        	console.log("FileBegin Detected");
+                	file.path = __dirname + '/profilePictures/' + file.name + Date.now();
+                	console.log("File Path Created");
+                });
+
+                form.addListener('file', function(name, file) {
+                	console.log("File Detected");
+                });
+
+                form.addListener('end', function() {
+                	console.log('end');
+                });
+
+		/*
+		form.addListener('fileBegin', function(name, file) {
+			console.log("FileBegin Detected");
+			file.path = __dirname + '/profilePictures/' + file.name + Date.now();
+			console.log("File Path Created");
+		});
 	
 		form.addListener('file', function(name, file) {
-    			// do something with uploaded filei
-    			//console.log(name);
-       			upload(req, res, function(err){
-                        	if(err){
-                                	console.log(err);
-                                	return res.status(500).send({
-                                        	"err": "file could not be saved"
-                                	});
-                        	}
-				
-                        	return res.status(201).send({
-                                	"msg": "file was uploaded"
-                        	});
-				
-                	});
+    			console.log("File Detected");
 		});
+		
+		form.addListener('end', function() {
+			console.log('end');
+			console.log(req.body);
+		});	
     
-         	form.addListener('end', function() {
-             		res.end();
-               	});
-
-
-		form.parse(req, function(err, fields, files){
-			console.log(fields);
-			console.log(files);
-		});
-
-		//var form = new multiparty.Form();
-
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"
@@ -225,27 +258,21 @@
 						"error": "authentication rejected"
 					});
 				} else {
-					/*
-					upload(req, res, function(err){
-						console.log(req.file);
-						console.log(res.file);
-						if(err){
-							console.log(err);
-							return res.status(500).send({
-								"err": "file could not be saved"
-							});
-						}
-
-						return res.status(201).send({
-							"msg": "file was uploaded"
-						});
-					});
-					*/
 					upload.single("fileName");
 				}
 			});
 		}
+		next();
+		*/
 	};
+
+	/*
+	exports.handlePhotoLocation = function(req, res, next) {
+		console.log("Handle Photo Function:");
+		console.log(req.fileName);
+		//console.log(res.file);
+	};
+	*/
 
 	exports.retrieveProfilePic = function(req, res) {
 
