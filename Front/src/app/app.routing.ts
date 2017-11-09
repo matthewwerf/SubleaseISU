@@ -60,7 +60,7 @@ export const ROUTES: Routes = [
     {
         path: 'browse',
         component: BrowseListingsComponent,
-        //canActivate: [AuthService]
+        canActivate: [AuthService]
     },
     {
         path: 'googlemaps',
