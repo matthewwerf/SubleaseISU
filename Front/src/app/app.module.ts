@@ -31,6 +31,7 @@ import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
+import { MessagingComponent } from './messaging/messaging.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ViewListingComponent } from './view-listing/view-listing.component';
     ViewProfileComponent,
     AddressSearchPipe,
     PriceSearchPipe,
-    ViewListingComponent
+    ViewListingComponent,
+    MessagingComponent
   ],
   imports: [
     BrowserModule,
