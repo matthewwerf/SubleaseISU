@@ -22,6 +22,9 @@
 			storage: Storage
 		});
 
+	// File Helper
+	var fh = require('../lib/fileHelper.js');
+
 	exports.createUser = function(req, res) {
 		// Logging
 		console.log("User creation request: POST");
@@ -173,6 +176,8 @@
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocation = null;
+		var auth = false;
+		var waitingOnAuth = true;
 
 		form.parse(req, function(err, fields, files) {
 			
@@ -220,6 +225,13 @@
 		form.addListener('end', function() {
 			console.log('end');
 			console.log(fileLocation);
+			while(waitingOnAuth);
+			if(!auth) {
+				fh.deleteFile(fileLocation);
+				console.log('Unauthorized, File Deteled: ' + fileLocation);
+			} else {
+				console.log('Authed');
+			}
 		});
 
 	};
