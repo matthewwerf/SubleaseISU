@@ -21,6 +21,8 @@ import { BrowseListingsService } from './browse-listings/browse-listings-service
 import { PriceSearchPipe } from './browse-listings/price.search.pipe';
 import { AddressSearchPipe } from './browse-listings/address.search.pipe';
 import { UserInfoService } from './view-profile/user-info-service';
+import { MessagingService } from './messaging/messaging-service';
+
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
@@ -67,7 +69,8 @@ import { MessagingComponent } from './messaging/messaging.component';
   ],
   providers: [AuthService,
     BrowseListingsService,
-    UserInfoService],
+    UserInfoService,
+    MessagingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
