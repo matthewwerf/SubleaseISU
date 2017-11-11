@@ -185,6 +185,8 @@
 				res.status(401).send({
 					"error": "not authenticated"
 				});
+				fh.deleteFile(fileLocation);
+				console.log('Unauthorized, File Deteled: ' + fileLocation);
 				return;
 			} else {
 				User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
@@ -193,6 +195,8 @@
 						res.status(401).send({
 							"error": "username not recognized"
 						});
+						fh.deleteFile(fileLocation);
+						console.log('Unauthorized, File Deteled: ' + fileLocation);
 						return;
 					}
 		
@@ -201,6 +205,8 @@
 						res.status(401).send({
 							"error": "authentication rejected"
 						});
+						fh.deleteFile(fileLocation);
+						console.log('Unauthorized, File Deteled: ' + fileLocation);
 						return;
 					} else {
 						// if authentication is accepted add listeners to save file
@@ -223,15 +229,7 @@
 		});
 
 		form.addListener('end', function() {
-			console.log('end');
-			console.log(fileLocation);
-			while(waitingOnAuth);
-			if(!auth) {
-				fh.deleteFile(fileLocation);
-				console.log('Unauthorized, File Deteled: ' + fileLocation);
-			} else {
-				console.log('Authed');
-			}
+			console.log('Saved at: ' + fileLocation);
 		});
 
 	};
