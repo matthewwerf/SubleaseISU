@@ -22,7 +22,6 @@
 				cb(null);
 			}
 			if (user.hashedPassword == req.body.hashedPassword){
-				console.log("success");
 				cb(user);
 			} else {
 				res.status(400).json({

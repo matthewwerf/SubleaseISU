@@ -154,34 +154,6 @@
 	};
 
 	exports.allowRouting = function(req, res) {
-		/*
-		if (!req.body.subleaseISUcookie || !req.body.username){
-			res.status(401).send({
-				"error": "not authenticated"
-			});
-			return;
-		} else {
-			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
-				if(user == null) { // don't forget to check this is all functions
-					res.status(401).send({
-						"error": "username not recognized"
-					});
-					return;
-				}
-
-				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
-				if(localCookieToCheck != req.body.subleaseISUcookie) {
-					res.status(401).send({
-						"error": "authentication rejected"
-					});
-				} else {
-					res.status(200).send({
-						"msg": "authentication accepted"
-					});
-				}
-			});
-		}
-		*/
 		ah.validateAuth(req, res, function(user){
 			if(user != null) {
 				res.status(200).send({
