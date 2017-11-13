@@ -24,6 +24,8 @@
 
 	// File Helper
 	var fh = require('../lib/fileHelper.js');
+	// Auth Helper
+	var ah = require('../lib/authHelper.js');
 
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
@@ -152,6 +154,7 @@
 	};
 
 	exports.allowRouting = function(req, res) {
+		/*
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"
@@ -176,6 +179,13 @@
 						"msg": "authentication accepted"
 					});
 				}
+			});
+		}
+		*/
+		var user = ah.validateAuth(req, res);
+		if (user != null) {
+			res.status(200).send({
+				"msg": "authentication accepted"
 			});
 		}
 	};
