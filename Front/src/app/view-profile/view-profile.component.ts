@@ -3,6 +3,7 @@ import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Router } from '@angular/router';
 import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
+import { ProfilePictureGrabService } from './profile-picture-grab-service';
 
 import { Http, Response } from '@angular/http';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -22,7 +23,7 @@ const URL2 = '/users/' + localStorage.getItem('username');
 export class ViewProfileComponent implements OnInit {
 
   //private header = { headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }) };
-  constructor(private userInfoService: UserInfoService, private http: HttpClient, private el: ElementRef, private router: Router) { }
+  constructor(private userInfoService: UserInfoService, private profilePictureGrabService: ProfilePictureGrabService, private http: HttpClient, private el: ElementRef, private router: Router) { }
   title: string;
 
   private UserInfoList: UserInfo;
@@ -38,7 +39,7 @@ export class ViewProfileComponent implements OnInit {
   newPassword: string;
   newEmail: string;
   newPhone: string;
-
+  retrievePic: any;
 
   imagePreview() 
   {
@@ -266,7 +267,8 @@ export class ViewProfileComponent implements OnInit {
       console.log(this.UserInfoList)
       this.isLoaded = true;
     });
-
+    this.retrievePic = this.profilePictureGrabService.getProfilePic();
+    console.log(this.retrievePic);
     this.source = [];
   	this.title = 'View or Update Your Profile';
   	//this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
