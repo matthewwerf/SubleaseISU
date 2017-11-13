@@ -127,7 +127,31 @@ describe('Users', () => {
 		});
 	});
 
-
+	describe('DELTED existing User', () => {
+		it('Should delete valid user', (done) =>{
+			let newUser = {
+				username: "username",
+				hashedPassword: "hashedPassword"
+			};
+			newUser = new User(newUser);
+			newUser.save((err, user) => {
+				chai.request(server)
+					.delete('/users/username')
+					.send({
+						hashedPassword: "hashedPassword",
+						username: "username",
+						subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
+					})
+					.end((err, res) => {
+						res.should.have.status(200);
+						res.body.should.be.a('object');
+						res.body.should.have.property('msg');
+						res.body.msg.should.be.eql('User successfully deleted');
+						done();
+				});
+			});
+		});
+	});
 
 
 
