@@ -7,6 +7,8 @@ var express = require("express"),
 	Message = require('./models/messageModel'),
 	bodyParser = require("body-parser");
 
+var config = require('config');
+
 var formidable = require('express-formidable');
 
 var winston = require('winston'),
@@ -18,7 +20,7 @@ var winston = require('winston'),
 	});
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/SubleaseISU')
+mongoose.connect(config.DBHost)
 	.then(() => console.log('database connected'))
 	.catch((err) => console.error(err)); 
 
