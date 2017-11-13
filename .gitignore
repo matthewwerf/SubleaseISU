@@ -2,6 +2,7 @@
 SD_B_1_ProjectName
 # logs
 .log
+logs/*
 # libraries
 REST/pkg/*
 REST/src/* 
