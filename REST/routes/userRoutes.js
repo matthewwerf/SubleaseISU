@@ -30,13 +30,6 @@
 			.post(user.authAndReturnCookie);
 
 		app.route('/uploadProfilePicture/:username')
-			/*
-			.post(user.uploadProfilePicture, function(req, res) {
-				console.log(req);
-			});
-			
-			.post(upload.single('fileName'), user.handlePhotoLocation);
-			*/
 			.post(user.uploadProfilePicture);
 		
 		app.route('/retrieveProfilePic/:username')
