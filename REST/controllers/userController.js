@@ -26,10 +26,6 @@
 	var fh = require('../lib/fileHelper.js');
 
 	exports.createUser = function(req, res) {
-		// Logging
-		console.log("User creation request: POST");
-
-
 		var newUser = new User(req.body);
 
 		User.findOne({username: req.body.username}, function (err, user) {
@@ -47,7 +43,10 @@
 					res.status(400).json({
 						"error": "Username already exists"
 					});
-				} else {
+				} 
+				// This should not be necessary
+				/*
+				else {
 					newUser.save(function (err, user) {
 						if (err) {
 							res.status(500).send(err);
@@ -55,6 +54,7 @@
 						res.status(201).json(user);
 					});
 				}
+				*/
 			}
 		});
 	};
