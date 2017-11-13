@@ -54,3 +54,5 @@ app.listen(port); // bind routes to port
 
 console.log("REST api started on: " + port);
 
+module.exports = app;
+
