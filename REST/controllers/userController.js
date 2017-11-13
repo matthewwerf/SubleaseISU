@@ -118,13 +118,17 @@
 	};
 
 	exports.deleteSpecificUser = function(req, res){
-		User.remove({
-			username: req.params.username
-		}, function(err, user){
-			if (err) {
-				res.status(500).send(err);
+		ah.validateAuth(req, res, function(user){
+			if(user != null) {
+				User.remove({
+					username: req.params.username
+				}, function(err, user){
+					if (err) {
+						res.status(500).send(err);
+					}
+					res.status(200).json({msg: 'User successfully deleted'});
+				});
 			}
-			res.status(200).json({message: 'User successfully deleted'});
 		});
 	};
 
