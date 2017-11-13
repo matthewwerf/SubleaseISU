@@ -8,26 +8,27 @@
 	/*
 	 * Returns null on error, user on success
 	 */
-	exports.validateAuth = function(req, res) {
+	exports.validateAuth = function(req, res, cb) {
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
 				res.status(401).send({
 					"error": "username not recognized"
 				});
-				return null;
+				cb(null);
 			}
 
 			if (err) {
 				res.status(500).send(err);
-				return null;
+				cb(null);
 			}
 			if (user.hashedPassword == req.body.hashedPassword){
-				return user;
+				console.log("success");
+				cb(user);
 			} else {
 				res.status(400).json({
 					"error": "Incorrect password."
 				});
-				return null;
+				cb(null);
 			}
 		});
 	};

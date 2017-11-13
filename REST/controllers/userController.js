@@ -182,12 +182,13 @@
 			});
 		}
 		*/
-		var user = ah.validateAuth(req, res);
-		if (user != null) {
-			res.status(200).send({
-				"msg": "authentication accepted"
-			});
-		}
+		ah.validateAuth(req, res, function(user){
+			if(user != null) {
+				res.status(200).send({
+					"msg" : "authentication accepted"
+				});
+			}
+		});
 	};
 
 	exports.uploadProfilePicture = function(req, res) {
