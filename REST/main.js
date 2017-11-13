@@ -9,6 +9,14 @@ var express = require("express"),
 
 var formidable = require('express-formidable');
 
+var winston = require('winston'),
+	logger = (winston.Logger)({
+		transports: [
+			new (winston.transports.Console)(),
+			new (winston.transports.File)({filename: 'logs/mainLog'})
+		]
+	});
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/SubleaseISU')
 	.then(() => console.log('database connected'))
@@ -28,7 +36,7 @@ app.use(function(req, res, next) { // allow CORS
 
 app.use(function(req, res, next) {
 	//console.log(req);
-	console.log("=============REQ===============");
+	winston.info('%s Request: To: %s, From: %s, Cookie: %s', req.method, req.url, req.body.username, req.body.subleaseISUcookie);
 	next();
 });
 
