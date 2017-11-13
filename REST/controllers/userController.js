@@ -176,7 +176,6 @@
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocation = null;
-		var auth = false;
 		var waitingOnAuth = true;
 
 		form.parse(req, function(err, fields, files) {
@@ -211,7 +210,20 @@
 					} else {
 						// if authentication is accepted add listeners to save file
 						console.log("Authentication Accepted");
-						auth = true;
+
+						User.findOneAndUpdate({username: fields.username}, {profilePictureLocation: fileLocation}, {new: true}, function(err, user) {
+							if(user == null) { // don't forget to check this is all functions
+								res.status(401).send({
+									"error": "username not recognized"
+								});
+								return;
+							}
+
+							if (err) {
+								res.status(500).send(err);
+							}
+						res.status(200).json(user);
+						});
 					}
 				});
 			}
