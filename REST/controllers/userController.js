@@ -113,25 +113,10 @@
 	};
 
 	exports.authAndReturnCookie = function(req, res){
-		//console.log(req);
-		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
-			if(user == null) { // don't forget to check this is all functions
-				res.status(401).send({
-					"error": "username not recognized"
-				});
-				return;
-			}
-
-			if (err) {
-				res.status(500).send(err);
-			}
-			if (user.hashedPassword == req.body.hashedPassword){
+		ah.validateAuth(req, res, function(user){
+			if(user != null) {
 				res.status(200).json({
 					"subleaseISUcookie": sha1(req.params.username + req.body.hashedPassword + config.salt)
-				});
-			} else {
-				res.status(400).json({
-					"error": "Incorrect password."
 				});
 			}
 		});
