@@ -12,7 +12,7 @@
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
 				res.status(401).send({
-					"error": "Username not recognized"
+					"error": "username not recognized"
 				});
 				cb(null);
 				return;

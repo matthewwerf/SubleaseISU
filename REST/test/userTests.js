@@ -15,23 +15,10 @@ chai.use(chaiHttp);
 // Instantiate Server
 let server = require('../main.js');
 
-
 describe('Users', () => {
 	beforeEach((done) => {
 		User.remove({}, (err) => { // Clear User DB
 			done();
-		});
-	});
-
-	describe('GET non-existant User', () => {
-		it('Should return error', (done) => {
-			chai.request(server)
-				.get('/users/username')
-				.end((err, res) => {
-					res.should.have.status(401);
-					JSON.parse(res.error.text).error.should.be.eql("username not recognized");
-					done();
-				});
 		});
 	});
 
@@ -54,6 +41,18 @@ describe('Users', () => {
 				});
 			});
 		});
+
+		it('Should error out if user does not exist', (done) =>{
+			chai.request(server)
+				.get('/users/username')
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					res.body.error.should.be.eql('username not recognized');
+					done();
+			});
+		});
 	});
 
 	describe('POST new User', () => {
@@ -74,9 +73,47 @@ describe('Users', () => {
 					done();
 				});
 		});
+
+		it('Should error out if user already exists', (done) => {
+			let newUser = {
+				username: "username",
+				hashedPassword: "hashedPassword"
+			};
+			newUser = new User(newUser);
+			newUser.save((err, user) => {
+				chai.request(server)
+					.post('/users')
+					.send({
+						username: "username"
+					})
+					.end((err, res) => {
+						res.should.have.status(400);
+						res.body.should.be.a('object');
+						res.body.should.have.property('error');
+						res.body.error.should.be.eql('Username already exists');
+						done();
+				});
+			});
+		});
 	});
 
 	describe('Auth Existing User', () => {
+		it('Should error out if user does not exist', (done) => {
+			chai.request(server)
+				.post('/login/username')
+				.send({
+					username: "username",
+					subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
+				})
+				.end((err, res) => {
+					res.should.have.status(401);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					res.body.error.should.be.eql('username not recognized');
+					done();
+				});
+		});
+
 		it('Should return cookie on valid auth', (done) => {
 			let newUser = {
 				username: "username",
@@ -98,9 +135,48 @@ describe('Users', () => {
 				});
 			});
 		});
+
+		it('Should error out if auth fails', (done) => {
+			let newUser = {
+				username: "username",
+				hashedPassword: "hashedPassword"
+			};
+			newUser = new User(newUser);
+			newUser.save((err, user) => {
+				chai.request(server)
+					.post('/login/username')
+					.send({
+						username: "username",
+						subleaseISUcookie: "incorrect"
+					})
+					.end((err, res) => {
+						res.should.have.status(400);
+						res.body.should.be.a('object');
+						res.body.should.have.property('error');
+						res.body.error.should.be.eql('Incorrect cookie');
+						done();
+				});
+			});
+		});
 	});
 
 	describe('PUT existing User', () => {
+		it('Should error out if user does not exist', (done) => {
+			chai.request(server)
+				.put('/users/username')
+				.send({
+					username: "username",
+					subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
+				})
+				.end((err, res) => {
+					res.should.have.status(401);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					res.body.error.should.be.eql('username not recognized');
+					done();
+				});
+		});
+
 		it('Should update valid user', (done) =>{
 			let newUser = {
 				username: "username",
@@ -126,6 +202,29 @@ describe('Users', () => {
 				});
 			});
 		});
+
+		it('Should error out if auth fails', (done) => {
+			let newUser = {
+				username: "username",
+				hashedPassword: "hashedPassword"
+			};
+			newUser = new User(newUser);
+			newUser.save((err, user) => {
+				chai.request(server)
+					.put('/users/username')
+					.send({
+						username: "username",
+						subleaseISUcookie: "incorrect"
+					})
+					.end((err, res) => {
+						res.should.have.status(400);
+						res.body.should.be.a('object');
+						res.body.should.have.property('error');
+						res.body.error.should.be.eql('Incorrect cookie');
+						done();
+				});
+			});
+		});
 	});
 
 	describe('DELETE existing User', () => {
@@ -140,7 +239,7 @@ describe('Users', () => {
 					res.should.have.status(401);
 					res.body.should.be.a('object');
 					res.body.should.have.property('error');
-					res.body.error.should.be.eql('Username not recognized');
+					res.body.error.should.be.eql('username not recognized');
 					done();
 				});
 		});
@@ -192,8 +291,5 @@ describe('Users', () => {
 		});
 
 	});
-
-
-
 
 });

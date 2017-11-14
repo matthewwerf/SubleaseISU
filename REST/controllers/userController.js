@@ -64,7 +64,7 @@
 	exports.getSpecificUser = function(req, res) {
 		User.findOne({username: req.params.username}, function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
-				res.status(401).send({
+				res.status(404).send({
 					"error": "username not recognized"
 				});
 				return;
@@ -130,7 +130,7 @@
 				});
 			} else {
 				res.status(400).json({
-					"error": "Incorrect password."
+					"error": "Incorrect cookie"
 				});
 			}
 		});
