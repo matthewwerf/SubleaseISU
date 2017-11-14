@@ -111,7 +111,6 @@ describe('Users', () => {
 				chai.request(server)
 					.put('/users/username')
 					.send({
-						hashedPassword: "hashedPassword",
 						username: "username",
 						subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c",
 						email: "newEmailTest@test.com"
@@ -129,7 +128,23 @@ describe('Users', () => {
 		});
 	});
 
-	describe('DELTED existing User', () => {
+	describe('DELETE existing User', () => {
+		it('Should error out if user does not exist', (done) => {
+			chai.request(server)
+				.delete('/users/username')
+				.send({
+					username: "username",
+					subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
+				})
+				.end((err, res) => {
+					res.should.have.status(401);
+					res.body.should.be.a('object');
+					res.body.should.have.property('error');
+					res.body.error.should.be.eql('Username not recognized');
+					done();
+				});
+		});
+
 		it('Should delete valid user', (done) =>{
 			let newUser = {
 				username: "username",
@@ -140,7 +155,6 @@ describe('Users', () => {
 				chai.request(server)
 					.delete('/users/username')
 					.send({
-						hashedPassword: "hashedPassword",
 						username: "username",
 						subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
 					})
@@ -153,6 +167,30 @@ describe('Users', () => {
 				});
 			});
 		});
+
+		it('Should error out if auth fails', (done) => {
+			let newUser = {
+				username: "username",
+				hashedPassword: "hashedPassword"
+			};
+			newUser = new User(newUser);
+			newUser.save((err, user) => {
+				chai.request(server)
+					.delete('/users/username')
+					.send({
+						username: "username",
+						subleaseISUcookie: "incorrect"
+					})
+					.end((err, res) => {
+						res.should.have.status(400);
+						res.body.should.be.a('object');
+						res.body.should.have.property('error');
+						res.body.error.should.be.eql('Incorrect cookie');
+						done();
+				});
+			});
+		});
+
 	});
 
 
