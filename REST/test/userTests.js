@@ -22,7 +22,7 @@ describe('Users', () => {
 		});
 	});
 
-	describe('GET existing User', () => {
+	describe('GET User', () => {
 		it('Should retrieve valid user', (done) =>{
 			let newUser = {
 				username: "username",
@@ -55,7 +55,7 @@ describe('Users', () => {
 		});
 	});
 
-	describe('POST new User', () => {
+	describe('POST User', () => {
 		it('Should create user with all reqs', (done) => {
 			let newUser = {
 				username: "Username",
@@ -97,7 +97,7 @@ describe('Users', () => {
 		});
 	});
 
-	describe('Auth Existing User', () => {
+	describe('Auth User', () => {
 		it('Should error out if user does not exist', (done) => {
 			chai.request(server)
 				.post('/login/username')
@@ -160,7 +160,7 @@ describe('Users', () => {
 		});
 	});
 
-	describe('PUT existing User', () => {
+	describe('PUT User', () => {
 		it('Should error out if user does not exist', (done) => {
 			chai.request(server)
 				.put('/users/username')
@@ -227,7 +227,7 @@ describe('Users', () => {
 		});
 	});
 
-	describe('DELETE existing User', () => {
+	describe('DELETE User', () => {
 		it('Should error out if user does not exist', (done) => {
 			chai.request(server)
 				.delete('/users/username')
