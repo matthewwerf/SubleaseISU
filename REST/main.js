@@ -35,12 +35,13 @@ app.use(function(req, res, next) { // allow CORS
   next();
 });
 
-
-app.use(function(req, res, next) {
-	//console.log(req);
-	winston.info('%s Request: To: %s, From: %s, Cookie: %s', req.method, req.url, req.body.username, req.body.subleaseISUcookie);
-	next();
-});
+if (process.env.NODE_ENV != 'test') {
+	app.use(function(req, res, next) {
+		//console.log(req);
+		winston.info('%s Request: To: %s, From: %s, Cookie: %s', req.method, req.url, req.body.username, req.body.subleaseISUcookie);
+		next();
+	});
+}
 
 //var routes = require('./routes/userRoutes')(app); // depreciated method
 var messageRoutes = require('./routes/messageRoutes'); // importing routes to messaging sockets
