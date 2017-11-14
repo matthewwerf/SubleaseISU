@@ -111,16 +111,18 @@ describe('Users', () => {
 				chai.request(server)
 					.put('/users/username')
 					.send({
-						hashedPassword: "newHashedPassword",
+						hashedPassword: "hashedPassword",
 						username: "username",
-						subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c"
+						subleaseISUcookie: "f069d9f42153600e1ad8d8106aa12411760ae79c",
+						email: "newEmailTest@test.com"
 					})
 					.end((err, res) => {
 						res.should.have.status(200);
 						res.body.should.be.a('object');
 						res.body.should.have.property('username');
 						res.body.should.have.property('hashedPassword');
-						res.body.hashedPassword.should.be.eql('newHashedPassword');
+						res.body.should.have.property('email');
+						res.body.email.should.be.eql('newEmailTest@test.com');
 						done();
 				});
 			});
