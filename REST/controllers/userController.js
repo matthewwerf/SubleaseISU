@@ -113,13 +113,28 @@
 	};
 
 	exports.authAndReturnCookie = function(req, res){
-		ah.validateAuth(req, res, function(user){
-			if(user != null) {
+		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
+			if(user == null) { // don't forget to check this is all functions
+				res.status(401).send({
+					"error": "username not recognized"
+				});
+				return;
+			}
+
+			if (err) {
+				res.status(500).send(err);
+			}
+			if (user.hashedPassword == req.body.hashedPassword){
 				res.status(200).json({
 					"subleaseISUcookie": sha1(req.params.username + req.body.hashedPassword + config.salt)
 				});
+			} else {
+				res.status(400).json({
+					"error": "Incorrect password."
+				});
 			}
 		});
+
 	};
 
 	exports.allowRouting = function(req, res) {
@@ -135,7 +150,6 @@
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocation = null;
-		var waitingOnAuth = true;
 
 		form.parse(req, function(err, fields, files) {
 			
@@ -207,31 +221,17 @@
 
 
 	exports.retrieveProfilePic = function(req, res) {
-		if (!req.body.subleaseISUcookie || !req.body.username){
-			res.status(401).send({
-				"error": "not authenticated"
-			});
-			return;
-		} else {
-			User.findOne({username: req.body.username}, function(err, user){
-				if(user == null) { // don't forget to check this is all functions
-					res.status(401).send({
-						"error": "username not recognized"
-					});
-					return;
-				}
-
-				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
-				if(localCookieToCheck != req.body.subleaseISUcookie) {
-					res.status(401).send({
-						"error": "authentication rejected"
-					});
-				} else {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				if(user.profilePictureLocation != null) {
 					res.status(200).sendFile(user.profilePictureLocation);
-					console.log(res);
+				} else {
+					res.status(404).send({
+						"error": "Profile Picture Location Does Not Exist"
+					});
 				}
-			});
-		}
+			}
+		});
 	};
 
 }());
