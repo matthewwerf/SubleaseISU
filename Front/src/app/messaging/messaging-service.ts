@@ -21,10 +21,10 @@ export class MessagingService {
   	}).map(res => {
         return res.json().map(item => {
           return new messageInfo( // Create new message objects
-            item.senderUsername,
-            item.receiverUsername,
-            item.message,
-            item.lastMessage);
+            item,
+            null,
+            null,
+            null);
         });
       });
   }
