@@ -1,3 +1,22 @@
-<p>
-  messaging works!
-</p>
+<body>
+	<table>
+	<tr>
+    	<th>Convo</th>
+      	<th>Link</th>
+		<tr *ngFor="let data of conversations">
+  			<td> {{data.senderUsername}}</td>
+  			<td> <a [routerLink]="['/../messageUser', data.senderUsername]"> View Listing </a></td>
+		</tr>
+</table>
+
+
+
+
+
+</body>
+  
+
+
+
+
+<router-outlet></router-outlet>

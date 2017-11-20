@@ -23,13 +23,10 @@ export class AuthService implements CanActivate {
 			username: localStorage.getItem('username'),
 			subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
 		}).map(res => {
-			console.log(res);
 			if(!res['error']) {
-				console.log("Youre logged in");
 				return true;
 			}
 			else {
-				console.log("Please log in");
 				this.router.navigate(['login']);
 				return false;
 			}
