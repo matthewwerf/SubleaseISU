@@ -7,10 +7,20 @@ var express = require("express"),
 	Message = require('./models/messageModel'),
 	bodyParser = require("body-parser");
 
+var config = require('config');
+
 var formidable = require('express-formidable');
 
+var winston = require('winston'),
+	logger = (winston.Logger)({
+		transports: [
+			new (winston.transports.Console)(),
+			new (winston.transports.File)({filename: 'logs/mainLog'})
+		]
+	});
+
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/SubleaseISU')
+mongoose.connect(config.DBHost)
 	.then(() => console.log('database connected'))
 	.catch((err) => console.error(err)); 
 
@@ -25,12 +35,13 @@ app.use(function(req, res, next) { // allow CORS
   next();
 });
 
-
-app.use(function(req, res, next) {
-	//console.log(req);
-	console.log("=============REQ===============");
-	next();
-});
+if (process.env.NODE_ENV != 'test') {
+	app.use(function(req, res, next) {
+		//console.log(req);
+		winston.info('%s Request: To: %s, From: %s, Cookie: %s', req.method, req.url, req.body.username, req.body.subleaseISUcookie);
+		next();
+	});
+}
 
 //var routes = require('./routes/userRoutes')(app); // depreciated method
 var messageRoutes = require('./routes/messageRoutes'); // importing routes to messaging sockets
@@ -43,4 +54,6 @@ propertyRoutes(app);
 app.listen(port); // bind routes to port
 
 console.log("REST api started on: " + port);
+
+module.exports = app;
 

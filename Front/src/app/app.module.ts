@@ -21,6 +21,8 @@ import { BrowseListingsService } from './browse-listings/browse-listings-service
 import { PriceSearchPipe } from './browse-listings/price.search.pipe';
 import { AddressSearchPipe } from './browse-listings/address.search.pipe';
 import { UserInfoService } from './view-profile/user-info-service';
+import { MessagingService } from './messaging/messaging-service';
+
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
@@ -31,6 +33,8 @@ import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
+import { MessagingComponent } from './messaging/messaging.component';
+import { MessageUserComponent } from './message-user/message-user.component';
 
 
 @NgModule({
@@ -44,12 +48,14 @@ import { ViewListingComponent } from './view-listing/view-listing.component';
     CreatePropertyComponent,
     MainPageComponent,
     BrowseListingsComponent,
+    MessagingComponent,
     PictureTestComponent,
     FileSelectDirective,
     ViewProfileComponent,
     AddressSearchPipe,
     PriceSearchPipe,
-    ViewListingComponent
+    ViewListingComponent,
+    MessageUserComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +69,12 @@ import { ViewListingComponent } from './view-listing/view-listing.component';
     Router,
     Ng4FilesModule
   ],
-  providers: [AuthService,
+  providers: [
+    AuthService,
     BrowseListingsService,
-    UserInfoService],
+    UserInfoService,
+    MessagingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

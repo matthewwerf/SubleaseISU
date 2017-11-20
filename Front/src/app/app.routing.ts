@@ -15,6 +15,8 @@ import { AuthService } from './services/auth.service';
 import { PictureTestComponent } from './picture-test/picture-test.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
+import { MessagingComponent } from './messaging/messaging.component';
+import { MessageUserComponent } from './message-user/message-user.component';
 
 
 // This is the router module where you add routes to components (Pages)
@@ -48,6 +50,10 @@ export const ROUTES: Routes = [
         component: ViewListingComponent
     },
     {
+        path: 'messageUser/:senderUsername',
+        component: MessageUserComponent
+    },
+    {
         path: 'login', 
         component: LogInComponentComponent,
         data:{title: 'Log In'}
@@ -60,6 +66,11 @@ export const ROUTES: Routes = [
     {
         path: 'browse',
         component: BrowseListingsComponent,
+        canActivate: [AuthService]
+    },
+    {
+        path: 'messaging',
+        component: MessagingComponent,
         //canActivate: [AuthService]
     },
     {
