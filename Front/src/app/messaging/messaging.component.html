@@ -2,16 +2,10 @@
 	<table>
 	<tr>
     	<th>Convo</th>
-    	<th>Rent</th>
-
-      <th>Link</th>
-
-  		<tr *ngFor="let data of conversations">
+      	<th>Link</th>
+		<tr *ngFor="let data of conversations">
   			<td> {{data.senderUsername}}</td>
-<!--   			<td> {{data.rentValue}}</td>
-  			<td> {{data.leasingAgency}}</td>
-  			<td> {{data.postingMessage}}</td> -->
-<!--         <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td> -->
+  			<td> <a [routerLink]="['/../messageUser', data.senderUsername]"> View Listing </a></td>
 		</tr>
 </table>
 
