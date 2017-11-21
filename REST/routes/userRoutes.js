@@ -32,7 +32,7 @@
 		app.route('/uploadProfilePicture/:username')
 			.post(user.uploadProfilePicture);
 		
-		app.route('/retrieveProfilePic/:username')
+		app.route('/retrieveProfilePicture/:username')
 			.post(user.retrieveProfilePic);
 	};
 }());
