@@ -224,7 +224,8 @@
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
 				if(user.profilePictureLocation != null) {
-					res.status(200).sendFile(user.profilePictureLocation);
+					let path = user.profilePictureLocation.replace(/(\s+)/g, '\\$1');
+					res.status(200).sendFile(path);
 				} else {
 					res.status(404).send({
 						"error": "Profile Picture Location Does Not Exist"
