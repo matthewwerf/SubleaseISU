@@ -267,8 +267,8 @@ export class ViewProfileComponent implements OnInit {
       this.isLoaded = true;
     });
 
-    this.profilePictureGrabService.getProfilePic().subscribe( any => {
-      this.retrievePic = any;
+    this.profilePictureGrabService.getProfilePic().subscribe( data => {
+      this.retrievePic = data;
       console.log(this.retrievePic);
     });
 
