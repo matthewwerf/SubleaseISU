@@ -160,7 +160,10 @@
 						}
 						var usernameArray = [];
 						for(var j=0; j<usernames.length; j++){
-							usernameArray.push(usernames[j].senderUsername);
+							let name = usernames[j].senderUsername;
+							if(usernameArray.indexOf(name) == -1) {
+								usernameArray.push(usernames[j].senderUsername);
+							}
 						}
 						res.json(usernameArray);
 					});

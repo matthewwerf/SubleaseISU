@@ -1,5 +1,19 @@
 (function () {'use strict';
 
+	var multer = require('multer'),
+                Storage = multer.diskStorage({
+                        destination: function(req, file, callback) {
+                                callback(null, './Images');
+                        },
+                        filename: function(req, file, callback) {
+                                callback(null, file.fieldname + '-' + req.body.username  + '-' + Date.now());
+                        }
+                }),
+                upload = multer({
+                        storage: Storage
+                });
+
+
 	module.exports = function(app) {
 		var user = require("../controllers/userController");
 
@@ -17,7 +31,7 @@
 
 		app.route('/uploadProfilePicture/:username')
 			.post(user.uploadProfilePicture);
-
+		
 		app.route('/retrieveProfilePic/:username')
 			.post(user.retrieveProfilePic);
 	};

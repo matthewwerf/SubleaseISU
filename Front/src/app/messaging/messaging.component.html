@@ -5,7 +5,7 @@
       	<th>Link</th>
 		<tr *ngFor="let data of conversations">
   			<td> {{data.senderUsername}}</td>
-  			<td> <a [routerLink]="['/../messageUser', data.senderUsername]"> View Listing </a></td>
+  			<td> <a [routerLink]="['/../messageUser', data.senderUsername]"> Message User </a></td>
 		</tr>
 </table>
 
