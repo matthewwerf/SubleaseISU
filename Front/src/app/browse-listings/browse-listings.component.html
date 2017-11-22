@@ -7,6 +7,9 @@
     <h5 id="priceRange" class="dropSelectors">Price Range:</h5>
         <input type="text" [(ngModel)]="lowPrice"  placeholder="Low"><br/><br/>
         <input type="text" [(ngModel)]="highPrice"  placeholder="High"><br/><br/>
+
+    <h5 id="numberOfRoomates" class="dropSelectors">Max Number of Roommates:</h5>
+        <input type="text" [(ngModel)]="roommateNumber" placeholder="Max Number of Roommates">
 	</div>
 </div>
 <div style="float: right;">
@@ -16,13 +19,17 @@
     	<th>Rent</th>
     	<th>Leasing Agency</th>
     	<th>Description</th>
+      <th>Number of Roommates</th>
+      <th>Personal Bathroom</th>
       <th>Link</th>
 
-  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice">
+  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice | roommateSearch: roommateNumber">
   			<td> {{data.address}}</td>
   			<td> {{data.rentValue}}</td>
   			<td> {{data.leasingAgency}}</td>
   			<td> {{data.postingMessage}}</td>
+        <td> {{data.roommateQuantity}}</td>
+        <td> {{data.personalBathroom}}</td>
         <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
 		</tr>
 </table>
