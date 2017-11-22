@@ -75,16 +75,16 @@ export class ViewProfileComponent implements OnInit {
     let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
     let fileCount: number = inputEl.files.length;
     let formData: FormData = new FormData();
-    var reader2 = new FileReader();
-    this.profilePic = inputEl.files[0];
-    if(this.profilePic){
-      reader2.readAsDataURL(this.profilePic);
-    }else{
-    }
-    reader2.onload = function(){
-        localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
-        (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
-    }
+    // var reader2 = new FileReader();
+    // this.profilePic = inputEl.files[0];
+    // if(this.profilePic){
+    //   reader2.readAsDataURL(this.profilePic);
+    // }else{
+    // }
+    // reader2.onload = function(){
+    //     localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
+    //     (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
+    // }
 
     formData.append('username', localStorage.getItem('username'));
     formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
@@ -105,8 +105,7 @@ export class ViewProfileComponent implements OnInit {
               console.log("there was an error");
           console.log(err);
               }
-            );
-          
+            );    
     }
 
   }
@@ -264,17 +263,29 @@ export class ViewProfileComponent implements OnInit {
     this.isLoaded = false;
     this.userInfoService.getUserInfo().subscribe( UserInfo => {
       this.UserInfoList = UserInfo;
-      console.log(this.UserInfoList)
+      console.log(this.UserInfoList);
       this.isLoaded = true;
     });
-    this.retrievePic = this.profilePictureGrabService.getProfilePic();
-    console.log(this.retrievePic);
+
+    this.profilePictureGrabService.getProfilePic().subscribe( any => {
+      this.retrievePic = any;
+      console.log(this.retrievePic);
+    });
+
+    var reader2 = new FileReader();
+    this.profilePic = this.retrievePic;
+    if(this.profilePic){
+      reader2.readAsDataURL(this.profilePic);
+    }else{
+    }
+    reader2.onload = function(){
+        //localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
+        (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
+    }
+    
     this.source = [];
   	this.title = 'View or Update Your Profile';
-  	//this.uploader.onAfterAddingFile = (file)=> {file.withCredentials = false;};
-  	// this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-   //      console.log("ImageUpload:uploaded:", item, status, response);
-   //  };
+  	
   }
 
 
