@@ -212,17 +212,17 @@ export class CreatePropertyComponent implements OnInit {
         }, this.header).subscribe(
             res => {
                 //console.log(res);
-                 if(!res['error']){
-          console.log("no error");
-          this.router.navigate(['main']);
-        } else {
-          console.log(res['error']);
-        }
-           //this.router.navigate(['login']);
+                if(!res['error']){
+                  console.log("no error");
+                  this.router.navigate(['main']);
+                } 
+                else {
+                console.log(res['error']);
+                }
             },
             err => {
-            console.log("there was an error");
-        console.log(err);
+              console.log("there was an error");
+              console.log(err);
             }
           );
       //For some reason this.streetAddress logs a value here but not in the code above
