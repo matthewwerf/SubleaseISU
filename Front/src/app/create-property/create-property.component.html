@@ -3,6 +3,29 @@
 	
 	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newAddressForm">	
 		
+		<label>Housing Type: </label>
+		<div id="rates">
+		  	<input type="radio" id="apartment" name="housingType"> Apartment
+		  	<input type="radio" id="house" name="housingType"> House
+		  	 
+		</div>
+
+		<div>
+			Personal Bathroom:
+			<input type="checkbox" id="personalBath" formControlName="personalBathroom">
+		</div>
+		
+		<div>
+			Number of Bathrooms:
+  			<input type="number" id="numBaths" formControlName="bathroomQuantity" min="0" max="10">
+		</div>
+
+		<div>
+			Number of current roommates:
+  			<input type="number" id="numRoommates" formControlName="roommateQuantity" min="0" max="10">
+		</div>
+		
+
 		<label>Street Address: </label>
 		<div class="form-group" [ngClass]="{
 			'has-danger': streetAddress.invalid && streetAddress.dirty,

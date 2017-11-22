@@ -28,6 +28,12 @@ export class CreatePropertyComponent implements OnInit {
   
   newPropertyForm: FormGroup;
   newAddressForm: FormGroup;
+
+  housingType: FormControl;
+  bathroomQuantity: FormControl;
+  roommateQuantity: FormControl;
+  personalBathroom: FormControl;
+
   posterUsername: FormControl;
   leasingAgency: FormControl;
   rentValue: FormControl;
@@ -92,8 +98,10 @@ export class CreatePropertyComponent implements OnInit {
 
   
   createFormControls() {
+    this.posterUsername = new FormControl();
     this.propertyID = new FormControl();
     this.address = new FormControl();
+    this.housingType = new FormControl();
     this.streetAddress = new FormControl('', Validators.required);
     this.city = new FormControl('', Validators.required);
     this.state = new FormControl('', Validators.required);
@@ -101,6 +109,19 @@ export class CreatePropertyComponent implements OnInit {
     this.leasingAgency = new FormControl('', Validators.required);
     this.rentValue = new FormControl('', Validators.required);
     this.postingMessage = new FormControl();
+
+    this.personalBathroom = new FormControl();
+    this.bathroomQuantity = new FormControl();
+    this.roommateQuantity = new FormControl();
+  }
+
+  getHousingType(){
+    if((<HTMLInputElement>document.getElementById('apartment')).checked){
+      this.housingType.setValue("apartment");
+    }
+    else{
+      this.housingType.setValue("house");
+    }
   }
 
   getAddress(){
@@ -109,8 +130,8 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   getPosterUsername() {
-    //How do we retrieve the poster's username?
-    this.posterUsername = new FormControl();
+    
+    this.posterUsername.setValue(localStorage.getItem('username'));
   }
   createPicures() {
     //Still need to figure out how to upload images
@@ -132,12 +153,19 @@ export class CreatePropertyComponent implements OnInit {
       streetAddress: this.streetAddress,
       city: this.city,
       state: this.state,
-      zip: this.zip
+      zip: this.zip,
+      personalBathroom: this.personalBathroom,
+      bathroomQuantity: this.bathroomQuantity,
+      roommateQuantity: this.roommateQuantity
     });
   }
 
   createForm() {
     this.newPropertyForm = new FormGroup ({
+      housingType: this.housingType,
+      personalBathroom: this.personalBathroom,
+      bathroomQuantity: this.bathroomQuantity,
+      roommateQuantity: this.roommateQuantity,
       posterUsername: this.posterUsername,
       address: this.address,
       leasingAgency: this.leasingAgency,
@@ -152,25 +180,35 @@ export class CreatePropertyComponent implements OnInit {
     if (this.newPropertyForm.valid && this.newAddressForm.valid) {
       console.log(this.selectedFiles);
       console.log("New Property Request Submitted");
+      this.getHousingType();
       this.getAddress();
       this.createPropertyID();
       this.createPicures();
-      //console.log(this.newPropertyForm.value);
+      
+      if(!this.personalBathroom.value){
+        this.personalBathroom.setValue(false);
+      }
+      console.log(this.newPropertyForm.value);
+      console.log(this.personalBathroom.value);
       //let headers = new Headers({'Content-Type' : 'application/json'});
       var localUsername = localStorage.getItem('username');
       var d = new Date();
       var shaPropertyID = crypto.SHA1(localUsername + d.getTime()).toString();
       //console.log(shaPropertyID);
       this.http.post('/properties', {
-	  username: localUsername,
-          posterUsername: localUsername,
+	        username: localUsername,
+          housingType: this.housingType.value,
+          personalBathroom: this.personalBathroom.value,
+          bathroomQuantity: this.bathroomQuantity.value,
+          roommateQuantity: this.roommateQuantity.value,
+          posterUsername: this.posterUsername.value,
           leasingAgency: this.leasingAgency.value,
           rentValue: this.rentValue.value,
           address: this.address.value,
           postingMessage: this.postingMessage.value,
           //linkedPictureIDs: this.linkedPictureIDs.value,
           propertyID: shaPropertyID, //change back to use function later
-	  subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
+	        subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
         }, this.header).subscribe(
             res => {
                 //console.log(res);
