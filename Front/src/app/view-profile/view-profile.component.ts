@@ -43,6 +43,8 @@ export class ViewProfileComponent implements OnInit {
 
   imagePreview() 
   {
+      document.getElementById("clearButt").style.display = 'block';
+      document.getElementById("uploadButt").style.display = 'block';
       document.getElementById("previewLabel").style.display = 'block';
       
       if(this.source.length > 0){
@@ -69,22 +71,25 @@ export class ViewProfileComponent implements OnInit {
   }
   
   clear(){
+    (<HTMLInputElement>document.getElementById("previewImage")).value = "";
+    document.getElementById("clearButt").style.display = 'none';
+    document.getElementById("uploadButt").style.display = 'none';
     document.getElementById("previewPic").style.display = 'none';
   }
   uploadGang(){
     let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#previewImage');
     let fileCount: number = inputEl.files.length;
     let formData: FormData = new FormData();
-    // var reader2 = new FileReader();
-    // this.profilePic = inputEl.files[0];
-    // if(this.profilePic){
-    //   reader2.readAsDataURL(this.profilePic);
-    // }else{
-    // }
-    // reader2.onload = function(){
-    //     localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
-    //     (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
-    // }
+    var reader2 = new FileReader();
+    this.profilePic = inputEl.files[0];
+    if(this.profilePic){
+      reader2.readAsDataURL(this.profilePic);
+    }else{
+    }
+    reader2.onload = function(){
+        localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
+        (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
+    }
 
     formData.append('username', localStorage.getItem('username'));
     formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
@@ -269,20 +274,23 @@ export class ViewProfileComponent implements OnInit {
 
     this.profilePictureGrabService.getProfilePic().subscribe( data => {
       this.retrievePic = data;
-      console.log(this.retrievePic);
-    });
-
-    var reader2 = new FileReader();
-    this.profilePic = this.retrievePic;
-    if(this.profilePic){
-      reader2.readAsDataURL(this.profilePic);
-    }else{
-    }
-    reader2.onload = function(){
-        //localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
-        (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
-    }
+      //console.log(this.retrievePic);
     
+
+      var reader2 = new FileReader();
+      this.profilePic = this.retrievePic;
+      if(this.profilePic){
+        //console.log("test")
+        reader2.readAsDataURL(this.profilePic);
+      }else{
+        console.log("wtfffff")
+      }
+      reader2.onload = function(){
+        //localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
+        //console.log("test");
+        (<HTMLImageElement>document.getElementById('profilePic')).src = reader2.result;
+      }
+    });
     this.source = [];
   	this.title = 'View or Update Your Profile';
   	

@@ -24,14 +24,14 @@ export class ProfilePictureGrabService {
       subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
     },
     {
-      responseType: 'text'
+      responseType: 'blob'
     }
     
       
     ).map(data => {
       
-      console.log(data);
-        
+      //console.log(data);
+      return data;  
        
     });
   }
