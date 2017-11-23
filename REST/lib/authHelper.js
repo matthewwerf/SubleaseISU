@@ -34,7 +34,7 @@
 				cb(null);
 				return;
 			}
-			var localCookieToCheck = sha1(req.params.username + user.hashedPassword + config.salt);
+			var localCookieToCheck = sha1(queryUsername + user.hashedPassword + config.salt);
 			if (localCookieToCheck == req.body.subleaseISUcookie){
 				cb(user);
 			} else {

@@ -245,7 +245,7 @@
 								res.status(500).send(err);
 								return;
 							}
-							res.statu(200).json({
+							res.status(200).json({
 								"msg": "Message successfully sent"
 							});
 						});
