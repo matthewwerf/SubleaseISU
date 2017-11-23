@@ -9,7 +9,18 @@
 	 * Returns null on error, user on success
 	 */
 	exports.validateAuth = function(req, res, cb) {
-		User.findOne({username: req.params.username}, function (err, user) {
+		var queryUsername;
+		if(req.params.username != null) {
+			queryUsername = req.params.username;
+		} else if(req.body.username != null) {
+			queryUsername = req.body.username;
+		} else {
+			res.status(400).json({
+				"msg" : "username not provided in request"
+			});
+			return;
+		}
+		User.findOne({username: queryUsername}, function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
 				res.status(401).send({
 					"error": "username not recognized"
