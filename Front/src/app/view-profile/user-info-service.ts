@@ -11,7 +11,6 @@ import 'rxjs/add/operator/catch';
 
 
 
-//: Observable<UserInfo>
 
 @Injectable()
 export class UserInfoService {

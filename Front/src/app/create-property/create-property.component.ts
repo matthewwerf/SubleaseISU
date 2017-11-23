@@ -50,43 +50,43 @@ export class CreatePropertyComponent implements OnInit {
   hashMe: string;
   addressValue: string;
   sha1hash: string; 
-  selectedFiles: any;
-  public imageFolder: Array<File>;
-  public imageFolderSize: number;
+  source: Array<File>;
+  currFile: File;
+  oldFile: File;
+  fileSize: number;
 
-  filesSelect(selectedFiles: Ng4FilesSelected): void {
-    if (selectedFiles.status !== Ng4FilesStatus.STATUS_SUCCESS) {
-      this.selectedFiles = selectedFiles.status;
-      console.log('Error during file uploaded');
+  imagePreview() 
+  {
+      document.getElementById("clearButt").style.display = 'block';
+      document.getElementById("uploadButt").style.display = 'block';
+      document.getElementById("previewLabel").style.display = 'block';
       
-      // Hnadle error statuses here
+      if(this.source.length > 0){
+        this.oldFile = this.source.pop();
+      }
+      this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
+      this.currFile = this.source[0];
+      var reader = new FileReader();
+      console.log(this.source);
       
-      return;
-    }
- 
-    this.selectedFiles = Array.from(selectedFiles.files).map(file => file);
-    var reader = new FileReader();  
+      if(this.source){
+        reader.readAsDataURL(this.currFile);
+        //reader.readAsDataURL(this.oldFile);
+      }
+      else{
+      }
 
-    console.log(this.selectedFiles);
-    this.imageFolderSize = this.imageFolder.push(this.selectedFiles);
-    
-    
+
       reader.onload = function(){
-        (<HTMLImageElement>document.getElementById('image1')).src = reader.result;
-    }
-    if(this.imageFolder){
-        console.log("test")
-        reader.readAsDataURL(this.imageFolder[0]);
-    }
-    else{
-    }
-    console.log('Number of Images: ' + this.imageFolderSize);
-    console.log(this.imageFolder);
+        (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
+        document.getElementById("previewPic").style.display = 'block';
+      }
+
   }
 
 
   ngOnInit() {
-    this.imageFolder = [];
+    this.source = [];
     this.createFormControls();
     this.getPosterUsername();
     this.createPicures();
@@ -135,9 +135,9 @@ export class CreatePropertyComponent implements OnInit {
   }
   createPicures() {
     //Still need to figure out how to upload images
-    this.linkedPictureIDs = new FormControl();
+    //this.linkedPictureIDs = new FormControl();
     //console.log(this.linkedPictureIDs.value);
-    this.linkedPictureIDs.setValue(this.imageFolder);
+    //this.linkedPictureIDs.setValue(this.imageFolder);
   }
 
   createPropertyID() {
@@ -171,14 +171,14 @@ export class CreatePropertyComponent implements OnInit {
       leasingAgency: this.leasingAgency,
       rentValue: this.rentValue,
       postingMessage: this.postingMessage,
-      linkedPictureIDs: this.linkedPictureIDs,
+      //linkedPictureIDs: this.linkedPictureIDs,
       propertyID: this.propertyID
     });
   }
 
   onSubmit() {
     if (this.newPropertyForm.valid && this.newAddressForm.valid) {
-      console.log(this.selectedFiles);
+      //console.log(this.selectedFiles);
       console.log("New Property Request Submitted");
       this.getHousingType();
       this.getAddress();

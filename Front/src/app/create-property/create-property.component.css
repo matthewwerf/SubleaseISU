@@ -1,32 +1,41 @@
 :host {
 	flex-grow: 1;
 	display: flex;
-	justify-content: center;
+	justify-content: left;
 	align-items: center;
 }
-
-/*div.input {
-	position: relative;
+.container3{
+	width: 200px;
+	height: 120px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.container2{
+	width: 200px;
+	height: 120px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.container2 img{
+   	height: auto; 
+   	width: 100%;
+}
+.container2 label{
+	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-div.input label {
-	position: absolute;
-	top: 0;
-	transform: translateY(-50%);
-	left: 10px;
-	background: white;
-	padding: 5px 2px;
+.column {
+    float: left;
+    width: 50%;
 }
 
-div.input input {
-	padding: 10px 20px;
-	font-size: 25px;
-	outline: 0;
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    margin-bottom: 10px;
 }
-
-div.input {
-	margin-top: 40px;
-}*/
 
 .form-control {
 	text-align: left;
