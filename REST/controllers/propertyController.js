@@ -6,7 +6,26 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
+	// Library to make requests
 	var axios = require('axios');
+
+	// Config for seperate env configurations
+	var nodeConfig = require('config');
+
+	// Library to send email
+	var nodemailer = require('nodemailer'),
+		transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: nodeConfig.NODEMAILER_EMAIL_USERNAME,
+				pass: nodeConfig.NODEMAILER_EMAIL_PASSWORD
+			}
+		});
+
+	const nodemailerEmail = nodeConfig.NODEMAILER_EMAIL;
+
+	// Auth Helper
+	var ah = require('../lib/authHelper.js');
 
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -182,11 +201,67 @@
 				}
 			});
 		}
-
-		
-
-
 	};
+
+	exports.sendEmailToPropertyOwner = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+					
+					User.findOne({username: property.posterUsername}, function(err, propertyOwner) {
+						if (err) {
+							res.status(500).send(err);
+							return;
+						} else if(propertyOwner == null) {
+							res.status(404).json({
+								"msg": "property posterUsername could not be found"
+							});
+							return;
+						} else if(propertyOwner.email == null) {
+							res.status(400).json({
+								"msg": "property owner did not provide email address"
+							});
+							return;
+						}
+
+						const mailOptions = {
+							from: nodemailerEmail,
+							to: propertyOwner.email,
+							subject: req.body.subject,
+							html: req.body.messageHTML
+						};
+
+						transporter.sendMail(mailOptions, function(err, info) {
+							if (err) {
+								res.status(500).send(err);
+								return;
+							}
+							res.statu(200).json({
+								"msg": "Message successfully sent"
+							});
+						});
+
+					});
+
+				});
+			}
+		});
+	};
+
+
+
+
+
+
 
 
 }());

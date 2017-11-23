@@ -13,5 +13,9 @@
 			.post(property.getSpecificProperty)
 			.put(property.updateSpecificProperty)
 			.delete(property.deleteSpecificProperty);
+
+		app.route('/emailOwner/:propertyID')
+			.post(property.sendEmailToPropertyOwner);
+
 	};
 }());

@@ -1,3 +1,6 @@
 {
-	"DBHost": "mongodb://127.0.0.1:27017/Test"
+	"DBHost": "mongodb://127.0.0.1:27017/Test",
+	"NODEMAILER_EMAIL_USERNAME": "309projectemail",
+	"NODEMAILER_EMAIL_PASSWORD": "309Project",
+	"NODEMAILER_EMAIL": "309projectemail@gmail.com"
 }
