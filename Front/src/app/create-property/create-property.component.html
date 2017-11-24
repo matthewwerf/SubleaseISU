@@ -25,58 +25,70 @@
   			<input type="number" id="numRoommates" formControlName="roommateQuantity" min="0" max="10">
 		</div>
 		
-
-		<label>Street Address: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': streetAddress.invalid && streetAddress.dirty,
-			'has-success': streetAddress.valid && streetAddress.dirty}">
-			<input type="text" class="form-control" formControlName="streetAddress" required placeholder="Enter Street Address">
+		<div class="row">
 			
-		</div>
+			<div class="column">
+				<label>Street Address: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': streetAddress.invalid && streetAddress.dirty,
+					'has-success': streetAddress.valid && streetAddress.dirty}">
+					<input type="text" class="form-control" formControlName="streetAddress" required placeholder="Enter Street Address">
+				</div>
+			</div>
 
-		<label>City: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': city.invalid && city.dirty,
-			'has-success': city.valid && city.dirty}">
-			<input type="text" class="form-control" formControlName="city" required placeholder="Enter City">
-			
-		</div>
+			<div class="column">
+				<label>City: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': city.invalid && city.dirty,
+					'has-success': city.valid && city.dirty}">
+					<input type="text" class="form-control" formControlName="city" required placeholder="Enter City">
+					
+				</div>
+			</div>
 
-		<label>State: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': state.invalid && state.dirty,
-			'has-success': state.valid && state.dirty}">
-			<input type="text" class="form-control" formControlName="state" required placeholder="Enter State (i.e MN, IA, Ca)">
-			
-		</div>
+			<div class="column">
+				<label>State: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': state.invalid && state.dirty,
+					'has-success': state.valid && state.dirty}">
+					<input type="text" class="form-control" formControlName="state" required placeholder="Enter State (i.e MN, IA, Ca)">
+					
+				</div>
+			</div>
 
-		<label>Zip Code: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': zip.invalid && zip.dirty,
-			'has-success': zip.valid && zip.dirty}">
-			<input type="text" class="form-control" formControlName="zip" required placeholder="Enter Zip Code">
-			
+			<div class="column">
+				<label>Zip Code: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': zip.invalid && zip.dirty,
+					'has-success': zip.valid && zip.dirty}">
+					<input type="text" class="form-control" formControlName="zip" required placeholder="Enter Zip Code">
+					
+				</div>
+			</div>
 		</div>
 	</form>	
 	<form (ngSubmit)="onSubmit()" novalidate [formGroup]="newPropertyForm">
 
-		<label>Leasing Agency: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': leasingAgency.invalid && leasingAgency.dirty,
-			'has-success': leasingAgency.valid && leasingAgency.dirty}">
+		<div class="row">
+			<div class="column">
+				<label>Leasing Agency: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': leasingAgency.invalid && leasingAgency.dirty,
+					'has-success': leasingAgency.valid && leasingAgency.dirty}">
 
-			<input type="text" class="form-control" formControlName="leasingAgency" required placeholder="Enter leasing agency (i.e 23Twenty)">
-			
+					<input type="text" class="form-control" formControlName="leasingAgency" required placeholder="Enter leasing agency (i.e 23Twenty)">
+				</div>	
+			</div>
+
+			<div class="column">
+				<label>Requested Rent: </label>
+				<div class="form-group" [ngClass]="{
+					'has-danger': rentValue.invalid && rentValue.dirty,
+					'has-success': rentValue.valid && rentValue.dirty}">	
+					<input required class="form-control" formControlName="rentValue" type="number" step="0.01"  placeholder="Enter desired rent amount">
+				</div>	
+			</div>
 		</div>
-
-		<label>Requested Rent: </label>
-		<div class="form-group" [ngClass]="{
-			'has-danger': rentValue.invalid && rentValue.dirty,
-			'has-success': rentValue.valid && rentValue.dirty}">	
-			<input required class="form-control" formControlName="rentValue" type="number" step="0.01"  placeholder="Enter desired rent amount">
-			
-		</div>
-
 		<label>Give a short description of the property: </label>
 		<div class="form-group" [ngClass]="{
 			'has-danger': postingMessage.invalid && postingMessage.dirty,
@@ -87,25 +99,34 @@
 		</div>
 
 		<label>Test Pic upload</label>
-		<div>
-		<ng4-files-click (filesSelect)="filesSelect($event)">
-  		<span>Click me to upload</span>
-		</ng4-files-click>
-		</div>
-
-		<div class="container">
-			<label id="propertyPreviewLabel" >Picture Preview:</label>
-			<img src="" id="image1" />
-			<img src="" id="image2"/>
-		</div>
-		<!-- <input type="file" #fileInput placeholder="Upload file..." />
-		<button type="button" (click)="upload()">Upload</button> -->
-
-		<div>
-			<span id="errorMsg"></span>
-		</div>
+		<div class="row">
+			<div class="column">
+				<input id="previewImage" type="file" (change)="imagePreview();" />
+				<button type="button" id="uploadButt" style="display: none;" class="btn btn-success btn-s" (click)="uploadGang()">
+					Update Profile Picture
+				</button>
+				<button type="button" id="clearButt" class="btn btn-success btn-s" style="display: none;" (click)="clear()">
+					Clear
+				</button>
+			
+				<div id="previewPic" class="container2">
+					<label id="previewLabel" style="display: none;"> Picture Preview:</label>
+					<img src="" id="preview" />
+					<img src="" id="preview2" />
+				</div>
+			</div>
 		
-		<button type="submit" class="btn btn-primary" >Submit</button>
+
+		
+			<div class="column">
+				<div>
+					<span id="errorMsg"></span>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary" >Submit</button>
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 <!-- <pre>{{newAddressForm.value | json}}</pre>

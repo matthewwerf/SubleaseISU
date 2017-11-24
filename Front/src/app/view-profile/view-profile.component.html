@@ -90,10 +90,10 @@
 	
 	
 	<input id="previewImage" type="file" (change)="imagePreview();" />
-	<button type="button" class="btn btn-success btn-s" (click)="uploadGang()">
+	<button type="button" id="uploadButt" style="display: none;" class="btn btn-success btn-s" (click)="uploadGang()">
 		Update Profile Picture
 	</button>
-	<button type="button" class="btn btn-success btn-s" (click)="clear()">
+	<button type="button" id="clearButt" class="btn btn-success btn-s" style="display: none;" (click)="clear()">
 		Clear
 	</button>
 	
