@@ -48,7 +48,10 @@ export class ViewListingComponent implements OnInit {
              res.json().rentValue,
              res.json().address,
              res.json().postingMessage,
-             res.json().propertyID);
+             res.json().propertyID,
+             res.json().bathroomQuantity,
+             res.json().roommateQuantity,
+             res.json().personalBathroom);
       });
   }
 }
