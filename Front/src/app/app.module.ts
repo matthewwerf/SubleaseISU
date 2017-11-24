@@ -21,6 +21,7 @@ import { BrowseListingsService } from './browse-listings/browse-listings-service
 import { PriceSearchPipe } from './browse-listings/price.search.pipe';
 import { AddressSearchPipe } from './browse-listings/address.search.pipe';
 import { RoommateSearchPipe } from './browse-listings/roommate.search.pipe';
+import { PersonalBathroomSearchPipe } from './browse-listings/personal.bathroom.search.pipe';
 import { UserInfoService } from './view-profile/user-info-service';
 import { MessagingService } from './messaging/messaging-service';
 import { ProfilePictureGrabService } from './view-profile/profile-picture-grab-service';
@@ -56,6 +57,7 @@ import { MessageUserComponent } from './message-user/message-user.component';
     AddressSearchPipe,
     PriceSearchPipe,
     RoommateSearchPipe,
+    PersonalBathroomSearchPipe,
     ViewListingComponent,
     MessageUserComponent
   ],

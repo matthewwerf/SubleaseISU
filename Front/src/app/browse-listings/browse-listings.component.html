@@ -10,6 +10,8 @@
 
     <h5 id="numberOfRoomates" class="dropSelectors">Max Number of Roommates:</h5>
         <input type="text" [(ngModel)]="roommateNumber" placeholder="Max Number of Roommates">
+    <h5 id="personalBathroom" class="dropSelectors">Personal Bathroom</h5>
+        <input type="checkbox" name="needPersonalBathroom1" [(ngModel)]="needPersonalBathroom" onchange="this.form.submit()">
 	</div>
 </div>
 <div style="float: right;">
@@ -23,7 +25,7 @@
       <th>Personal Bathroom</th>
       <th>Link</th>
 
-  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice | roommateSearch: roommateNumber">
+  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice | roommateSearch: roommateNumber | personalBathroomSearch: needPersonalBathroom">
   			<td> {{data.address}}</td>
   			<td> {{data.rentValue}}</td>
   			<td> {{data.leasingAgency}}</td>
