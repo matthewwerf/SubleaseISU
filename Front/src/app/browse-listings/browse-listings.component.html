@@ -17,6 +17,7 @@
     	<th>Leasing Agency</th>
     	<th>Description</th>
       <th>Link</th>
+      <th>Comments</th>
 
   		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice">
   			<td> {{data.address}}</td>
@@ -24,6 +25,7 @@
   			<td> {{data.leasingAgency}}</td>
   			<td> {{data.postingMessage}}</td>
         <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
+        <td> <a [routerLink]="['/../listingComments', data.propertyId, data.address]"> Comments </a></td>
 		</tr>
 </table>
 <div>

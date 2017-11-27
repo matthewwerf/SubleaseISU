@@ -28,13 +28,12 @@ import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 
-
-import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageUserComponent } from './message-user/message-user.component';
+import { ListingCommentsComponent } from './listing-comments/listing-comments.component';
 
 
 @NgModule({
@@ -49,13 +48,13 @@ import { MessageUserComponent } from './message-user/message-user.component';
     MainPageComponent,
     BrowseListingsComponent,
     MessagingComponent,
-    PictureTestComponent,
     FileSelectDirective,
     ViewProfileComponent,
     AddressSearchPipe,
     PriceSearchPipe,
     ViewListingComponent,
-    MessageUserComponent
+    MessageUserComponent,
+    ListingCommentsComponent
   ],
   imports: [
     BrowserModule,
