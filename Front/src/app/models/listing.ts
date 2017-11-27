@@ -1,3 +1,4 @@
+import { Comment } from './comment';
 export class ListingInfo {
 	_id: string;
 	posterUsername: string;
@@ -9,8 +10,11 @@ export class ListingInfo {
 	bathroomQuantity: number;
 	roommateQuantity: number;
 	personalBathroom: boolean;
+	comments: Comment[];
 
-	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number, address: string, postingMessage: string, propertyId: string, bathroomQuantity: number, roommateQuantity: number, personalBathroom: boolean) {
+	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number,
+				address: string, postingMessage: string, propertyId: string, bathroomQuantity: number,
+				roommateQuantity: number, personalBathroom: boolean, comments: Comment[]) {
 		this._id = id;
 		this.posterUsername = posterUsername;
 		this.leasingAgency = leasingAgency;
@@ -21,5 +25,6 @@ export class ListingInfo {
 		this.bathroomQuantity = bathroomQuantity;
 		this.roommateQuantity = roommateQuantity;
 		this.personalBathroom = personalBathroom;
+		this.comments = comments;
 	}
 }
