@@ -32,7 +32,10 @@ export class BrowseListingsService {
             item.rentValue,
             item.address,
             item.postingMessage,
-            item.propertyID);
+            item.propertyID,
+            item.bathroomQuantity,
+            item.roommateQuantity,
+            item.personalBathroom);
         });
       });
   }

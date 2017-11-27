@@ -7,6 +7,11 @@
     <h5 id="priceRange" class="dropSelectors">Price Range:</h5>
         <input type="text" [(ngModel)]="lowPrice"  placeholder="Low"><br/><br/>
         <input type="text" [(ngModel)]="highPrice"  placeholder="High"><br/><br/>
+
+    <h5 id="numberOfRoomates" class="dropSelectors">Max Number of Roommates:</h5>
+        <input type="text" [(ngModel)]="roommateNumber" placeholder="Max Number of Roommates">
+    <h5 id="personalBathroom" class="dropSelectors">Personal Bathroom</h5>
+        <input type="checkbox" name="needPersonalBathroom1" [(ngModel)]="needPersonalBathroom" onchange="this.form.submit()">
 	</div>
 </div>
 <div style="float: right;">
@@ -16,14 +21,18 @@
     	<th>Rent</th>
     	<th>Leasing Agency</th>
     	<th>Description</th>
+      <th>Number of Roommates</th>
+      <th>Personal Bathroom</th>
       <th>Link</th>
       <th>Comments</th>
 
-  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice">
+  		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice | roommateSearch: roommateNumber | personalBathroomSearch: needPersonalBathroom">
   			<td> {{data.address}}</td>
   			<td> {{data.rentValue}}</td>
   			<td> {{data.leasingAgency}}</td>
   			<td> {{data.postingMessage}}</td>
+        <td> {{data.roommateQuantity}}</td>
+        <td> {{data.personalBathroom}}</td>
         <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
         <td> <a [routerLink]="['/../listingComments', data.propertyId, data.address]"> Comments </a></td>
 		</tr>
