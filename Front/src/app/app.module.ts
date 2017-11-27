@@ -29,6 +29,8 @@ import { ProfilePictureGrabService } from './view-profile/profile-picture-grab-s
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
+import { ChatServiceService } from './services/chat-service.service';
+import { WebSocketService } from './services/web-socket.service';
 
 
 import { PictureTestComponent } from './picture-test/picture-test.component';
@@ -78,7 +80,9 @@ import { MessageUserComponent } from './message-user/message-user.component';
     BrowseListingsService,
     UserInfoService,
     MessagingService,
-    ProfilePictureGrabService
+    ProfilePictureGrabService,
+    WebSocketService,
+    ChatServiceService
   ],
   bootstrap: [AppComponent]
 })
