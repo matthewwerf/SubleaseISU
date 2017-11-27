@@ -14,7 +14,8 @@
 		latitude: String,
 		bathroomQuantity: Number,
 		roommateQuantity: Number,
-		personalBathroom: Boolean
+		personalBathroom: Boolean,
+		comments: Object
 	});
 
 	module.exports = mongoose.model('Property', propertySchema);

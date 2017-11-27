@@ -257,7 +257,47 @@
 		});
 	};
 
+	exports.addComment = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
 
+					var propertyComments = property.comments;
+					if(propertyComments == null) {
+						propertyComments = [];
+					}
+
+					var newComment = {
+						commentPosterUsername: req.body.username,
+						timePosted: Date.now(),
+						message: req.body.message
+					};
+
+					propertyComments.push(newComment);
+
+					var updatedProperty = property;
+					updatedProperty.comments = propertyComments;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
+	};
 
 
 
