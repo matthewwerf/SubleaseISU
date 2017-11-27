@@ -14,7 +14,7 @@
 			.put(property.updateSpecificProperty)
 			.delete(property.deleteSpecificProperty);
 
-		app.route('propertyComment/:propertyID')
+		app.route('/propertyComment/:propertyID')
 			.post(property.addComment);
 
 		app.route('/emailOwner/:propertyID')
