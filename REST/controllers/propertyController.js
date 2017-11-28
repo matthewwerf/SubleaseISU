@@ -355,7 +355,7 @@
 					var newRating = {
 						ratingPosterUsername: req.body.username,
 						timePosted: getDateTime(),
-						rating: req.body.rating
+						rating: rateInt
 					};
 
 					propertyRatings.push(newRating);
