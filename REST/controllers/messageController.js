@@ -98,6 +98,7 @@
 			if (user != null) {
 				var newMessage = Message(req.body);
 				newMessage.timeSent = getDateTime();
+				newMessage.jsTime = Date.now();
 
 				newMessage.save(function (err, message) {
 					if(err) {
@@ -162,6 +163,7 @@
 						return;
 					}
 
+					/*
 					var lastYear = messageArray[messageArray.length - 1].timeSent.substring(0,4);
 					var lastMonth = messageArray[messageArray.length - 1].timeSent.substring(5,7);
 					var lastDay = messageArray[messageArray.length - 1].timeSent.substring(8,10);
@@ -170,7 +172,7 @@
 					var lastSecond = messageArray[messageArray.length - 1].timeSent.substring(17,19);
 
 					console.log(lastYear + lastMonth + lastDay + lastHour + lastMinute + lastSecond);
-
+					*/
 
 					for(var message in messages) {
 						messageArray.push(messages[message]);
