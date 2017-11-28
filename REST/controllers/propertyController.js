@@ -344,6 +344,14 @@
 						propertyRatings = [];
 					}
 
+					var rateInt = parseInt(req.body.rating);
+					if(rateInt == null || rateInt < 1 || rateInt > 5) {
+						res.status(400).json({
+							"msg" : "rating was not an integer between 1 and 5"
+						});
+						return;
+					}
+
 					var newRating = {
 						ratingPosterUsername: req.body.username,
 						timePosted: getDateTime(),
