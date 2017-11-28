@@ -162,12 +162,12 @@
 						return;
 					}
 
-					var lastYear = messageArray[messageArray.length].timeSent.substring(0,4);
-					var lastMonth = messageArray[messageArray.length].timeSent.substring(5,7);
-					var lastDay = messageArray[messageArray.length].timeSent.substring(8,10);
-					var lastHour = messageArray[messageArray.length].timeSent.substring(11,13);
-					var lastMinute = messageArray[messageArray.length].timeSent.substring(14,16);
-					var lastSecond = messageArray[messageArray.length].timeSent.substring(17,19);
+					var lastYear = messageArray[messageArray.length - 1].timeSent.substring(0,4);
+					var lastMonth = messageArray[messageArray.length - 1].timeSent.substring(5,7);
+					var lastDay = messageArray[messageArray.length - 1].timeSent.substring(8,10);
+					var lastHour = messageArray[messageArray.length - 1].timeSent.substring(11,13);
+					var lastMinute = messageArray[messageArray.length - 1].timeSent.substring(14,16);
+					var lastSecond = messageArray[messageArray.length - 1].timeSent.substring(17,19);
 
 					console.log(lastYear + lastMonth + lastDay + lastHour + lastMinute + lastSecond);
 
