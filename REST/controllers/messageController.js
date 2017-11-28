@@ -176,7 +176,6 @@
 
 					// try to merge both
 					while(firstArrayDate != null && secondArrayDate != null) {
-						console.log(firstArrayDate + '===' + secondArrayDate + '===' + (firstArrayDate > secondArrayDate));
 						if(firstArrayDate > secondArrayDate) {
 							mergedMessageArray.push(messages[secondArrayIndex]);
 							secondArrayIndex++;
