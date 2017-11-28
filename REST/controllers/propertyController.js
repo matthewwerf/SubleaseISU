@@ -390,11 +390,11 @@
 
 			var sum = 0, count =0;
 			for (var rating in property.ratings) {
-				sum += rating.rating;
+				sum += property.ratings[rating].rating;
 				count++;
 			}
 
-			res.send(200).json({
+			res.status(200).json({
 				"avgRating" : sum/count
 			});
 		});
