@@ -325,7 +325,7 @@
 
 	}
 
-	exports.addComment = function(req, res) {
+	exports.addRating = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
 				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
