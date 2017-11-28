@@ -25,6 +25,7 @@ import { PersonalBathroomSearchPipe } from './browse-listings/personal.bathroom.
 import { UserInfoService } from './view-profile/user-info-service';
 import { MessagingService } from './messaging/messaging-service';
 import { ProfilePictureGrabService } from './view-profile/profile-picture-grab-service';
+import { WebSocketService } from './services/web-socket.service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
@@ -78,6 +79,7 @@ import { MessageUserComponent } from './message-user/message-user.component';
     BrowseListingsService,
     UserInfoService,
     MessagingService,
+    WebSocketService,
     ProfilePictureGrabService
   ],
   bootstrap: [AppComponent]
