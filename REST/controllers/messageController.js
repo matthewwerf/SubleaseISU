@@ -141,88 +141,89 @@
 	exports.getHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
-				var messageArray = [];
+				//var messageArray = [];
 
 				Message.find({
 					receiverUsername: req.body.username,
 					senderUsername: req.params.usernameOfSender
-				}, function(err, messages) {
+				}, function(err, messageArray) {
 					if(err) {
 						res.send(err);
 						return;
 					}
-					messageArray = messages;
-				});
+					//messageArray = messages;
 
-				Message.find({
-					receiverUsername: req.params.usernameOfSender,
-					senderUsername: req.body.username
-				}, function(err, messages) {
-					if(err) {
-						res.send(err);
-						return;
-					}
+					Message.find({
+						receiverUsername: req.params.usernameOfSender,
+						senderUsername: req.body.username
+					}, function(err, messages) {
+						if(err) {
+							res.send(err);
+							return;
+						}
 
-					// messageArray
-					var firstArrayIndex = 0;
-					var firstArrayDate = messageArray[firstArrayIndex]['jsTime'].valueOf();
-					
-					// messages
-					var secondArrayIndex = 0;
-					var secondArrayDate = messages[secondArrayIndex]['jsTime'].valueOf();
-					
-					// result
-					var mergedMessageArray = [];
+						// messageArray
+						var firstArrayIndex = 0;
+						var firstArrayDate = messageArray[firstArrayIndex].jsTime.valueOf();
+						
+						// messages
+						var secondArrayIndex = 0;
+						var secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
+						
+						// result
+						var mergedMessageArray = [];
 
-					// try to merge both
-					while(firstArrayDate != null && secondArrayDate != null) {
-						if(firstArrayDate > secondArrayDate) {
+						// try to merge both
+						while(firstArrayDate != null && secondArrayDate != null) {
+							if(firstArrayDate > secondArrayDate) {
+								mergedMessageArray.push(messages[secondArrayIndex]);
+								secondArrayIndex++;
+								try {
+									secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
+								}
+								catch (error) {
+									secondArrayDate = null;
+								}
+							} else{
+								mergedMessageArray.push(messageArray[firstArrayIndex]);
+								firstArrayIndex++;
+								try {
+									firstArrayDate = messageArray[firstArrayIndex].jsTime.valueOf();
+								}
+								catch (error) {
+									firstArrayDate = null;
+								}
+							}
+						}
+
+						// first array emptied
+						while(secondArrayDate != null) {
 							mergedMessageArray.push(messages[secondArrayIndex]);
 							secondArrayIndex++;
 							try {
-								secondArrayDate = messages[secondArrayIndex]['jsTime'].valueOf();
+								secondArrayDate = messages[secondArrayIndex].jsTime.getTime();
 							}
 							catch (error) {
 								secondArrayDate = null;
 							}
-						} else{
+						}
+
+						// second array emptied
+						while(firstArrayDate != null) {
 							mergedMessageArray.push(messageArray[firstArrayIndex]);
 							firstArrayIndex++;
 							try {
-								firstArrayDate = messageArray[firstArrayIndex]['jsTime'].valueOf();
+								firstArrayDate = messageArray[firstArrayIndex].jsTime.getTime();
 							}
 							catch (error) {
 								firstArrayDate = null;
 							}
 						}
-					}
 
-					// first array emptied
-					while(secondArrayDate != null) {
-						mergedMessageArray.push(messages[secondArrayIndex]);
-						secondArrayIndex++;
-						try {
-							secondArrayDate = messages[secondArrayIndex]['jsTime'].getTime();
-						}
-						catch (error) {
-							secondArrayDate = null;
-						}
-					}
-
-					// second array emptied
-					while(firstArrayDate != null) {
-						mergedMessageArray.push(messageArray[firstArrayIndex]);
-						firstArrayIndex++;
-						try {
-							firstArrayDate = messageArray[firstArrayIndex]['jsTime'].getTime();
-						}
-						catch (error) {
-							firstArrayDate = null;
-						}
-					}
-
-					res.status(200).json(mergedMessageArray);
+						res.status(200).json(mergedMessageArray);
+					});
 				});
+
 			}
 		});
 	};
