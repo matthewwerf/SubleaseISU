@@ -27,6 +27,7 @@
 	// Auth Helper
 	var ah = require('../lib/authHelper.js');
 
+	// NEED TO ADD FALLBACK WHEN LONG LAT IS NULL
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -324,7 +325,47 @@
 
 	}
 
+	exports.addComment = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
 
+					var propertyRatings = property.ratings;
+					if(propertyRatings == null) {
+						propertyRatings = [];
+					}
+
+					var newRating = {
+						ratingPosterUsername: req.body.username,
+						timePosted: getDateTime(),
+						rating: req.body.rating
+					};
+
+					propertyRatings.push(newRating);
+
+					var updatedProperty = property;
+					updatedProperty.ratings = propertyRatings;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
+	};
 
 
 }());
