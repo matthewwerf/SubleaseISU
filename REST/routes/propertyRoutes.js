@@ -13,5 +13,15 @@
 			.post(property.getSpecificProperty)
 			.put(property.updateSpecificProperty)
 			.delete(property.deleteSpecificProperty);
+
+		app.route('/propertyComment/:propertyID')
+			.post(property.addComment);
+
+		app.route('/propertyRating/:propertyID')
+			.post(property.addRating);
+
+		app.route('/emailOwner/:propertyID')
+			.post(property.sendEmailToPropertyOwner);
+
 	};
 }());

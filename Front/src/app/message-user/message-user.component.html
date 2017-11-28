@@ -1,5 +1,22 @@
 	<div *ngIf="isLoaded">
-		Showing page for {{username}}
+		Showing page for {{username}} <br>
+		Messages:
+		<div *ngFor="let data of messageHistory">
+			<div *ngIf="data.senderUsername == currentUser; else received_message">
+				<p align="right">
+					{{data.timeSent}} <br>
+					{{data.message}} <br>
+				</p>
+			</div>
+			<ng-template #received_message>
+				<div>
+					<p>
+						{{data.timeSent}} <br>
+						{{data.message}} <br>
+					</p>
+				</div>
+			</ng-template>
+
 	</div>
 
 <router-outlet></router-outlet>
