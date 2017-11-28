@@ -163,22 +163,65 @@
 						return;
 					}
 
-					/*
-					var lastYear = messageArray[messageArray.length - 1].timeSent.substring(0,4);
-					var lastMonth = messageArray[messageArray.length - 1].timeSent.substring(5,7);
-					var lastDay = messageArray[messageArray.length - 1].timeSent.substring(8,10);
-					var lastHour = messageArray[messageArray.length - 1].timeSent.substring(11,13);
-					var lastMinute = messageArray[messageArray.length - 1].timeSent.substring(14,16);
-					var lastSecond = messageArray[messageArray.length - 1].timeSent.substring(17,19);
+					// messageArray
+					var firstArrayIndex = 0;
+					var firstArrayDate = messageArray[firstArrayIndex].jsTime;
 
-					console.log(lastYear + lastMonth + lastDay + lastHour + lastMinute + lastSecond);
-					*/
+					// messages
+					var secondArrayIndex = 0;
+					var secondArrayDate = messages[secondArrayIndex].jsTime;
 
-					for(var message in messages) {
-						messageArray.push(messages[message]);
+					// result
+					var mergedMessageArray = [];
+
+					// try to merge both
+					while(firstArrayDate != null && secondArrayDate != null) {
+						if(firstArrayDate > secondArrayDate) {
+							mergedMessageArray.push(messageArray[firstArrayIndex]);
+							firstArrayIndex++;
+							try {
+								firstArrayDate = messageArray[firstArrayIndex];
+							}
+							catch (error) {
+								firstArrayDate = null;
+							}
+						} else{
+							mergedMessageArray.push(messages[secondArrayIndex]);
+							secondArrayIndex++;
+							try {
+								secondArrayDate = messages[secondArrayIndex];
+							}
+							catch (error) {
+								secondArrayDate = null;
+							}
+						}
 					}
 
-					res.status(200).json(messageArray);
+					// first array emptied
+					while(secondArrayDate != null) {
+						mergedMessageArray.push(messages[secondArrayIndex]);
+						secondArrayIndex++;
+						try {
+								secondArrayDate = messages[secondArrayIndex];
+							}
+							catch (error) {
+								secondArrayDate = null;
+							}
+					}
+
+					// second array emptied
+					while(firstArrayDate != null) {
+						mergedMessageArray.push(messageArray[firstArrayIndex]);
+						firstArrayIndex++;
+						try {
+							firstArrayDate = messageArray[firstArrayIndex];
+						}
+						catch (error) {
+							firstArrayDate = null;
+						}
+					}
+
+					res.status(200).json(mergedMessageArray);
 				});
 			}
 		});
