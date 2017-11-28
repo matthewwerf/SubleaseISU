@@ -12,6 +12,8 @@
 		server = require('http').createServer(app),
 		io = require('socket.io')(server);
 
+	var ah = require('../lib/authHelper.js');
+
 	// depreciated, never tested
 	/*
 	exports.createMessage = function (req, res) {
@@ -78,15 +80,61 @@
 		if (data.senderUsername && data.receiverUsername && data.message){
 
 			var newMessage = new Message(req.body);
+			newMessage.timeSent = getDateTime();
 
 			newMessage.save(function (err, message) {
 				if (err) {
 					console.log(err); // how do I want to handle this error
 				}
 			});
+
 		} else {
 			console.log("Error in saveHistory");
 		}
+	}
+
+	exports.saveHistory = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if (user != null) {
+				var newMessage = Message(req.body);
+				newMessage.timeSent = getDateTime();
+
+				newMessage.save(function (err, message) {
+					if(err) {
+						res.status(500).send(err);
+						return;
+					}
+					res.status(201).json({
+						"msg" : "Messaged saved"
+					});
+				});
+			}
+		});
+	};
+
+	function getDateTime() {
+
+	    var date = new Date();
+
+	    var hour = date.getHours();
+	    hour = (hour < 10 ? "0" : "") + hour;
+
+	    var min  = date.getMinutes();
+	    min = (min < 10 ? "0" : "") + min;
+
+	    var sec  = date.getSeconds();
+	    sec = (sec < 10 ? "0" : "") + sec;
+
+	    var year = date.getFullYear();
+
+	    var month = date.getMonth() + 1;
+	    month = (month < 10 ? "0" : "") + month;
+
+	    var day  = date.getDate();
+	    day = (day < 10 ? "0" : "") + day;
+
+	    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+
 	}
 
 	exports.getHistory = function(req, res) {

@@ -13,14 +13,9 @@
 		app.route('/messages/getHistory/:usernameOfSender')
 			.post(message.getHistory);
 
-		/*
-		// Should be able to implement within backend socket
 		app.route('/messages/saveHistory')
 			.post(message.saveHistory);
-		*/
 		
-		// socket routes
-
 	};
 
 }());
