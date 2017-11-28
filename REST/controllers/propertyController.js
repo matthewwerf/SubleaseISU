@@ -6,8 +6,28 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
+	// Library to make requests
 	var axios = require('axios');
 
+	// Config for seperate env configurations
+	var nodeConfig = require('config');
+
+	// Library to send email
+	var nodemailer = require('nodemailer'),
+		transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: nodeConfig.NODEMAILER_EMAIL_USERNAME,
+				pass: nodeConfig.NODEMAILER_EMAIL_PASSWORD
+			}
+		});
+
+	const nodemailerEmail = nodeConfig.NODEMAILER_EMAIL;
+
+	// Auth Helper
+	var ah = require('../lib/authHelper.js');
+
+	// NEED TO ADD FALLBACK WHEN LONG LAT IS NULL
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -182,10 +202,177 @@
 				}
 			});
 		}
+	};
 
-		
+	exports.sendEmailToPropertyOwner = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+					
+					User.findOne({username: property.posterUsername}, function(err, propertyOwner) {
+						if (err) {
+							res.status(500).send(err);
+							return;
+						} else if(propertyOwner == null) {
+							res.status(404).json({
+								"msg": "property posterUsername could not be found"
+							});
+							return;
+						} else if(propertyOwner.email == null) {
+							res.status(400).json({
+								"msg": "property owner did not provide email address"
+							});
+							return;
+						}
 
+						const mailOptions = {
+							from: nodemailerEmail,
+							to: propertyOwner.email,
+							subject: req.body.subject,
+							html: req.body.messageHTML
+						};
 
+						transporter.sendMail(mailOptions, function(err, info) {
+							if (err) {
+								res.status(500).send(err);
+								return;
+							}
+							res.status(200).json({
+								"msg": "Message successfully sent"
+							});
+						});
+
+					});
+
+				});
+			}
+		});
+	};
+
+	exports.addComment = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+
+					var propertyComments = property.comments;
+					if(propertyComments == null) {
+						propertyComments = [];
+					}
+
+					var newComment = {
+						commentPosterUsername: req.body.username,
+						timePosted: getDateTime(),
+						message: req.body.message
+					};
+
+					propertyComments.push(newComment);
+
+					var updatedProperty = property;
+					updatedProperty.comments = propertyComments;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
+	};
+
+	function getDateTime() {
+
+	    var date = new Date();
+
+	    var hour = date.getHours();
+	    hour = (hour < 10 ? "0" : "") + hour;
+
+	    var min  = date.getMinutes();
+	    min = (min < 10 ? "0" : "") + min;
+
+	    var sec  = date.getSeconds();
+	    sec = (sec < 10 ? "0" : "") + sec;
+
+	    var year = date.getFullYear();
+
+	    var month = date.getMonth() + 1;
+	    month = (month < 10 ? "0" : "") + month;
+
+	    var day  = date.getDate();
+	    day = (day < 10 ? "0" : "") + day;
+
+	    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+
+	}
+
+	exports.addRating = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+
+					var propertyRatings = property.ratings;
+					if(propertyRatings == null) {
+						propertyRatings = [];
+					}
+
+					var rateInt = parseInt(req.body.rating);
+					if(rateInt == null || rateInt < 1 || rateInt > 5) {
+						res.status(400).json({
+							"msg" : "rating was not an integer between 1 and 5"
+						});
+						return;
+					}
+
+					var newRating = {
+						ratingPosterUsername: req.body.username,
+						timePosted: getDateTime(),
+						rating: req.body.rating
+					};
+
+					propertyRatings.push(newRating);
+
+					var updatedProperty = property;
+					updatedProperty.ratings = propertyRatings;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
 	};
 
 

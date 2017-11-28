@@ -224,6 +224,7 @@
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
 				if(user.profilePictureLocation != null) {
+					//let path = user.profilePictureLocation.replace(/(\s+)/g, '\\$1');
 					res.status(200).sendFile(user.profilePictureLocation);
 				} else {
 					res.status(404).send({

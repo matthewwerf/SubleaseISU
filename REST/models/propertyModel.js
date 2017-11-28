@@ -11,7 +11,13 @@
 		linkedPictureIDs: Array,
 		propertyID: String,
 		longitude: String,
-		latitude: String
+		latitude: String,
+		milesFromMU: Number,
+		bathroomQuantity: Number,
+		roommateQuantity: Number,
+		personalBathroom: Boolean,
+		comments: Object,
+		ratings: Object
 	});
 
 	module.exports = mongoose.model('Property', propertySchema);
