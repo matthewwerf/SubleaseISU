@@ -138,41 +138,38 @@
 	}
 
 	exports.getHistory = function(req, res) {
-		if(!req.body.subleaseISUcookie || !req.body.username) {
-			res.status(401).send({
-				"error" : "not authenticated"
-			});
-			return;
-		} else {
-			User.findOne({username: req.body.username}, 'hashedPassword', function (err, user) {
-				if(user == null) { // don't forget to check this is all functions
-					res.status(401).send({
-						"error": "username not recognized"
-					});
-					return;
-				}
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				var messageArray = [];
 
-				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
-				if(localCookieToCheck != req.body.subleaseISUcookie) {
-					res.status(401).send({
-						"error" : "authentication rejected" // check which message I look for in the front end
-					});
-					return;
-				}
-				else {
-					Message.find({
-						receiverUsername: req.body.username,
-						senderUsername: req.params.usernameOfSender
-					}, function(err, messages) {
-						if(err) {
-							res.send(err);
-							return;
-						}
-						res.json(messages);
-					});
-				}
-			});
-		}
+				Message.find({
+					receiverUsername: req.body.username,
+					senderUsername: req.params.usernameOfSender
+				}, function(err, messages) {
+					if(err) {
+						res.send(err);
+						return;
+					}
+					messageArray = messages;
+				});
+
+				Message.find({
+					receiverUsername: req.params.usernameOfSender,
+					senderUsername: req.body.username
+				}, function(err, messages) {
+					if(err) {
+						res.send(err);
+						return;
+					}
+
+					for(var message in messages) {
+						messageArray.push(messages[message]);
+					}
+
+					res.status(200).json(messageArray);
+				});
+			}
+		});
 	};
 
 	exports.getUsernamesOfSenders = function(req, res) {
