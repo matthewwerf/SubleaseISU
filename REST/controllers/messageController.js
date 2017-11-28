@@ -165,34 +165,35 @@
 
 					// messageArray
 					var firstArrayIndex = 0;
-					var firstArrayDate = messageArray[firstArrayIndex].jsTime;
-
+					var firstArrayDate = messageArray[firstArrayIndex]['jsTime'].valueOf();
+					
 					// messages
 					var secondArrayIndex = 0;
-					var secondArrayDate = messages[secondArrayIndex].jsTime;
-
+					var secondArrayDate = messages[secondArrayIndex]['jsTime'].valueOf();
+					
 					// result
 					var mergedMessageArray = [];
 
 					// try to merge both
 					while(firstArrayDate != null && secondArrayDate != null) {
+						console.log(firstArrayDate + '===' + secondArrayDate + '===' + (firstArrayDate > secondArrayDate));
 						if(firstArrayDate > secondArrayDate) {
-							mergedMessageArray.push(messageArray[firstArrayIndex]);
-							firstArrayIndex++;
-							try {
-								firstArrayDate = messageArray[firstArrayIndex];
-							}
-							catch (error) {
-								firstArrayDate = null;
-							}
-						} else{
 							mergedMessageArray.push(messages[secondArrayIndex]);
 							secondArrayIndex++;
 							try {
-								secondArrayDate = messages[secondArrayIndex];
+								secondArrayDate = messages[secondArrayIndex]['jsTime'].valueOf();
 							}
 							catch (error) {
 								secondArrayDate = null;
+							}
+						} else{
+							mergedMessageArray.push(messageArray[firstArrayIndex]);
+							firstArrayIndex++;
+							try {
+								firstArrayDate = messageArray[firstArrayIndex]['jsTime'].valueOf();
+							}
+							catch (error) {
+								firstArrayDate = null;
 							}
 						}
 					}
@@ -202,11 +203,11 @@
 						mergedMessageArray.push(messages[secondArrayIndex]);
 						secondArrayIndex++;
 						try {
-								secondArrayDate = messages[secondArrayIndex];
-							}
-							catch (error) {
-								secondArrayDate = null;
-							}
+							secondArrayDate = messages[secondArrayIndex]['jsTime'].getTime();
+						}
+						catch (error) {
+							secondArrayDate = null;
+						}
 					}
 
 					// second array emptied
@@ -214,7 +215,7 @@
 						mergedMessageArray.push(messageArray[firstArrayIndex]);
 						firstArrayIndex++;
 						try {
-							firstArrayDate = messageArray[firstArrayIndex];
+							firstArrayDate = messageArray[firstArrayIndex]['jsTime'].getTime();
 						}
 						catch (error) {
 							firstArrayDate = null;
