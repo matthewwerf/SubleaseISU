@@ -18,6 +18,7 @@
 			.post(property.addComment);
 
 		app.route('/propertyRating/:propertyID')
+			.get(property.retrieveRating)
 			.post(property.addRating);
 
 		app.route('/emailOwner/:propertyID')
