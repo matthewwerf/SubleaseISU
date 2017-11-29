@@ -38,42 +38,22 @@
 	*/
 
 	exports.maintainSocket = function(req, res) {
-		if(!req.body.subleaseISUcookie || !req.body.username) {
-			res.status(401).send({
-				"error" : "not authenticated"
+		// establish socket connection
+		io.on('connection', function(socket) {
+			console.log("Connection Event");
+			socket.on('disconnect', function() {
+				console.log("Disconnect Event");
 			});
-			return;
-		} else {
-			User.findOne({username: req.body.username}, 'hashedPassword', function (err, user) {
-				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
-				if(localCookieToCheck != req.body.subleaseISUcookie) {
-					res.status(401).send({
-						"error" : "authentication rejected" // check which message I look for in the front end
-					});
-					return;
-				}
-				else {
-					// establish socket connection
-					io.on('connection', function(socket) {
-						console.log("Connection Event");
-						socket.on('disconnect', function() {
-							console.log("Disconnect Event");
-						});
-						socket.on("new-message-to-server", function(data) {
-							// call save history
-							saveHistory(data);
-							console.log("Incoming Message: " + data);
+			socket.on("new-message-to-server", function(data) {
+				// call save history
+				saveHistory(data);
+				console.log("Incoming Message: " + data);
 
-							io.emit("server-distribute-message", {
-								message: data
-							});
-						});
-					});
-					// on
-
-				}
+				io.emit("server-distribute-message", {
+					message: data
+				});
 			});
-		}
+		});
 	};
 
 	function saveHistory(data) {
