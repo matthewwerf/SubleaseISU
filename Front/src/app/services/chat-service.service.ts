@@ -7,15 +7,15 @@ export class ChatServiceService {
 
   messages: Subject<any>;
 
-   constructor(private wsService: WebSocketService) {
-   	this.messages = <Subject<any>>wsService.connect().map((response: any): any => {
-   		return response;
-   	})
+   // constructor(private wsService: WebSocketService) {
+   // 	this.messages = <Subject<any>>wsService.connect().map((response: any): any => {
+   // 		return response;
+   // 	})
 
-   }
+   // }
 
-   sendMessage(msg) {
-   	this.messages.next(msg);
-   }
+   // sendMessage(msg) {
+   // 	this.messages.next(msg);
+   // }
 
 }
