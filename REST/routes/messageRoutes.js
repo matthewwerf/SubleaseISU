@@ -1,16 +1,13 @@
 (function () {'use strict';
 
 	module.exports = function(app) {
-		var message = require("../controllers/messageController.js"),
-			http = require('http').Server(app),
-			io = require('socket.io')(http);
+		var message = require("../controllers/messageController.js");
 
 		/*
 		app.route('/messages')
 			.post(message.maintainSocket);
 		*/
-		io.on('connection', message.maintainSocket);
-
+		
 		app.route('/messages/getUsernamesOfSenders')
 			.post(message.getUsernamesOfSenders);
 
