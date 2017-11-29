@@ -37,7 +37,7 @@
 	};
 	*/
 
-	exports.maintainSocket = function(req, res) {
+	exports.maintainSocket = function(socket) {
 		// establish socket connection
 		console.log("Connection Event");
 		socket.on('disconnect', function() {
