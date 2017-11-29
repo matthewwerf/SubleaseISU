@@ -39,19 +39,17 @@
 
 	exports.maintainSocket = function(req, res) {
 		// establish socket connection
-		io.on('connection', function(socket) {
-			console.log("Connection Event");
-			socket.on('disconnect', function() {
-				console.log("Disconnect Event");
-			});
-			socket.on("new-message-to-server", function(data) {
-				// call save history
-				saveHistory(data);
-				console.log("Incoming Message: " + data);
+		console.log("Connection Event");
+		socket.on('disconnect', function() {
+			console.log("Disconnect Event");
+		});
+		socket.on("new-message-to-server", function(data) {
+			// call save history
+			saveHistory(data);
+			console.log("Incoming Message: " + data);
 
-				io.emit("server-distribute-message", {
-					message: data
-				});
+			io.emit("server-distribute-message", {
+				message: data
 			});
 		});
 	};
