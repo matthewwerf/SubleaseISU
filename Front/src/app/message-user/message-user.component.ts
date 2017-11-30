@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { messageInfo } from '../models/messageInfo';
 import { WebSocketService } from '../services/web-socket.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as io from "socket.io-client";
 
 
@@ -23,42 +24,60 @@ export class MessageUserComponent implements OnInit {
 	private username: string;
 	private sub: any;
   private messageHistory: messageInfo[];
-  private msgData = { room: '', message: '' };
-  private isJoined: boolean;
   private socket;
-  chats: any;
-
+  private textMessage: FormControl;
+  private newMessageForm: FormGroup;
 
   	constructor(private route: ActivatedRoute, private http: Http, private webSocketService: WebSocketService) { }
 
   	ngOnInit() {
+      // Connect the socket
       this.socket = io.connect('/');
   		this.isLoaded = false;
-      this.isJoined = false;
+
+      // Get the info for the users and get the chat history
   		this.sub = this.route.params.subscribe(params => {
        		this.username = params.senderUsername;
           this.currentUser = localStorage.getItem('username');
           this.webSocketService.getChatByUser(this.username).subscribe(messages => {
-            this.messageHistory = messages;
+          this.messageHistory = messages;
           });
        		this.isLoaded = true;
+
+           // Create an event listener for receiving messages
+          this.socket.on('server-distribute-message', function (data) {
+            console.log(data);
+            if(data.senderUsername === this.currentUser || data.receiverUsername === this.currentUser) {
+              var tempMessageInfoObject = new messageInfo(data.senderUsername, data.receiverUsername, data.message, data.timeSent);
+              this.messageHistory.push(tempMessageInfoObject);
+              }
+            }.bind(this));
   	  });
 
-      this.msgData = {room: this.username , message: ''};
-      this.isJoined = true;
+      // Create the form used to send messages
+      this.createFormControls();
+      this.createForm();
 
-      //this.socket.on()
-    //   this.socket.on('new-message', function (data) {
-    //   if(data.message.room === JSON.parse(localStorage.getItem('username')).room) {
-    //     this.chats.push(data.message);
-    //     this.msgData = { room: this.currentUser.room, message: '' }
-    //   }
-    // }.bind(this));
-
-      this.socket.emit('new-message-to-server', "This is a test");
 
   	}
 
+    createFormControls() {
+      this.textMessage = new FormControl('');
+    }
 
+    createForm() {
+    this.newMessageForm = new FormGroup ({
+        textMessage: this.textMessage,
+     });
+    }
 
-}
+    onSubmit(form: any): void{
+      if(this.textMessage.value != '') {
+        // Create json object to be sent
+        var messageToBeSent = {message: this.textMessage.value, senderUsername: this.currentUser, receiverUsername: this.username};
+        this.socket.emit('new-message-to-server', JSON.stringify(messageToBeSent));
+        this.newMessageForm.reset(); // Clear the chat box
+      }
+     }
+   }
+
