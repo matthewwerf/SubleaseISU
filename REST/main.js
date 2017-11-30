@@ -60,7 +60,20 @@ propertyRoutes(app);
 
 // Socket Handler
 var message = require("./controllers/messageController");
-io.on('connection', message.maintainSocket);
+io.on('connection', function(socket) {
+	console.log("Connection Event");
+		
+	socket.on('disconnect', function() {
+		console.log("Disconnect Event");
+	});
+
+	socket.on('new-message-to-server', function(data) {
+		// call save history
+		message.saveMessage(data);
+		console.log("Incoming Message: " + data);
+		io.emit("server-distribute-message", data);
+	});
+});
 
 //app.listen(port); // bind REST routes to port
 //console.log("REST api started on: " + port);

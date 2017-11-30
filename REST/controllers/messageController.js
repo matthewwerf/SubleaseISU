@@ -39,6 +39,7 @@
 	};
 	*/
 
+	/* //depricated
 	exports.maintainSocket = function(socket) {
 		// establish socket connection
 		console.log("Connection Event");
@@ -55,13 +56,10 @@
 			// call save history
 			//saveHistory(data);
 			console.log("Incoming Message: " + data);
-			/*
-			io.emit("server-distribute-message", {
-				message: data
-			});
-			*/
+			io.emit("server-distribute-message", data);
 		});
 	};
+	*/
 
 	function saveHistory(data) {
 		if (data.senderUsername && data.receiverUsername && data.message){
@@ -79,6 +77,23 @@
 			console.log("Error in saveHistory");
 		}
 	}
+
+	exports.saveMessage = function(data) {
+		if (data.senderUsername && data.receiverUsername && data.message){
+
+			var newMessage = new Message(req.body);
+			newMessage.timeSent = Date.now();
+
+			newMessage.save(function (err, message) {
+				if (err) {
+					console.log(err); // how do I want to handle this error
+				}
+			});
+
+		} else {
+			console.log("Error in saveHistory");
+		}
+	};
 
 	exports.saveHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
