@@ -17,5 +17,30 @@
   	Personal Bathroom: {{currentListing.personalBathroom}} <br/>
 
   	Number of Roommates: {{currentListing.roommateQuantity}} <br/>
+
+
   </div>
 
+  <table>
+    <tr>
+    <th>Poster Username</th>
+    <th>Comment</th>
+    <th>Time</th>
+    
+    <tr *ngFor let data of commentArray>
+      <td> {{data.commentPosterUsername}}</td>
+      <td> {{data.message}}</td>
+      <td> {{data.timePosted}}</td>
+    </tr>
+  </table>
+
+  <div class="commentBox">
+    <label>Write a comment regarding this property: </label>
+    <div>
+      
+      <textarea required class="txt-area" id="comment" type="text" placeholder="Comment..." rows="5" cols="80"></textarea>
+    </div>
+    <div>
+      <button type="button" (click)="comment()">Comment</button>
+    </div>
+  </div>

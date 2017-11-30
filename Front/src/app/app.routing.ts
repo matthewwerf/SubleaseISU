@@ -17,7 +17,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageUserComponent } from './message-user/message-user.component';
-import { ListingCommentsComponent } from './listing-comments/listing-comments.component';
+
 
 // This is the router module where you add routes to components (Pages)
 export const ROUTES: Routes = [
@@ -39,10 +39,6 @@ export const ROUTES: Routes = [
         component: CreatePropertyComponent,
         data:{title: 'Create Property'},
         canActivate: [AuthService]
-    },
-    {
-        path: 'listingComments/:propertyId/:address',
-        component: ListingCommentsComponent
     },
     {
         path: 'viewListing/:propertyId',

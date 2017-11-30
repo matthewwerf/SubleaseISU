@@ -35,7 +35,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageUserComponent } from './message-user/message-user.component';
-import { ListingCommentsComponent } from './listing-comments/listing-comments.component';
+
 
 
 @NgModule({
@@ -57,8 +57,7 @@ import { ListingCommentsComponent } from './listing-comments/listing-comments.co
     RoommateSearchPipe,
     PersonalBathroomSearchPipe,
     ViewListingComponent,
-    MessageUserComponent,
-    ListingCommentsComponent
+    MessageUserComponent
   ],
   imports: [
     BrowserModule,

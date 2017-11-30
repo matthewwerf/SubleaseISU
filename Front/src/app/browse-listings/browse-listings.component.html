@@ -24,7 +24,7 @@
       <th>Number of Roommates</th>
       <th>Personal Bathroom</th>
       <th>Link</th>
-      <th>Comments</th>
+      
 
   		<tr *ngFor="let data of ListingList | addressSearch: searchString | priceSearch: lowPrice : highPrice | roommateSearch: roommateNumber | personalBathroomSearch: needPersonalBathroom">
   			<td> {{data.address}}</td>
@@ -34,7 +34,7 @@
         <td> {{data.roommateQuantity}}</td>
         <td> {{data.personalBathroom}}</td>
         <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
-        <td> <a [routerLink]="['/../listingComments', data.propertyId, data.address]"> Comments </a></td>
+        
 		</tr>
 </table>
 <div>
