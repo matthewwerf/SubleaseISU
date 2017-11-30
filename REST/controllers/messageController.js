@@ -59,7 +59,7 @@
 			io.emit("server-distribute-message", data);
 		});
 	};
-	*/
+	
 
 	function saveHistory(data) {
 		if (data.senderUsername && data.receiverUsername && data.message){
@@ -77,21 +77,28 @@
 			console.log("Error in saveHistory");
 		}
 	}
+	*/
 
-	exports.saveMessage = function(data) {
-		if (data.senderUsername && data.receiverUsername && data.message){
+	exports.saveMessage = function(data, cb) {
+		var obj = JSON.parse(data);
+		if (obj.senderUsername && obj.receiverUsername && obj.message){
 
-			var newMessage = new Message(req.body);
-			newMessage.timeSent = Date.now();
+			var newMessage = new Message(obj);
+			newMessage.timeSent = getDateTime();
 
 			newMessage.save(function (err, message) {
 				if (err) {
 					console.log(err); // how do I want to handle this error
+					cb("There was an error", null);
+				}
+				else {
+					console.log("Message Saved Successfully From: " + newMessage.senderUsername + " TO: " + newMessage.receiverUsername);
+					cb(null, message);
 				}
 			});
 
 		} else {
-			console.log("Error in saveHistory");
+			console.log("Parameters missing");
 		}
 	};
 
@@ -166,12 +173,20 @@
 
 						// messageArray
 						var firstArrayIndex = 0;
-						var firstArrayDate = messageArray[firstArrayIndex].jsTime.valueOf();
-						
+						try {
+							var firstArrayDate = messageArray[firstArrayIndex].jsTime.valueOf();
+						}
+						catch (error) {
+							var firstArrayDate = null;
+						}
 						// messages
 						var secondArrayIndex = 0;
-						var secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
-						
+						try {
+							var secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
+						}
+						catch (error) {
+							var secondArrayDate = null;
+						}
 						// result
 						var mergedMessageArray = [];
 

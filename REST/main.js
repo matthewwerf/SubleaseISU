@@ -69,9 +69,11 @@ io.on('connection', function(socket) {
 
 	socket.on('new-message-to-server', function(data) {
 		// call save history
-		message.saveMessage(data);
-		console.log("Incoming Message: " + data);
-		io.emit("server-distribute-message", data);
+		message.saveMessage(data, function(err, jsonObj) {
+			if(err == null) {
+				io.emit("server-distribute-message", jsonObj);
+			}
+		});
 	});
 });
 
