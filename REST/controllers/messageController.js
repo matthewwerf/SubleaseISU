@@ -180,7 +180,7 @@
 						catch (error) {
 							var firstArrayDate = null;
 						}
-						// messages
+						 messages
 						var secondArrayIndex = 0;
 						try {
 							var secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
