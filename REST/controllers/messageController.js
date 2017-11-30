@@ -85,6 +85,7 @@
 
 			var newMessage = new Message(obj);
 			newMessage.timeSent = getDateTime();
+			newMessage.jsTime = Date.now();
 
 			newMessage.save(function (err, message) {
 				if (err) {
@@ -179,7 +180,7 @@
 						catch (error) {
 							var firstArrayDate = null;
 						}
-						// messages
+						 messages
 						var secondArrayIndex = 0;
 						try {
 							var secondArrayDate = messages[secondArrayIndex].jsTime.valueOf();
