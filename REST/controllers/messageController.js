@@ -6,11 +6,13 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
+	/*
 	// socket declarations
 	var express = require("express"),
 		app = express(),
 		server = require('http').createServer(app),
 		io = require('socket.io')(server);
+	*/
 
 	var ah = require('../lib/authHelper.js');
 
@@ -40,17 +42,24 @@
 	exports.maintainSocket = function(socket) {
 		// establish socket connection
 		console.log("Connection Event");
+		
 		socket.on('disconnect', function() {
 			console.log("Disconnect Event");
 		});
-		socket.on("new-message-to-server", function(data) {
-			// call save history
-			saveHistory(data);
-			console.log("Incoming Message: " + data);
 
+		socket.on('test', function(data) {
+			console.log(data);
+		});
+
+		socket.on('new-message-to-server', function(data) {
+			// call save history
+			//saveHistory(data);
+			console.log("Incoming Message: " + data);
+			/*
 			io.emit("server-distribute-message", {
 				message: data
 			});
+			*/
 		});
 	};
 
@@ -207,7 +216,6 @@
 	};
 
 	exports.getUsernamesOfSenders = function(req, res) {
-		console.log("Message, sender usernames: POST");
 		if(!req.body.subleaseISUcookie || !req.body.username) {
 			res.status(401).send({
 				"error" : "not authenticated"
