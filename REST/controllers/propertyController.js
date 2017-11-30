@@ -355,7 +355,7 @@
 					var newRating = {
 						ratingPosterUsername: req.body.username,
 						timePosted: getDateTime(),
-						rating: req.body.rating
+						rating: rateInt
 					};
 
 					propertyRatings.push(newRating);
@@ -372,6 +372,31 @@
 
 				});
 			}
+		});
+	};
+
+	exports.retrieveRating = function(req, res) {
+		Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+			if(err) {
+				res.status(500).send(err);
+				return;
+			}
+			if (property == null) {
+				res.status(404).json({
+					"msg": "propertyID not found"
+				});
+				return;
+			}
+
+			var sum = 0, count =0;
+			for (var rating in property.ratings) {
+				sum += property.ratings[rating].rating;
+				count++;
+			}
+
+			res.status(200).json({
+				"avgRating" : sum/count
+			});
 		});
 	};
 
