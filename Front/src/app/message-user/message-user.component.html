@@ -18,5 +18,10 @@
 			</ng-template>
 
 	</div>
-
+	<form (ngSubmit)="onSubmit()" [formGroup]="newMessageForm">
+		<div class="form-group">
+			<input type="text" class="form-control" formControlName="textMessage" required placeholder="Enter Message Here">
+		</div>
+		<div><input type="submit" id="submit" value="Submit"></div>
+	</form>
 <router-outlet></router-outlet>
