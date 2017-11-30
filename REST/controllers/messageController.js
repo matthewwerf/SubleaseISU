@@ -85,6 +85,7 @@
 
 			var newMessage = new Message(obj);
 			newMessage.timeSent = getDateTime();
+			newMessage.jsTime = Date.now();
 
 			newMessage.save(function (err, message) {
 				if (err) {
