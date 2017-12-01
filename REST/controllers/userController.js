@@ -27,6 +27,20 @@
 	// Auth Helper
 	var ah = require('../lib/authHelper.js');
 
+
+	/**
+	 * @api {post} /users
+	 * @apiName createUser
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} userType User's Account type. (Admin, Leaser, Renter)
+	 * @apiParam {string} hashedPassword SHA1 Hash of User's Password.
+	 * @apiParam {string} email User's email address. (Optional)
+	 * @apiParam {string} phoneNumber User's phone number.
+	 *
+	 * @apiSuccess {User} res The Object is echoed back in the response.
+	 */
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
 
@@ -112,6 +126,16 @@
 		});
 	};
 
+	/**
+	 * @api {post} /login/{username}
+	 * @apiName authAndReturnCookie
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} hashedPassword Users hased password.
+	 *
+	 * @apiSuccess {User} res Users username and cookie is echoed back in the response.
+	 */
 	exports.authAndReturnCookie = function(req, res){
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
@@ -224,6 +248,7 @@
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
 				if(user.profilePictureLocation != null) {
+					//let path = user.profilePictureLocation.replace(/(\s+)/g, '\\$1');
 					res.status(200).sendFile(user.profilePictureLocation);
 				} else {
 					res.status(404).send({

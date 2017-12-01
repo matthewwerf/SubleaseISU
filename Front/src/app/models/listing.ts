@@ -1,3 +1,4 @@
+import { Comment } from './comment';
 export class ListingInfo {
 	_id: string;
 	posterUsername: string;

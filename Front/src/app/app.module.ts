@@ -25,10 +25,12 @@ import { PersonalBathroomSearchPipe } from './browse-listings/personal.bathroom.
 import { UserInfoService } from './view-profile/user-info-service';
 import { MessagingService } from './messaging/messaging-service';
 import { ProfilePictureGrabService } from './view-profile/profile-picture-grab-service';
+import { WebSocketService } from './services/web-socket.service';
 
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
+import { ChatServiceService } from './services/chat-service.service';
 
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
@@ -76,7 +78,9 @@ import { MessageUserComponent } from './message-user/message-user.component';
     BrowseListingsService,
     UserInfoService,
     MessagingService,
-    ProfilePictureGrabService
+    ProfilePictureGrabService,
+    WebSocketService,
+    ChatServiceService
   ],
   bootstrap: [AppComponent]
 })

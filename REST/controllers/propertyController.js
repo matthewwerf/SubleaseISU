@@ -6,8 +6,90 @@
 		sha1 = require("sha1"),
 		config = require("../config.js");
 
+	// Library to make requests
 	var axios = require('axios');
 
+	// Config for seperate env configurations
+	var nodeConfig = require('config');
+
+	// Library to send email
+	var nodemailer = require('nodemailer'),
+		transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: nodeConfig.NODEMAILER_EMAIL_USERNAME,
+				pass: nodeConfig.NODEMAILER_EMAIL_PASSWORD
+			}
+		});
+
+	const nodemailerEmail = nodeConfig.NODEMAILER_EMAIL;
+
+	// Auth Helper
+	var ah = require('../lib/authHelper.js');
+
+	/**
+	 * @apiDefine UsernameNotFoundError
+	 *
+	 * @apiError UsernameNotFound The username of the User was not found.
+	 *
+	 * @apiErrorExample UsernameNotFoundError-Error-Response:
+	 *     HTTP/1.1 401 Unauthorized
+	 *     {
+	 *       "error": "username not recognized"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine UsernameNotProvided
+	 *
+	 * @apiError UsernameNotProvided The username of the User was not in the request.
+	 *
+	 * @apiErrorExample UsernameNotProvided-Error-Response:
+	 *     HTTP/1.1 400 Bad request
+	 *     {
+	 *       "error": "username not provided in request"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine DatabaseError
+	 *
+	 * @apiError DatabaseError There was an error in the MongoDB query
+	 *
+	 * @apiErrorExample DatabaseError-Error-Response:
+	 *     HTTP/1.1 500 Internal Server Error
+	 *     {
+	 *       "error": error
+	 *     }
+	 */
+
+
+	// NEED TO ADD FALLBACK WHEN LONG LAT IS NULL
+
+	/**
+	 * @api {post} /property
+	 * @apiName createroperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 * @apiParam {string} posterUsername Username of account creating a new property listing.
+	 * @apiParam {string} leasingAgency The name of the property's leasing agency.
+	 * @apiParam {number} rentValue The dollar amount of a month's rent.
+	 * @apiParam {string} address The address of the property.
+	 * @apiParam {string} postingMessage The description the user provides.
+	 * @apiParam {number} bathroomQuantity The number of bathrooms.
+	 * @apiParam {number} roommateQuantity The number of roommates.
+	 * @apiParam {boolean} personalBathroom Whether the posting has a personal bathroom for the renter.
+	 *
+	 * @apiSuccess {Property} res The property is echoed in response of the error message is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -76,6 +158,23 @@
 		}
 	};
 
+
+	/**
+	 * @api {post} /property/{propertyID}
+	 * @apiName getSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 *
+	 * @apiSuccess {Property} res The property associated with the propertyID is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.getSpecificProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -103,6 +202,23 @@
 		});
 	};
 
+	/**
+	 * @api {put} /property/{propertyID}
+	 * @apiName updateSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 * @apiParam {string} PROPERTY_OBJECT_ATTRIBUTE Any other property model attributes can be added and will be updated in the database.
+	 *
+	 * @apiSuccess {Property} res The update property object is echoed back or an error code is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.updateSpecificProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -129,6 +245,22 @@
 		});
 	};
 
+	/**
+	 * @api {delete} /property/{propertyID}
+	 * @apiName deleteSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 *
+	 * @apiSuccess {string} message Message is echo back confirming deletion
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.deleteSpecificProperty = function(req, res){
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -158,6 +290,21 @@
 	};
 
 
+	/**
+	 * @api {post} /listAllProperties
+	 * @apiName listAllProperties
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 *
+	 * @apiSuccess {Property[]} res Array of properties is echoed back in the response.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.listAllProperties = function(req, res){
 		
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -182,10 +329,269 @@
 				}
 			});
 		}
+	};
 
-		
+	/**
+	 * @api {post} /emailOwner/{propertyID}
+	 * @apiName sendEmailToPropertyOwner
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique propertyID.
+	 * @apiParam {string} subject Email subject.
+	 * @apiParam {string} messageHTML The text content of the email.
+	 *
+	 * @apiSuccess {string} msg Success or error message is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
+	exports.sendEmailToPropertyOwner = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+					
+					User.findOne({username: property.posterUsername}, function(err, propertyOwner) {
+						if (err) {
+							res.status(500).send(err);
+							return;
+						} else if(propertyOwner == null) {
+							res.status(404).json({
+								"msg": "property posterUsername could not be found"
+							});
+							return;
+						} else if(propertyOwner.email == null) {
+							res.status(400).json({
+								"msg": "property owner did not provide email address"
+							});
+							return;
+						}
 
+						const mailOptions = {
+							from: nodemailerEmail,
+							to: propertyOwner.email,
+							subject: req.body.subject,
+							html: req.body.messageHTML
+						};
 
+						transporter.sendMail(mailOptions, function(err, info) {
+							if (err) {
+								res.status(500).send(err);
+								return;
+							}
+							res.status(200).json({
+								"msg": "Message successfully sent"
+							});
+						});
+
+					});
+
+				});
+			}
+		});
+	};
+
+	/**
+	 * @api {post} /propertyComment/{propertyID}
+	 * @apiName addComment
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} commentPosterUsername Username of the comment's poster.
+	 * @apiParam {string} message The text of the comment.
+	 *
+	 * @apiSuccess {Property} res The updated property object is returned with the new comment appended to the array of comments.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
+	exports.addComment = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+
+					var propertyComments = property.comments;
+					if(propertyComments == null) {
+						propertyComments = [];
+					}
+
+					var newComment = {
+						commentPosterUsername: req.body.username,
+						timePosted: getDateTime(),
+						message: req.body.message
+					};
+
+					propertyComments.push(newComment);
+
+					var updatedProperty = property;
+					updatedProperty.comments = propertyComments;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
+	};
+
+	function getDateTime() {
+
+	    var date = new Date();
+
+	    var hour = date.getHours();
+	    hour = (hour < 10 ? "0" : "") + hour;
+
+	    var min  = date.getMinutes();
+	    min = (min < 10 ? "0" : "") + min;
+
+	    var sec  = date.getSeconds();
+	    sec = (sec < 10 ? "0" : "") + sec;
+
+	    var year = date.getFullYear();
+
+	    var month = date.getMonth() + 1;
+	    month = (month < 10 ? "0" : "") + month;
+
+	    var day  = date.getDate();
+	    day = (day < 10 ? "0" : "") + day;
+
+	    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+
+	}
+
+	/**
+	 * @api {post} /propertyRating/{propertyID}
+	 * @apiName addRating
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} ratingPosterUsername Username of the rating's poster.
+	 * @apiParam {number} rating The number rating from 1-5.
+	 *
+	 * @apiSuccess {Property} res The updated property object is returned with the new rating appended to the array of ratings.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
+	exports.addRating = function(req, res) {
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+					if(err) {
+						res.status(500).send(err);
+						return;
+					} else if (property == null) {
+						res.status(404).json({
+							"msg": "propertyID could not be found"
+						});
+						return;
+					}
+
+					var propertyRatings = property.ratings;
+					if(propertyRatings == null) {
+						propertyRatings = [];
+					}
+
+					var rateInt = parseInt(req.body.rating);
+					if(rateInt == null || rateInt < 1 || rateInt > 5) {
+						res.status(400).json({
+							"msg" : "rating was not an integer between 1 and 5"
+						});
+						return;
+					}
+
+					var newRating = {
+						ratingPosterUsername: req.body.username,
+						timePosted: getDateTime(),
+						rating: rateInt
+					};
+
+					propertyRatings.push(newRating);
+
+					var updatedProperty = property;
+					updatedProperty.ratings = propertyRatings;
+					
+					Property.findOneAndUpdate({propertyID: req.params.propertyID}, updatedProperty, {new: true}, function (err, property){
+						if (err) {
+							res.status(500).send(err);
+						}
+						res.status(200).json(property);
+					});
+
+				});
+			}
+		});
+	};
+
+	/**
+	 * @api {get} /propertyRating/{propertyID}
+	 * @apiName retrieveRating
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 *
+	 * @apiSuccess {number} avgRating The average rating is calculated and returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
+	exports.retrieveRating = function(req, res) {
+		Property.findOne({propertyID: req.params.propertyID}, function(err, property){
+			if(err) {
+				res.status(500).send(err);
+				return;
+			}
+			if (property == null) {
+				res.status(404).json({
+					"msg": "propertyID not found"
+				});
+				return;
+			}
+
+			var sum = 0, count =0;
+			for (var rating in property.ratings) {
+				sum += property.ratings[rating].rating;
+				count++;
+			}
+
+			res.status(200).json({
+				"avgRating" : sum/count
+			});
+		});
 	};
 
 
