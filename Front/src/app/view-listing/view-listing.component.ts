@@ -28,6 +28,9 @@ export class ViewListingComponent implements OnInit {
   //private subscription: any;
   private commentArray: Array<CommentInfo>;
   private URL2: string;
+  private avgRating: number;
+
+  
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -45,6 +48,14 @@ export class ViewListingComponent implements OnInit {
   		this.isLoaded = true;
   	});
 
+    this.getAverage().subscribe(rating => {
+      this.avgRating = <number>rating;
+      console.log(this.avgRating);
+      if(this.avgRating == null)
+      {
+        //this.avgRating == 0;
+      }
+    });
 
 	}
 
@@ -64,7 +75,12 @@ export class ViewListingComponent implements OnInit {
                   //console.log(res);
                    if(!res['error']){
             console.log("no error");
-            
+            this.isLoaded = false;
+            this.getListing().subscribe(listing => {
+            this.currentListing = listing;
+            this.commentArray = listing.comments;
+            this.isLoaded = true;
+    });
           } else {
             console.log(res['error']);
           }
@@ -79,14 +95,12 @@ export class ViewListingComponent implements OnInit {
     
   }
 
-  // getComments(): Observable<CommentInfo> {
-  //   return this.http.post<CommentInfo>('/property/' + this.propID, {
-  //     username: localStorage.getItem('username'),
-  //   subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
-  //   }).map(res => {
-  //     return 
-  //   })
-  // }
+  getAverage(){
+    console.log("test");
+    return this.http.get('/propertyRating/' + this.propID).map(res => {
+      return res;
+    });
+  }
 	getListing(): Observable<ListingInfo> {
   	// Get the json data string
   	return this.http.put<ListingInfo>('/property/' + this.propID, {

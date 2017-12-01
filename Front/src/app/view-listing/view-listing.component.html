@@ -18,6 +18,7 @@
 
   	Number of Roommates: {{currentListing.roommateQuantity}} <br/>
 
+    Average Rating: {{avgRating.avgRating}} <br/>
 
   </div>
 
@@ -27,7 +28,7 @@
     <th>Comment</th>
     <th>Time</th>
     
-    <tr *ngFor let data of commentArray>
+    <tr *ngFor="let data of commentArray">
       <td> {{data.commentPosterUsername}}</td>
       <td> {{data.message}}</td>
       <td> {{data.timePosted}}</td>
