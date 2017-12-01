@@ -106,7 +106,7 @@
 	/**
 	 * @api {post} /messages/saveHistory
 	 * @apiName saveHistory
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
@@ -164,7 +164,7 @@
 	/**
 	 * @api {post} /messages/getHistory/{usernameOfSender}
 	 * @apiName getHistory
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
@@ -273,7 +273,7 @@
 	/**
 	 * @api {post} /messages/getUsernamesOfSenders
 	 * @apiName getUsernamesOfSenders
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
