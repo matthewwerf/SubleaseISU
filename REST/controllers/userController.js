@@ -129,7 +129,7 @@
 	/**
 	 * @api {post} /login/{username}
 	 * @apiName authAndReturnCookie
-	 * @apiGroup user
+	 * @apiGroup User
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} hashedPassword Users hased password.

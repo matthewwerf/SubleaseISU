@@ -27,7 +27,69 @@
 	// Auth Helper
 	var ah = require('../lib/authHelper.js');
 
+	/**
+	 * @apiDefine UsernameNotFoundError
+	 *
+	 * @apiError UsernameNotFound The username of the User was not found.
+	 *
+	 * @apiErrorExample UsernameNotFoundError-Error-Response:
+	 *     HTTP/1.1 401 Unauthorized
+	 *     {
+	 *       "error": "username not recognized"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine UsernameNotProvided
+	 *
+	 * @apiError UsernameNotProvided The username of the User was not in the request.
+	 *
+	 * @apiErrorExample UsernameNotProvided-Error-Response:
+	 *     HTTP/1.1 400 Bad request
+	 *     {
+	 *       "error": "username not provided in request"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine DatabaseError
+	 *
+	 * @apiError DatabaseError There was an error in the MongoDB query
+	 *
+	 * @apiErrorExample DatabaseError-Error-Response:
+	 *     HTTP/1.1 500 Internal Server Error
+	 *     {
+	 *       "error": error
+	 *     }
+	 */
+
+
 	// NEED TO ADD FALLBACK WHEN LONG LAT IS NULL
+
+	/**
+	 * @api {post} /property
+	 * @apiName createroperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 * @apiParam {string} posterUsername Username of account creating a new property listing.
+	 * @apiParam {string} leasingAgency The name of the property's leasing agency.
+	 * @apiParam {number} rentValue The dollar amount of a month's rent.
+	 * @apiParam {string} address The address of the property.
+	 * @apiParam {string} postingMessage The description the user provides.
+	 * @apiParam {number} bathroomQuantity The number of bathrooms.
+	 * @apiParam {number} roommateQuantity The number of roommates.
+	 * @apiParam {boolean} personalBathroom Whether the posting has a personal bathroom for the renter.
+	 *
+	 * @apiSuccess {Property} res The property is echoed in response of the error message is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -103,10 +165,15 @@
 	 * @apiGroup Property
 	 *
 	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
 	 * @apiParam {string} propertyID Unique ID associated with property.
 	 *
 	 * @apiSuccess {Property} res The property associated with the propertyID is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
 	 */
 	exports.getSpecificProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -135,6 +202,23 @@
 		});
 	};
 
+	/**
+	 * @api {put} /property/{propertyID}
+	 * @apiName updateSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 * @apiParam {string} PROPERTY_OBJECT_ATTRIBUTE Any other property model attributes can be added and will be updated in the database.
+	 *
+	 * @apiSuccess {Property} res The update property object is echoed back or an error code is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.updateSpecificProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -167,10 +251,15 @@
 	 * @apiGroup Property
 	 *
 	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
 	 * @apiParam {string} propertyID Unique ID associated with property.
 	 *
-	 * @apiSuccess {string} res Message is echo back confirming deletion
+	 * @apiSuccess {string} message Message is echo back confirming deletion
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
 	 */
 	exports.deleteSpecificProperty = function(req, res){
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -207,9 +296,14 @@
 	 * @apiGroup Property
 	 *
 	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
 	 *
-	 * @apiSuccess {Property} res Array of properties is echoed back in the response.
+	 * @apiSuccess {Property[]} res Array of properties is echoed back in the response.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
 	 */
 	exports.listAllProperties = function(req, res){
 		
@@ -237,6 +331,24 @@
 		}
 	};
 
+	/**
+	 * @api {post} /emailOwner/{propertyID}
+	 * @apiName sendEmailToPropertyOwner
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique propertyID.
+	 * @apiParam {string} subject Email subject.
+	 * @apiParam {string} messageHTML The text content of the email.
+	 *
+	 * @apiSuccess {string} msg Success or error message is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.sendEmailToPropertyOwner = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
@@ -291,6 +403,23 @@
 		});
 	};
 
+	/**
+	 * @api {post} /propertyComment/{propertyID}
+	 * @apiName addComment
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} commentPosterUsername Username of the comment's poster.
+	 * @apiParam {string} message The text of the comment.
+	 *
+	 * @apiSuccess {Property} res The updated property object is returned with the new comment appended to the array of comments.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.addComment = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
@@ -358,6 +487,23 @@
 
 	}
 
+	/**
+	 * @api {post} /propertyRating/{propertyID}
+	 * @apiName addRating
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 * @apiParam {string} ratingPosterUsername Username of the rating's poster.
+	 * @apiParam {number} rating The number rating from 1-5.
+	 *
+	 * @apiSuccess {Property} res The updated property object is returned with the new rating appended to the array of ratings.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.addRating = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
@@ -408,6 +554,21 @@
 		});
 	};
 
+	/**
+	 * @api {get} /propertyRating/{propertyID}
+	 * @apiName retrieveRating
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 *
+	 * @apiSuccess {number} avgRating The average rating is calculated and returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 */
 	exports.retrieveRating = function(req, res) {
 		Property.findOne({propertyID: req.params.propertyID}, function(err, property){
 			if(err) {
