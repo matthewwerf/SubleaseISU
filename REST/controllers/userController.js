@@ -29,7 +29,7 @@
 
 
 	/**
-	 * @api {post} /users Create User Account
+	 * @api {post} /users
 	 * @apiName createUser
 	 * @apiGroup User
 	 *
@@ -126,6 +126,16 @@
 		});
 	};
 
+	/**
+	 * @api {post} /login/{username}
+	 * @apiName authAndReturnCookie
+	 * @apiGroup user
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} hashedPassword Users hased password.
+	 *
+	 * @apiSuccess {User} res Users username and cookie is echoed back in the response.
+	 */
 	exports.authAndReturnCookie = function(req, res){
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
 			if(user == null) { // don't forget to check this is all functions

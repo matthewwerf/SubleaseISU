@@ -96,6 +96,18 @@
 		}
 	};
 
+
+	/**
+	 * @api {post} /property/{propertyID}
+	 * @apiName getSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 *
+	 * @apiSuccess {Property} res The property associated with the propertyID is returned.
+	 */
 	exports.getSpecificProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -149,6 +161,17 @@
 		});
 	};
 
+	/**
+	 * @api {delete} /property/{propertyID}
+	 * @apiName deleteSpecificProperty
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} propertyID Unique ID associated with property.
+	 *
+	 * @apiSuccess {string} res Message is echo back confirming deletion
+	 */
 	exports.deleteSpecificProperty = function(req, res){
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
@@ -178,6 +201,16 @@
 	};
 
 
+	/**
+	 * @api {post} /listAllProperties
+	 * @apiName listAllProperties
+	 * @apiGroup Property
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 *
+	 * @apiSuccess {Property} res Array of properties is echoed back in the response.
+	 */
 	exports.listAllProperties = function(req, res){
 		
 		if (!req.body.subleaseISUcookie || !req.body.username){
