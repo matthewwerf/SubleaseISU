@@ -27,6 +27,20 @@
 	// Auth Helper
 	var ah = require('../lib/authHelper.js');
 
+
+	/**
+	 * @api {post} /users Create User Account
+	 * @apiName createUser
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} userType User's Account type. (Admin, Leaser, Renter)
+	 * @apiParam {string} hashedPassword SHA1 Hash of User's Password.
+	 * @apiParam {string} email User's email address. (Optional)
+	 * @apiParam {string} phoneNumber User's phone number.
+	 *
+	 * @apiSuccess {User} res The Object is echoed back in the response.
+	 */
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
 

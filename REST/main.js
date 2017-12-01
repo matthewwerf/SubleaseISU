@@ -35,6 +35,8 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //app.use(formidable());
 
+app.use(express.static('apidoc_REST'));
+
 app.use(function(req, res, next) { // allow CORS
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
