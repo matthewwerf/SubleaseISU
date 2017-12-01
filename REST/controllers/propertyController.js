@@ -89,6 +89,54 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *     {
+	 *	  "_id": "5a1601b55de8fd2455f02392",
+	 *	  "personalBathroom": false,
+	 *	  "bathroomQuantity": 3,
+	 *	  "roommateQuantity": 1,
+	 *	  "posterUsername": "username",
+	 *	  "leasingAgency": "dfd",
+	 *	  "rentValue": 2322222,
+	 *	  "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *	  "postingMessage": "22",
+	 *	  "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *	  "longitude": "-93.64681569999999",
+	 *	  "latitude": "42.02074409999999",
+	 *	  "__v": 0,
+	 *	  "comments": [
+	 *	    {
+	 *	      "message": "This is a new comment ",
+	 *	      "timePosted": "2017:11:27:14:55:15",
+	 *	      "commentPosterUsername": "matt"
+	 *	    },
+	 *	    {
+	 *	      "commentPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:27:14:55:26",
+	 *	      "message": "This is a new comment 2"
+	 *	    }
+	 *	  ],
+	 *	  "ratings": [
+	 *	    {
+	 *	      "ratingPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:30:12:28:31",
+	 *	      "rating": 5
+	 *	    },
+	 *	    {
+	 *	      "rating": 3,
+	 *	      "timePosted": "2017:11:30:12:28:34",
+	 *	      "ratingPosterUsername": "matt"
+	 *	    },
+	 *	    {
+	 *	      "ratingPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:30:12:28:38",
+	 *	      "rating": 3
+	 *	    }
+	 *	  ],
+	 *	  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 *	}
+	 *
 	 */
 	exports.createProperty = function(req, res) {
 		if (!req.body.subleaseISUcookie || !req.body.username){
@@ -133,12 +181,30 @@
 						newObj.latitude = longLat.lat;
 						newProperty = new Property(newObj);
 
+						// Previous Location
+						/*
 						newProperty.save(function (err, property) {
 							if (err) {
 								res.status(500).send(err);
 							}
 							res.status(201).json(property);
 						});
+						*/
+
+						var distance_matrix_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + encodeURIComponent(req.body.address) + '&destinations=Memorial%20Union%20Iowa%20State&mode=walking&language=en-&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c';
+						axios.get(distance_matrix_url)
+							.then(function(distance_matrix_response) {
+								newProperty.milesFromMU = parseInt(distance_matrix_response.rows[0].elements.distance.text);
+							})
+							.catch(function(err) {
+								console.log(err);
+							});
+							newProperty.save(function (err, property) {
+								if (err) {
+									res.status(500).send(err);
+								}
+								res.status(201).json(property);
+							});
 					})
 					.catch(function(err) {
 						console.log(err);
@@ -173,6 +239,54 @@
 	 * @apiUse UsernameNotFoundError
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
+
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *     {
+	 *	  "_id": "5a1601b55de8fd2455f02392",
+	 *	  "personalBathroom": false,
+	 *	  "bathroomQuantity": 3,
+	 *	  "roommateQuantity": 1,
+	 *	  "posterUsername": "username",
+	 *	  "leasingAgency": "dfd",
+	 *	  "rentValue": 2322222,
+	 *	  "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *	  "postingMessage": "22",
+	 *	  "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *	  "longitude": "-93.64681569999999",
+	 *	  "latitude": "42.02074409999999",
+	 *	  "__v": 0,
+	 *	  "comments": [
+	 *	    {
+	 *	      "message": "This is a new comment ",
+	 *	      "timePosted": "2017:11:27:14:55:15",
+	 *	      "commentPosterUsername": "matt"
+	 *	    },
+	 *	    {
+	 *	      "commentPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:27:14:55:26",
+	 *	      "message": "This is a new comment 2"
+	 *	    }
+	 *	  ],
+	 *	  "ratings": [
+	 *	    {
+	 *	      "ratingPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:30:12:28:31",
+	 *	      "rating": 5
+	 *	    },
+	 *	    {
+	 *	      "rating": 3,
+	 *	      "timePosted": "2017:11:30:12:28:34",
+	 *	      "ratingPosterUsername": "matt"
+	 *	    },
+	 *	    {
+	 *	      "ratingPosterUsername": "matt",
+	 *	      "timePosted": "2017:11:30:12:28:38",
+	 *	      "rating": 3
+	 *	    }
+	 *	  ],
+	 *	  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 *	}
 	 *
 	 */
 	exports.getSpecificProperty = function(req, res) {
