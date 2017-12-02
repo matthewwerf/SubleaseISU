@@ -39,7 +39,7 @@
 	 * @apiParam {string} email User's email address. (Optional)
 	 * @apiParam {string} phoneNumber User's phone number.
 	 *
-	 * @apiSuccess {User} res The Object is echoed back in the response.
+	 * @apiSuccess {User} res The Object is echoed back in the response
 	 */
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
@@ -75,6 +75,15 @@
 		});
 	};
 
+	/**
+	 * @api {get} /users/{userName}
+	 * @apiName getSpecificUser
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 *
+	 * @apiSuccess {User} res The User Object is returned in the response.
+	 */
 	exports.getSpecificUser = function(req, res) {
 		User.findOne({username: req.params.username}, function (err, user) {
 			if(user == null) { // don't forget to check this is all functions
@@ -91,6 +100,19 @@
 		});
 	};
 
+	/**
+	 * @api {put} /users/{userName}
+	 * @apiName updateSpecificUser
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 * @apiParam {string} email Users email.
+	 * @apiParam {string} password Users password.
+	 * @apiParam {string} email Users phone.
+	 *
+	 * @apiSuccess {User} res The User Object is returned in the response
+	 */
 	exports.updateSpecificUser = function(req, res) {
 		ah.validateAuth(req, res, function(user){
 			if(user != null) {
@@ -111,6 +133,16 @@
 		});
 	};
 
+	/**
+	 * @api {delete} /users/{userName}
+	 * @apiName deleteSpecificUser
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 *
+	 * @apiSuccess {User} res The success message is returned
+	 */
 	exports.deleteSpecificUser = function(req, res){
 		ah.validateAuth(req, res, function(user){
 			if(user != null) {
@@ -161,6 +193,16 @@
 
 	};
 
+	/**
+	 * @api {post} /users/{userName}
+	 * @apiName allowRouting
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 *
+	 * @apiSuccess {User} res The success message "authentication accepted" is returned
+	 */
 	exports.allowRouting = function(req, res) {
 		ah.validateAuth(req, res, function(user){
 			if(user != null) {
@@ -171,6 +213,16 @@
 		});
 	};
 
+	/**
+	 * @api {post} /uploadProfilePicture/{userName}
+	 * @apiName uploadProfilePicture
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 *
+	 * @apiSuccess {User} res The User Object is echoed back in the response
+	 */
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocation = null;
@@ -243,7 +295,16 @@
 
 	};
 
-
+	/**
+	 * @api {post} /retrieveProfilePicture/{userName}
+	 * @apiName retrieveProfilePic
+	 * @apiGroup User
+	 *
+	 * @apiParam {string} userName Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 *
+	 * @apiSuccess {User} res The profilePictureLocation property of the User object is returned
+	 */
 	exports.retrieveProfilePic = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {

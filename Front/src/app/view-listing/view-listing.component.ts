@@ -51,6 +51,7 @@ export class ViewListingComponent implements OnInit {
     this.getAverage().subscribe(rating => {
       this.avgRating = <number>rating;
       console.log(this.avgRating);
+      this.avgRating = Math.round(this.avgRating * 10)/10;
       if(this.avgRating == null)
       {
         //this.avgRating == 0;
@@ -97,8 +98,8 @@ export class ViewListingComponent implements OnInit {
 
   getAverage(){
     console.log("test");
-    return this.http.get('/propertyRating/' + this.propID).map(res => {
-      return res;
+    return this.http.get<any>('/propertyRating/' + this.propID).map(res => {
+      return res.avgRating;
     });
   }
 	getListing(): Observable<ListingInfo> {
@@ -107,7 +108,8 @@ export class ViewListingComponent implements OnInit {
   		username: localStorage.getItem('username'),
 		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
   	}).map(res => {
-      console.log(res);
+      //console.log(res);
+
   		return new ListingInfo(
              res._id,
              res.posterUsername,
