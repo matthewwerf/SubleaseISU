@@ -103,6 +103,19 @@
 		}
 	};
 
+	/**
+	 * @api {post} /messages/saveHistory
+	 * @apiName saveHistory
+	 * @apiGroup message
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} senderUsername Unique username of the person who sent the message.
+	 * @apiParam {string} receiverUsername Unique username of the person who is receiving the message.
+	 * @apiParam {string} message The message that is to be sent
+	 *
+	 * @apiSuccess {string} res Message saying that the message is saved in the history.
+	 */
 	exports.saveHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if (user != null) {
@@ -148,6 +161,17 @@
 
 	}
 
+	/**
+	 * @api {post} /messages/getHistory/{usernameOfSender}
+	 * @apiName getHistory
+	 * @apiGroup message
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} usernameOfSender Unique ID associated the user.
+	 *
+	 * @apiSuccess {Message} res Message history with the user is echoed in the response.
+	 */
 	exports.getHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
@@ -246,6 +270,16 @@
 		});
 	};
 
+	/**
+	 * @api {post} /messages/getUsernamesOfSenders
+	 * @apiName getUsernamesOfSenders
+	 * @apiGroup message
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} cookie Users upique cookie.
+	 *
+	 * @apiSuccess {User} res Array of users that the current user has chatted with.
+	 */
 	exports.getUsernamesOfSenders = function(req, res) {
 		if(!req.body.subleaseISUcookie || !req.body.username) {
 			res.status(401).send({

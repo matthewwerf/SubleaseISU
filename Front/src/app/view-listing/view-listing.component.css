@@ -1,0 +1,26 @@
+.commentBox{
+  
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+
+table {
+	  margin-top: 50px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #C8102E;
+}
+
+tr:nth-child(odd) {
+    background-color: #CAC7A7;
+}

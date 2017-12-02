@@ -10,11 +10,9 @@ export class ListingInfo {
 	bathroomQuantity: number;
 	roommateQuantity: number;
 	personalBathroom: boolean;
-	comments: Comment[];
+	comments: Array<any>;
 
-	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number,
-				address: string, postingMessage: string, propertyId: string, bathroomQuantity: number,
-				roommateQuantity: number, personalBathroom: boolean, comments: Comment[]) {
+	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number, address: string, postingMessage: string, propertyId: string, bathroomQuantity: number, roommateQuantity: number, personalBathroom: boolean, comments: Array<any>) {
 		this._id = id;
 		this.posterUsername = posterUsername;
 		this.leasingAgency = leasingAgency;

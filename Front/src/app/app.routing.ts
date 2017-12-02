@@ -12,7 +12,7 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
 import { MainPageComponent } from './main-page/main-page.component';
 
 import { AuthService } from './services/auth.service';
-import { PictureTestComponent } from './picture-test/picture-test.component';
+
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
@@ -39,11 +39,6 @@ export const ROUTES: Routes = [
         component: CreatePropertyComponent,
         data:{title: 'Create Property'},
         canActivate: [AuthService]
-    },
-    {
-        path: 'picturetest', 
-        component: PictureTestComponent,
-        data:{title: 'Picture Test'}
     },
     {
         path: 'viewListing/:propertyId',

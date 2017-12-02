@@ -36,7 +36,7 @@ export class BrowseListingsService {
             item.bathroomQuantity,
             item.roommateQuantity,
             item.personalBathroom,
-            null);
+            item.comments);
         });
       });
   }

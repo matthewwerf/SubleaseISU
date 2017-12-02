@@ -32,13 +32,12 @@ import { GooglemapsComponent } from './googlemaps/googlemaps.component';
 import { BrowseListingsComponent } from './browse-listings/browse-listings.component';
 import { ChatServiceService } from './services/chat-service.service';
 
-
-import { PictureTestComponent } from './picture-test/picture-test.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageUserComponent } from './message-user/message-user.component';
+
 
 
 @NgModule({
@@ -53,7 +52,6 @@ import { MessageUserComponent } from './message-user/message-user.component';
     MainPageComponent,
     BrowseListingsComponent,
     MessagingComponent,
-    PictureTestComponent,
     FileSelectDirective,
     ViewProfileComponent,
     AddressSearchPipe,
