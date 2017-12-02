@@ -179,7 +179,7 @@
 
 						newObj.longitude = longLat.lng;
 						newObj.latitude = longLat.lat;
-						newProperty = new Property(newObj);
+						//newProperty = new Property(newObj);
 
 						// Previous Location
 						/*
@@ -194,16 +194,25 @@
 						var distance_matrix_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + encodeURIComponent(req.body.address) + '&destinations=Memorial%20Union%20Iowa%20State&mode=walking&language=en-&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c';
 						axios.get(distance_matrix_url)
 							.then(function(distance_matrix_response) {
-								newProperty.milesFromMU = parseInt(distance_matrix_response.rows[0].elements.distance.text);
+								newObj.milesFromMU = parseFloat(distance_matrix_response.data.rows[0].elements[0].distance.text);
+								newProperty = new Property(newObj);
+		
+								newProperty.save(function (err, property) {
+                                                                	if (err) {
+                                                                        	res.status(500).send(err);
+                                                                	}
+                                                                	res.status(201).json(property);
+                                                        	});							
+	
 							})
 							.catch(function(err) {
 								console.log(err);
-							});
-							newProperty.save(function (err, property) {
-								if (err) {
-									res.status(500).send(err);
-								}
-								res.status(201).json(property);
+								newProperty.save(function (err, property) {
+                                                                	if (err) {
+                                                                	        res.status(500).send(err);
+                                                                	}
+                                                                	res.status(201).json(property);
+                                                        	});
 							});
 					})
 					.catch(function(err) {
