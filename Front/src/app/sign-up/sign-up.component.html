@@ -32,6 +32,12 @@
             <input type="text" class="form-control" formControlName="phonenumber" required>
             <div class="form-control-feedback" *ngIf=" phonenumber.invalid && phonenumber.dirty">Field is invalid</div>
         </div>
+        <div class="form-group">
+            <label>Account Type</label>
+            <input type="radio" name="AccountType" value="regular" id="accountChoice1" checked> Regular Account
+            <input type="radio" name="AccountType" value="leasing" id="accountChoice2"> Leasing Agency Account
+            <input type="radio" name="AccountType" value="admin"  id="accountChoice3"> Admin Account
+        </div>
     	<button type="submit" class="btn btn-primary" >Submit</button>
     </form>
 </div>

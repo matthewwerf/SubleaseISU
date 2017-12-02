@@ -30,12 +30,13 @@ export class UserInfoService {
       
         console.log(res);
         
-          return new UserInfo( // Create new listing objects
+          return new UserInfo( // Create new user objects
           res.username,
           res.email,
           res.phoneNumber,
           res.venmoUsername,
-          res.paypalUsername);  
+          res.paypalUsername,
+          null);  
       });
   }
       private handleError(error: any): Promise<any> {
