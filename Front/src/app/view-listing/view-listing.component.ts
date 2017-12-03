@@ -29,7 +29,7 @@ export class ViewListingComponent implements OnInit {
   private commentArray: Array<CommentInfo>;
   private URL2: string;
   private avgRating: number;
-
+  private rating: number;
   
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
@@ -57,8 +57,58 @@ export class ViewListingComponent implements OnInit {
         //this.avgRating == 0;
       }
     });
-
 	}
+
+  getRating(){
+    if((<HTMLInputElement>document.getElementById('one')).checked){
+      this.rating = 1;
+    }
+    if((<HTMLInputElement>document.getElementById('two')).checked){
+      this.rating = 2;
+    }
+    if((<HTMLInputElement>document.getElementById('three')).checked){
+      this.rating = 3;
+    }
+    if((<HTMLInputElement>document.getElementById('four')).checked){
+      this.rating = 4;
+    }
+    if((<HTMLInputElement>document.getElementById('five')).checked){
+      this.rating = 5;
+    }
+    if(this.rating == null)
+    {
+      document.getElementById('ratingError').innerText = "UHHH Rate Me PLS";
+    }
+    else{
+      document.getElementById('ratingError').innerText = "";
+      this.http.post('/propertyRating/' + this.propID, {
+        username: localStorage.getItem('username'),
+        subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+        ratingPosterUsername: localStorage.getItem('username'),
+        rating: this.rating
+      }).subscribe(res => {
+                  //console.log(res);
+                    if(!res['error']){
+                      console.log("no error");
+                      this.getAverage().subscribe(rating => {
+                        this.avgRating = <number>rating;
+                        console.log(this.avgRating);
+                        this.avgRating = Math.round(this.avgRating * 10)/10;
+                        if(this.avgRating == null)
+                        {
+                          //this.avgRating == 0;
+                        }
+                      });
+                    } else {
+                      console.log(res['error']);
+                    }
+              },
+              err => {
+                console.log("there was an error");
+                console.log(err);
+              });
+    }
+  }
 
   comment(){
     this.commentBody = (<HTMLInputElement>document.getElementById("comment")).value;
@@ -91,7 +141,7 @@ export class ViewListingComponent implements OnInit {
               console.log("there was an error");
           console.log(err);
               }
-            );
+    );
     (<HTMLInputElement>document.getElementById("comment")).value = "";
     
   }

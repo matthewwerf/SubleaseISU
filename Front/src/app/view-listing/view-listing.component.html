@@ -22,6 +22,23 @@
 
   </div>
 
+  <label>Rate this property:</label>
+  <div id="rating">
+    <input type="radio" id="one" name="rating"> 1
+    <input type="radio" id="two" name="rating"> 2
+    <input type="radio" id="three" name="rating"> 3
+    <input type="radio" id="four" name="rating"> 4
+    <input type="radio" id="five" name="rating"> 5     
+  </div>
+  
+  <div>
+          <span id="ratingError"></span>
+  </div>
+  
+  <div>
+    <button id="submitRating" type="button" (click)="getRating()">Submit Rating</button>
+  </div>
+
   <table>
     <tr>
     <th>Poster Username</th>

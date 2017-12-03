@@ -251,20 +251,6 @@ export class ViewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    // var reader3 = new FileReader();
-    // var storedProfile = JSON.parse(localStorage.getItem('profPic'));
-    // if(storedProfile){
-    //    reader3.readAsDataURL(storedProfile);
-    // }
-    // else{
-    // }
-    // reader3.onload = function(){
-    //   (<HTMLImageElement>document.getElementById('profilePic')).src = reader3.result;
-    // }
-
-    // reader3.onload = function(){
-    //   (<HTMLImageElement>document.getElementById('profilePic')).src = localStorage.getItem('profPic'); 
-    // }
     this.isLoaded = false;
     this.userInfoService.getUserInfo().subscribe( UserInfo => {
       this.UserInfoList = UserInfo;
