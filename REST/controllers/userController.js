@@ -281,7 +281,7 @@
 							"msg" : "userType is not set for this accout"
 						});
 						return;
-					} else if(user.userTypeApproved == 'user') {
+					} else if(user.userTypeApproved == 'regular') {
 						res.status(401).json({
 							"error": "you are not authorized for this page"
 						});
