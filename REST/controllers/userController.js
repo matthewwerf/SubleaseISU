@@ -274,7 +274,7 @@
 					res.status(500).send(err);
 					return;
 				}
-				var localCookieToCheck = sha1(queryUsername + user.hashedPassword + config.salt);
+				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
 				if (localCookieToCheck == req.body.subleaseISUcookie){
 					if(user.userType == null) {
 						res.status(500).json({
@@ -316,6 +316,10 @@
 			return;
 		}
 		
+	};
+
+	exports.approveUserType = function(req, res) {
+
 	};
 
 }());
