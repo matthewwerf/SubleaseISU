@@ -323,6 +323,13 @@
 			if(user != null) {
 				if(user.userTypeApproved != null){
 					if(user.userType == 'admin' && user.userTypeApproved == true) {
+						if(req.params.accountUsername == null || req.params.accountUsername == "undefined") {
+							res.status(400).json({
+								"error" : "username is undefined"
+							});
+							return;
+						}
+
 						User.findOneAndUpdate({username: req.params.accountUsername}, {userTypeApproved: req.body.approvalBoolean}, {new: true}, function(err, user) {
 							if(err) {
 								res.status(500).send(err);
