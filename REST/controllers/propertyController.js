@@ -729,8 +729,11 @@
 				}
 				return;
 			} else {
-				User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
-
+				User.findOne({username: fields.username}, function(err, user){
+					if(err){
+						res.status(500).send(err);
+						return;
+					}
 					if(user == null) { // don't forget to check this is all functions
 						res.status(401).send({
 							"error": "username not recognized"
@@ -758,10 +761,10 @@
 						// if authentication is accepted add listeners to save file
 						console.log("Authentication Accepted");
 
-						Property.findOneAndUpdate({username: fields.propertyID}, {linkedPictureIDs: fileLocations}, {new: true}, function(err, user) {
+						Property.findOneAndUpdate({propertyID: fields.propertyID}, {linkedPictureIDs: fileLocations}, {new: true}, function(err, user) {
 							if(user == null) { // don't forget to check this is all functions
 								res.status(401).send({
-									"error": "username not recognized"
+									"error": "propertyID not recognized"
 								});
 								return;
 							}
@@ -779,7 +782,7 @@
 		form.addListener('fileBegin', function(name, file) {
 			console.log("FileBegin Detected");
 			file.path = __dirname + '/propertyPictures/' + file.name + Date.now();
-			fileLocations.append(file.path);
+			fileLocations.push(file.path);
 			console.log("File Path Created");
 		});
 
