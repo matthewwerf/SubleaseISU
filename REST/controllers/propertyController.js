@@ -24,8 +24,14 @@
 
 	const nodemailerEmail = nodeConfig.NODEMAILER_EMAIL;
 
+	// Formdata
+	var formidable = require('formidable');
+
 	// Auth Helper
 	var ah = require('../lib/authHelper.js');
+
+	// File Helper
+	var fh = require('../lib/fileHelper.js');
 
 	/**
 	 * @apiDefine UsernameNotFoundError
