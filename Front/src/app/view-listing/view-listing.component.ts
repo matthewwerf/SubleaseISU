@@ -33,6 +33,8 @@ export class ViewListingComponent implements OnInit {
   private URL2: string;
   private avgRating: number;
   private rating: number;
+  private textMessage: FormControl;
+  private newMessageForm: FormGroup;
   
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
@@ -60,6 +62,10 @@ export class ViewListingComponent implements OnInit {
         //this.avgRating == 0;
       }
     });
+
+  	  // Create the form used to send messages
+      this.createFormControls();
+      this.createForm();
 	}
 
   getRating(){
