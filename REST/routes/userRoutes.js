@@ -38,7 +38,7 @@
 		app.route('/getApprovals')
 			.post(user.getPendingApprovals);
 
-		app.route('/approve/:username')
+		app.route('/approve/:accountUsername')
 			.post(user.approveUserType);
 	};
 }());

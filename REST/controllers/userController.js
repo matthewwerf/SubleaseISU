@@ -319,11 +319,11 @@
 	};
 
 	exports.approveUserType = function(req, res) {
-		ah.validateAuth(req, req, function(user) {
+		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
 				if(user.userTypeApproved != null){
 					if(user.userType == 'admin' && user.userTypeApproved == true) {
-						User.findOneAndUpdate({username: req.body.accountUsername}, {userTypeApproved: req.body.approvalBoolean}, {new: true}, function(err, user) {
+						User.findOneAndUpdate({username: req.params.accountUsername}, {userTypeApproved: req.body.approvalBoolean}, {new: true}, function(err, user) {
 							if(err) {
 								res.status(500).send(err);
 								return;
