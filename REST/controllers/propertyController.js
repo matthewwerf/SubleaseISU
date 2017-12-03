@@ -813,7 +813,14 @@
 	exports.retrievePropertyPicture = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
-				res.sendFile(req.body.pictureLocation);
+				try{
+					res.sendFile(req.body.pictureLocation);
+				}				
+				catch (error){
+					res.status(400).json({
+						"msg" : "file could not be retrieved"
+					});
+				}
 			}
 		});
 	};
