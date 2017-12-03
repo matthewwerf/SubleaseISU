@@ -311,7 +311,7 @@
 			});
 		} else {
 			res.status(400).json({
-				"msg" : "username not provided in request"
+				"error" : "username not provided in request"
 			});
 			return;
 		}
