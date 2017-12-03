@@ -36,12 +36,11 @@
 			}
 			var localCookieToCheck = sha1(queryUsername + user.hashedPassword + config.salt);
 			if (localCookieToCheck == req.body.subleaseISUcookie){
+				/*
 				if(user.userType) {
 					if(user.userType == 'admin') {
 						if(user.userTypeApproved == true) {
-							handleAdmin(req, res, function(adminAccount){
-								cb(adminAccount);
-							});
+							cb(adminAccount);
 						} else {
 							res.status(400).json({
 								"error" : "account is still pending approval for admin status"
@@ -52,9 +51,7 @@
 						
 					} else if(user.userType == 'leasing') {
 						if(user.userTypeApproved == true) {
-							handleLeaser(req, res, function(leaserAccount) {
-								cb(leaserAccount);
-							});
+							cb(leaserAccount);
 						} else {
 							res.status(400).json({
 								"error" : "account is still pending approval for leasing status"
@@ -66,6 +63,8 @@
 				} else {
 					cb(user);
 				}
+				*/
+				cb(user);
 			} else {
 				res.status(400).json({
 					"error": "Incorrect cookie"
@@ -75,12 +74,69 @@
 		});
 	};
 
-	function handleAdmin(req, res, adminAccount, cb) {
-		cb(adminAccount);
-	}
-
-	function handleLeaser(req, res, leasingAccount, cb) {
-		cb(leasingAccount);
-	}
+	exports.tieredPropertyAuth = function(req, res, property, cb) {
+		validateAuth(req, res, function(user){
+			if(user != null) {
+				if(user.userType) {
+					// if admin, return property
+					if(user.userType == 'admin') {
+						if(user.userTypeApproved == true) {
+							cb(true);
+						} else {
+							res.status(401).json({
+								"error" : "account is still pending approval for admin status"
+							});
+							cb(false);
+							return;
+						}
+					// if leaser, return property onlyIf, property.leasingAgency == leasingAccount.username
+					} else if(user.userType == 'leasing') {
+						if(user.userTypeApproved == true) {
+							if(user.username == property.leasingAgency) {
+								cb(true);
+							}
+							else {
+								res.status(401).json({
+									"error" : "Leasing agency name does not match that of the property"
+								});
+								cb(false);
+								return;
+							}
+						} else {
+							res.status(401).json({
+								"error" : "account is still pending approval for leasing status"
+							});
+							cb(false);
+							return;
+						}
+					// if user, return property onlyIf, property.posterUsername == user.username
+					} else { // userType is regular
+						if(user.username == property.posterUsername) {
+							cb(true);
+							return;
+						} else {
+							res.status(401).json({
+								"error" : "you are not the poster of this property"
+							});
+							cb(false);
+							return;
+						}
+					}
+				// if user, return property onlyIf, property.posterUsername == user.username
+				} else { // userType not sent (assume regular)
+					if(user.username == property.posterUsername) {
+						cb(true);
+						return;
+					} else {
+						res.status(401).json({
+							"error" : "you are not the poster of this property"
+						});
+						cb(false);
+						return;
+					}
+				}
+			}
+		});
+	};
 
 }());
