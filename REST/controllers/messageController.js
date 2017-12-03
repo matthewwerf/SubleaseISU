@@ -307,7 +307,7 @@
 						receiverUsername: req.body.username,
 					}, 'senderUsername', function(err, usernames) {
 						if(err) {
-							res.send(err);
+							res.status(500).send(err);
 							return;
 						}
 						var usernameArray = [];
@@ -317,6 +317,27 @@
 								usernameArray.push(usernames[j].senderUsername);
 							}
 						}
+
+						Message.find({
+							senderUsername: req.body.username
+						}, 'receiverUsername', function(err, usernamesOfRecipients) {
+							if(err) {
+								res.status(500).send(err);
+								return;
+							}
+							if(usernameArray == null){
+								usernameArray = [];
+							}
+
+							for(j=0; j<usernamesOfRecipients.length; j++){
+								let name = usernamesOfRecipients[j].senderUsername;
+								if(usernameArray.indexOf(name) == -1) {
+									usernameArray.push(usernamesOfRecipients[j].senderUsername);
+								}
+						}
+
+						});
+
 						res.json(usernameArray);
 					});
 				}
