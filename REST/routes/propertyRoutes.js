@@ -9,8 +9,8 @@
 		app.route('/propertyPictures/:propertyID')
 			.post(property.uploadPropertyPictures);
 
-		app.route('/retrievePropertyPictures/:propertyID')
-			.post(property.retrievePropertyPictures);
+		app.route('/retrievePropertyPicture')
+			.post(property.retrievePropertyPicture);
 
 		app.route('/listAllProperties')
 			.post(property.listAllProperties);
