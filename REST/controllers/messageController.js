@@ -330,15 +330,14 @@
 							}
 
 							for(j=0; j<usernamesOfRecipients.length; j++){
-								let name = usernamesOfRecipients[j].senderUsername;
+								let name = usernamesOfRecipients[j].receiverUsername;
 								if(usernameArray.indexOf(name) == -1) {
-									usernameArray.push(usernamesOfRecipients[j].senderUsername);
+									usernameArray.push(usernamesOfRecipients[j].receiverUsername);
 								}
 						}
 
+							res.status(200).json(usernameArray);
 						});
-
-						res.json(usernameArray);
 					});
 				}
 			});
