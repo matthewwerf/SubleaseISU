@@ -98,6 +98,7 @@
 	 *	  "roommateQuantity": 1,
 	 *	  "posterUsername": "username",
 	 *	  "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
 	 *	  "rentValue": 2322222,
 	 *	  "address": "223 Lynn Avenue, Ames, Iowa 50014",
 	 *	  "postingMessage": "22",
@@ -179,17 +180,6 @@
 
 						newObj.longitude = longLat.lng;
 						newObj.latitude = longLat.lat;
-						//newProperty = new Property(newObj);
-
-						// Previous Location
-						/*
-						newProperty.save(function (err, property) {
-							if (err) {
-								res.status(500).send(err);
-							}
-							res.status(201).json(property);
-						});
-						*/
 
 						var distance_matrix_url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + encodeURIComponent(req.body.address) + '&destinations=Memorial%20Union%20Iowa%20State&mode=walking&language=en-&key=AIzaSyCbDvpWBiyq0h_HNWBgMcD1iGAhxg-L37c';
 						axios.get(distance_matrix_url)
@@ -198,21 +188,21 @@
 								newProperty = new Property(newObj);
 		
 								newProperty.save(function (err, property) {
-                                                                	if (err) {
-                                                                        	res.status(500).send(err);
-                                                                	}
-                                                                	res.status(201).json(property);
-                                                        	});							
+									if (err) {
+										res.status(500).send(err);
+									}
+									res.status(201).json(property);
+								});							
 	
 							})
 							.catch(function(err) {
 								console.log(err);
 								newProperty.save(function (err, property) {
-                                                                	if (err) {
-                                                                	        res.status(500).send(err);
-                                                                	}
-                                                                	res.status(201).json(property);
-                                                        	});
+									if (err) {
+										res.status(500).send(err);
+									}
+									res.status(201).json(property);
+								});
 							});
 					})
 					.catch(function(err) {
@@ -715,6 +705,82 @@
 				"avgRating" : sum/count
 			});
 		});
+	};
+
+	exports.uploadPropertyPictures = function(req, res) {
+		var form = formidable.IncomingForm();
+		var fileLocation = null;
+
+		form.parse(req, function(err, fields, files) {
+			
+			if (!fields.subleaseISUcookie || !fields.username) {
+				res.status(401).send({
+					"error": "not authenticated"
+				});
+				fh.deleteFile(fileLocation);
+				console.log('Unauthorized, File Deteled: ' + fileLocation);
+				return;
+			} else {
+				User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
+
+					if(user == null) { // don't forget to check this is all functions
+						res.status(401).send({
+							"error": "username not recognized"
+						});
+						fh.deleteFile(fileLocation);
+						console.log('Unauthorized, File Deteled: ' + fileLocation);
+						return;
+					}
+		
+					var localCookieToCheck = sha1(fields.username + user.hashedPassword + config.salt);
+					if(localCookieToCheck != fields.subleaseISUcookie) {
+						res.status(401).send({
+							"error": "authentication rejected"
+						});
+						fh.deleteFile(fileLocation);
+						console.log('Unauthorized, File Deteled: ' + fileLocation);
+						return;
+					} else {
+						// if authentication is accepted add listeners to save file
+						console.log("Authentication Accepted");
+
+						User.findOneAndUpdate({username: fields.username}, {profilePictureLocation: fileLocation}, {new: true}, function(err, user) {
+							if(user == null) { // don't forget to check this is all functions
+								res.status(401).send({
+									"error": "username not recognized"
+								});
+								return;
+							}
+
+							if (err) {
+								res.status(500).send(err);
+							}
+						res.status(200).json(user);
+						});
+					}
+				});
+			}
+		});
+
+		form.addListener('fileBegin', function(name, file) {
+			console.log("FileBegin Detected");
+			file.path = __dirname + '/propertyPictures/' + file.name + Date.now();
+			fileLocation = file.path;
+			console.log("File Path Created");
+		});
+
+		form.addListener('file', function(name, file) {
+			console.log("File Detected");
+		});
+
+		form.addListener('end', function() {
+			console.log('Saved at: ' + fileLocation);
+		});
+
+	};
+
+	exports.retrievePropertyPictures = function(req, res) {
+
 	};
 
 
