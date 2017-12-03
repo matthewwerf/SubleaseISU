@@ -334,7 +334,7 @@
 								if(usernameArray.indexOf(name) == -1) {
 									usernameArray.push(usernamesOfRecipients[j].receiverUsername);
 								}
-						}
+							}
 
 							res.status(200).json(usernameArray);
 						});

@@ -702,10 +702,23 @@
 			}
 
 			var sum = 0, count =0;
+			var usernamesOfRaters = []; // Used to ensure only most recent rating is used
+
+			for(var i = property.ratings.length-1; i >= 0; i--){
+				if(usernamesOfRaters.indexOf(property.ratings[rating].ratingPosterUsername) != -1) {
+					sum += property.ratings[rating].rating;
+					count++;
+				}
+			}
+
+
+			// Old, does not account for re-rate
+			/*
 			for (var rating in property.ratings) {
 				sum += property.ratings[rating].rating;
 				count++;
 			}
+			*/
 
 			res.status(200).json({
 				"avgRating" : sum/count
