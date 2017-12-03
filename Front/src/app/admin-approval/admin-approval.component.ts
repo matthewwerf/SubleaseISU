@@ -45,4 +45,19 @@ export class AdminApprovalComponent implements OnInit {
   		});
   	}
 
+  	onClick(user: UserInfo, approve: boolean) {
+  		this.http.post('approve/' + user, {
+  			username: localStorage.getItem('username'),
+			subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+  			approvalBoolean: approve
+  		}).subscribe(res => {
+  			if(!res['error']) {
+  				window.alert("User permissions Updated.")
+  			}
+  			else {
+  				window.alert("There was an error in updating user permissions.")
+  			}
+  		})
+  	}
+
 }

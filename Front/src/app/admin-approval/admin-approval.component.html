@@ -4,13 +4,16 @@
     	<th>Username</th>
     	<th>Account Type</th>
     	<th>Approved</th>
+    	<th>Approve User</th>
+    	<th>Un-Aprove User</th>
       
 
   		<tr *ngFor="let data of userList">
   			<td> {{data.username}}</td>
   			<td> {{data.accountType}}</td>
   			<td> {{data.accountTypeApproved}}</td>
-        <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
+        	<td> <button (click)="onClick(data.username, true)">Click Here</button></td>
+        	<td> <button (click)="onClick(data.username, false)">Click Here</button></td>
         
 		</tr>
 </table>
