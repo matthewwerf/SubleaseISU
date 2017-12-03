@@ -715,7 +715,7 @@
 
 	exports.uploadPropertyPictures = function(req, res) {
 		var form = formidable.IncomingForm();
-		var fileLocation = null;
+		var fileLocations = [];
 
 		form.parse(req, function(err, fields, files) {
 			
@@ -723,8 +723,10 @@
 				res.status(401).send({
 					"error": "not authenticated"
 				});
-				fh.deleteFile(fileLocation);
-				console.log('Unauthorized, File Deteled: ' + fileLocation);
+				for(let file in fileLocations){
+					fh.deleteFile(fileLocations[file]);
+					console.log('Unauthorized, File Deteled: ' + fileLocations[file]);
+				}
 				return;
 			} else {
 				User.findOne({username: fields.username}, 'hashedPassword', function(err, user){
@@ -733,8 +735,10 @@
 						res.status(401).send({
 							"error": "username not recognized"
 						});
-						fh.deleteFile(fileLocation);
-						console.log('Unauthorized, File Deteled: ' + fileLocation);
+						for(let file in fileLocations){
+							fh.deleteFile(fileLocations[file]);
+							console.log('Unauthorized, File Deteled: ' + fileLocations[file]);
+						}
 						return;
 					}
 		
@@ -743,14 +747,18 @@
 						res.status(401).send({
 							"error": "authentication rejected"
 						});
-						fh.deleteFile(fileLocation);
-						console.log('Unauthorized, File Deteled: ' + fileLocation);
+
+						for(let file in fileLocations){
+							fh.deleteFile(fileLocations[file]);
+							console.log('Unauthorized, File Deteled: ' + fileLocations[file]);
+						}
 						return;
+
 					} else {
 						// if authentication is accepted add listeners to save file
 						console.log("Authentication Accepted");
 
-						User.findOneAndUpdate({username: fields.username}, {profilePictureLocation: fileLocation}, {new: true}, function(err, user) {
+						Property.findOneAndUpdate({username: fields.propertyID}, {linkedPictureIDs: fileLocations}, {new: true}, function(err, user) {
 							if(user == null) { // don't forget to check this is all functions
 								res.status(401).send({
 									"error": "username not recognized"
@@ -771,7 +779,7 @@
 		form.addListener('fileBegin', function(name, file) {
 			console.log("FileBegin Detected");
 			file.path = __dirname + '/propertyPictures/' + file.name + Date.now();
-			fileLocation = file.path;
+			fileLocations.append(file.path);
 			console.log("File Path Created");
 		});
 
@@ -780,7 +788,7 @@
 		});
 
 		form.addListener('end', function() {
-			console.log('Saved at: ' + fileLocation);
+			console.log('Saved at: ' + fileLocations);
 		});
 
 	};
