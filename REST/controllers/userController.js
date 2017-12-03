@@ -259,4 +259,63 @@
 		});
 	};
 
+	exports.getPendingApprovals = function(req, res) {
+		var queryUsername;
+		if(req.body.username != null) {
+			User.findOne({username: req.body.username}, function (err, user) {
+				if(user == null) { // don't forget to check this is all functions
+					res.status(401).send({
+						"error": "username not recognized"
+					});
+					return;
+				}
+
+				if (err) {
+					res.status(500).send(err);
+					return;
+				}
+				var localCookieToCheck = sha1(queryUsername + user.hashedPassword + config.salt);
+				if (localCookieToCheck == req.body.subleaseISUcookie){
+					if(user.userType == null) {
+						res.status(500).json({
+							"msg" : "userType is not set for this accout"
+						});
+						return;
+					} else if(user.userTypeApproved == 'user') {
+						res.status(401).json({
+							"error": "you are not authorized for this page"
+						});
+						return;
+					} else if(user.userTypeApproved == null){
+						res.status(401).json({
+							"error": "your account is pending approval"
+						});
+						return;
+					} else if(user.userTypeApproved == false){
+						res.status(401).json({
+							"error": "your account is not approved"
+						});
+						return;
+					} else if(user.userTypeApproved == true){
+						User.find({$or:[{userType: 'leasing'}, {userType: 'admin'}]}, function(err, users) {
+							res.status(200).json(users);
+						});
+
+					}
+				} else {
+					res.status(400).json({
+						"error": "Incorrect cookie"
+					});
+					return;
+				}
+			});
+		} else {
+			res.status(400).json({
+				"msg" : "username not provided in request"
+			});
+			return;
+		}
+		
+	};
+
 }());

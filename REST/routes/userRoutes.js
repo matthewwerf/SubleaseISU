@@ -34,5 +34,11 @@
 		
 		app.route('/retrieveProfilePicture/:username')
 			.post(user.retrieveProfilePic);
+
+		app.route('/getApprovals')
+			.post(user.getPendingApprovals);
+
+		app.route('/approve/:username')
+			.post(user.approveUserType);
 	};
 }());
