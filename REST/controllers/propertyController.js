@@ -811,7 +811,11 @@
 	};
 
 	exports.retrievePropertyPictures = function(req, res) {
-
+		ah.validateAuth(req, res, function(user) {
+			if(user != null) {
+				res.send(req.pictureLocation);
+			}
+		});
 	};
 
 
