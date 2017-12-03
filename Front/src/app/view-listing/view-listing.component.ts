@@ -22,13 +22,10 @@ export class ViewListingComponent implements OnInit {
 	private sub: any;
 	private currentListing: ListingInfo;
 	private isLoaded: boolean;
-  private commentArray: any;
-  private avgRating: any;
   private commentBody: string;
   private time: string;
   private newComment: CommentInfo;
   private isLoaded2: boolean;
-  //private subscription: any;
   private commentArray: Array<CommentInfo>;
   private URL2: string;
   private avgRating: number;
@@ -55,7 +52,6 @@ export class ViewListingComponent implements OnInit {
 
     this.getAverage().subscribe(rating => {
       this.avgRating = <number>rating;
-      console.log(this.avgRating);
       this.avgRating = Math.round(this.avgRating * 10)/10;
       if(this.avgRating == null)
       {
@@ -123,16 +119,13 @@ export class ViewListingComponent implements OnInit {
     this.commentBody = (<HTMLInputElement>document.getElementById("comment")).value;
     this.time = (new Date().toLocaleDateString()) + " " +(new Date().toLocaleTimeString());
     this.newComment = new CommentInfo(localStorage.getItem('username'), this.time, this.commentBody);
-    //this.commentArray.push(this.newComment);
     this.URL2 = URL + this.propID;
-    console.log(this.newComment);
     this.http.post(this.URL2, {
       username: localStorage.getItem('username'),
       subleaseISUcookie: localStorage.getItem('subleaseISUcookie'), 
       message: this.commentBody
     }).subscribe(
               res => {
-                  //console.log(res);
                    if(!res['error']){
             console.log("no error");
             this.isLoaded = false;
@@ -173,9 +166,6 @@ export class ViewListingComponent implements OnInit {
 
     onSubmit(form: any): void{
       if(this.textMessage.value != '') {
-
-        //var body = JSON.stringify();
-        //console.log(body);
         this.http.post('/messages/saveHistory', {
           username: localStorage.getItem('username'),
           subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
