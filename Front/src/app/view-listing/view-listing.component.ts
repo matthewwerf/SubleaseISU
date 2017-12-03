@@ -7,6 +7,8 @@ import { ListingInfo } from '../models/listing';
 //import { Headers, Http } from '@angular/http';
 import { CommentInfo } from '../models/commentInfo';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Headers, Http, RequestOptions } from '@angular/http';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 const URL = '/propertyComment/';
 @Component({
@@ -20,7 +22,8 @@ export class ViewListingComponent implements OnInit {
 	private sub: any;
 	private currentListing: ListingInfo;
 	private isLoaded: boolean;
-  //private address: string;
+  private commentArray: any;
+  private avgRating: any;
   private commentBody: string;
   private time: string;
   private newComment: CommentInfo;
@@ -152,6 +155,39 @@ export class ViewListingComponent implements OnInit {
       return res.avgRating;
     });
   }
+    createFormControls() {
+      this.textMessage = new FormControl('');
+    }
+
+    createForm() {
+    this.newMessageForm = new FormGroup ({
+        textMessage: this.textMessage,
+     });
+    }
+
+    onSubmit(form: any): void{
+      if(this.textMessage.value != '') {
+
+        //var body = JSON.stringify();
+        //console.log(body);
+        this.http.post('/messages/saveHistory', {
+          username: localStorage.getItem('username'),
+          subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+          senderUsername: localStorage.getItem('username'),
+          receiverUsername: this.currentListing.posterUsername,
+          message: this.textMessage.value}
+        ).subscribe(res => {
+          if(!res['error']){
+          window.alert("Message sent, you can see your messages in messages tab.");
+          this.newMessageForm.reset(); // Clear the chat box
+        }
+        else {
+          window.alert("There was an error in sending the message.");
+        }
+      });
+      }
+     }
+
 	getListing(): Observable<ListingInfo> {
   	// Get the json data string
   	return this.http.put<ListingInfo>('/property/' + this.propID, {
