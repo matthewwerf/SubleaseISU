@@ -37,6 +37,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageUserComponent } from './message-user/message-user.component';
+import { AdminApprovalComponent } from './admin-approval/admin-approval.component';
 
 
 
@@ -59,7 +60,8 @@ import { MessageUserComponent } from './message-user/message-user.component';
     RoommateSearchPipe,
     PersonalBathroomSearchPipe,
     ViewListingComponent,
-    MessageUserComponent
+    MessageUserComponent,
+    AdminApprovalComponent
   ],
   imports: [
     BrowserModule,

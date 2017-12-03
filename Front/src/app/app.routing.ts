@@ -12,6 +12,7 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
 import { MainPageComponent } from './main-page/main-page.component';
 
 import { AuthService } from './services/auth.service';
+import { AdminApprovalComponent } from './admin-approval/admin-approval.component';
 
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { ViewListingComponent } from './view-listing/view-listing.component';
@@ -46,7 +47,15 @@ export const ROUTES: Routes = [
     },
     {
         path: 'messageUser/:senderUsername',
-        component: MessageUserComponent
+        component: MessageUserComponent,
+        canActivate: [AuthService]
+
+    },
+    {
+        path: 'adminApproval',
+        component: AdminApprovalComponent,
+        //canActivate: [AuthService]
+
     },
     {
         path: 'login', 
@@ -66,7 +75,7 @@ export const ROUTES: Routes = [
     {
         path: 'messaging',
         component: MessagingComponent,
-        //canActivate: [AuthService]
+        canActivate: [AuthService]
     },
     {
         path: 'googlemaps',
