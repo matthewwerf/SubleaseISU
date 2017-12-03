@@ -705,9 +705,10 @@
 			var usernamesOfRaters = []; // Used to ensure only most recent rating is used
 
 			for(var i = property.ratings.length-1; i >= 0; i--){
-				if(usernamesOfRaters.indexOf(property.ratings[rating].ratingPosterUsername) != -1) {
-					sum += property.ratings[rating].rating;
+				if(usernamesOfRaters.indexOf(property.ratings[i].ratingPosterUsername) == -1) {
+					sum += property.ratings[i].rating;
 					count++;
+					usernamesOfRaters.push(property.ratings[i].ratingPosterUsername);
 				}
 			}
 
