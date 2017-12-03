@@ -36,6 +36,7 @@ export class UserInfoService {
           res.phoneNumber,
           res.venmoUsername,
           res.paypalUsername,
+          null,
           null);  
       });
   }

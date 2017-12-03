@@ -1,3 +1,18 @@
-<p>
-  admin-approval works!
-</p>
+<div>
+<table>
+	<tr>
+    	<th>Username</th>
+    	<th>Account Type</th>
+    	<th>Approved</th>
+      
+
+  		<tr *ngFor="let data of userList">
+  			<td> {{data.username}}</td>
+  			<td> {{data.accountType}}</td>
+  			<td> {{data.accountTypeApproved}}</td>
+        <td> <a [routerLink]="['/../viewListing', data.propertyId]"> View Listing </a></td>
+        
+		</tr>
+</table>
+</div>
+<router-outlet></router-outlet>
