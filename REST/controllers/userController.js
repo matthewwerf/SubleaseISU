@@ -319,7 +319,31 @@
 	};
 
 	exports.approveUserType = function(req, res) {
-
+		ah.validateAuth(req, req, function(user) {
+			if(user != null) {
+				if(user.userTypeApproved != null){
+					if(user.userType == 'admin' && user.userTypeApproved == true) {
+						User.findOneAndUpdate({username: req.body.accountUsername}, {userTypeApproved: req.body.approvalBoolean}, {new: true}, function(err, user) {
+							if(err) {
+								res.status(500).send(err);
+								return;
+							}
+							res.status(200).json({
+								"msg" : "user updated"
+							});
+						});
+					} else {
+						res.status(401).json({
+							"error" : "you are not an approved admin"
+						});
+					}
+				} else {
+					res.status(401).json({
+						"error" : "your account is still pending approval"
+					});
+				}
+			}
+		});
 	};
 
 }());
