@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 //import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
 
 import * as crypto from 'crypto-js';
-
+const URL = '/propertyPictures/'
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -58,7 +58,7 @@ export class CreatePropertyComponent implements OnInit {
   imagePreview() 
   {
       
-      document.getElementById("uploadButt").style.display = 'block';
+      //document.getElementById("uploadButt").style.display = 'block';
       document.getElementById("previewLabel").style.display = 'block';
       document.getElementById("clearButt").style.display = 'block';
 
@@ -198,12 +198,9 @@ export class CreatePropertyComponent implements OnInit {
       }
   }
 
-  uploadGang(){
-    
-  }
   clear(){
-       document.getElementById("uploadButt").style.display = 'none';
-      document.getElementById("previewLabel").style.display = 'none';
+       //document.getElementById("uploadButt").style.display = 'none';
+    document.getElementById("previewLabel").style.display = 'none';
     (<HTMLImageElement>document.getElementById('preview0')).src = "";
     (<HTMLImageElement>document.getElementById('preview1')).src = "";
     (<HTMLImageElement>document.getElementById('preview2')).src = "";
@@ -342,6 +339,35 @@ export class CreatePropertyComponent implements OnInit {
                 //console.log(res);
                 if(!res['error']){
                   console.log("no error");
+
+                  let formData: FormData = new FormData();
+                  formData.append('username', localStorage.getItem('username'));
+                  formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
+                  formData.append('propertyID', shaPropertyID);
+                  if(this.source.length > 0){
+                    let i = 0
+
+                    for(i; i< this.source.length; i++){
+                      formData.append('fileArray[]', this.source[i]);
+                    }
+
+                    this.http.post(URL + shaPropertyID, formData).subscribe(
+                            res => {
+                                //console.log(res);
+                                 if(!res['error']){
+                          console.log("no error");
+                        } else {
+                          console.log(res['error']);
+                        }
+                           //this.router.navigate(['login']);
+                            },
+                            err => {
+                            console.log("there was an error");
+                        console.log(err);
+                            }
+                          );    
+                  }
+
                   this.router.navigate(['main']);
                 } 
                 else {

@@ -30,6 +30,7 @@ export class ViewListingComponent implements OnInit {
   private URL2: string;
   private avgRating: number;
   private rating: number;
+  private ratingMessage: string ="Not Rated";
   
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
@@ -149,12 +150,18 @@ export class ViewListingComponent implements OnInit {
   getAverage(){
     console.log("test");
     return this.http.get<any>('/propertyRating/' + this.propID).map(res => {
-      return res.avgRating;
+      if(!res['error']){
+        this.ratingMessage = "";
+        return res.avgRating;
+      }
+      else{
+        this.ratingMessage = "Not Rated"
+      }
     });
   }
 	getListing(): Observable<ListingInfo> {
   	// Get the json data string
-  	return this.http.put<ListingInfo>('/property/' + this.propID, {
+  	return this.http.post<ListingInfo>('/property/' + this.propID, {
   		username: localStorage.getItem('username'),
 		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
   	}).map(res => {
