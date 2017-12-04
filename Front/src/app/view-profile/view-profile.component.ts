@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, Input} from '@angular/core';
-import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+//import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Router } from '@angular/router';
 import { UserInfo } from '../models/userInfo';
 import { UserInfoService } from './user-info-service';
@@ -29,7 +29,7 @@ export class ViewProfileComponent implements OnInit {
   private UserInfoList: UserInfo;
   private isLoaded: boolean;
 
-  uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'fileName'});
+  //uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'fileName'});
   firstLoad: boolean = true;
   fileSize: number;
   source: Array<File>;
@@ -70,6 +70,8 @@ export class ViewProfileComponent implements OnInit {
 
   }
   
+
+
   clear(){
     (<HTMLInputElement>document.getElementById("previewImage")).value = "";
     document.getElementById("clearButt").style.display = 'none';

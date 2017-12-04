@@ -99,24 +99,27 @@
 		</div>
 
 		<label>Test Pic upload</label>
+		<div>
+			<span id="tooMany"></span>
+		</div>
+		<input id="previewImage" type="file" (change)="imagePreview();" />
+		
 		<div class="row">
 			<div class="column">
-				<input id="previewImage" type="file" (change)="imagePreview();" />
-				<button type="button" id="uploadButt" style="display: none;" class="btn btn-success btn-s" (click)="uploadGang()">
-					Upload Property Pictures
-				</button>
+					
 				<button type="button" id="clearButt" class="btn btn-success btn-s" style="display: none;" (click)="clear()">
 					Clear
 				</button>
-			
+				
 				<div id="previewPic" class="container2">
 					<label id="previewLabel" style="display: none;"> Picture Preview:</label>
-					<img src="" id="preview" />
+					<img src="" id="preview0" />
+					<img src="" id="preview1" />
 					<img src="" id="preview2" />
+					<img src="" id="preview3" />
+					<img src="" id="preview4" />
 				</div>
-			</div>
-		
-
+			</div>		
 		
 			<div class="column">
 				<div>

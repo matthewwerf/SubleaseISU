@@ -6,10 +6,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 //import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
-import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
+//import { Ng4FilesStatus, Ng4FilesSelected, Ng4FilesService, Ng4FilesConfig } from 'angular4-files-upload/src/app/ng4-files';
 
 import * as crypto from 'crypto-js';
-
+const URL = '/propertyPictures/'
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -57,35 +57,160 @@ export class CreatePropertyComponent implements OnInit {
 
   imagePreview() 
   {
-      document.getElementById("clearButt").style.display = 'block';
-      document.getElementById("uploadButt").style.display = 'block';
+      
+      //document.getElementById("uploadButt").style.display = 'block';
       document.getElementById("previewLabel").style.display = 'block';
-      
-      if(this.source.length > 0){
-        this.oldFile = this.source.pop();
-      }
-      this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
-      this.currFile = this.source[0];
-      var reader = new FileReader();
-      console.log(this.source);
-      
-      if(this.source){
-        reader.readAsDataURL(this.currFile);
-        //reader.readAsDataURL(this.oldFile);
+      document.getElementById("clearButt").style.display = 'block';
+
+      if(((<HTMLInputElement>document.getElementById("previewImage")).files[0]) && (this.fileSize < 5))
+      {
+        this.fileSize = this.source.push((<HTMLInputElement>document.getElementById("previewImage")).files[0]);
+        //this.currFile = this.source[0];
+        
+        //console.log(this.fileSize);
+        console.log(this.source);
+        
+        if(this.source.length < 0)
+        {
+          console.log("Error");
+        }
+        else if(this.source.length == 1){
+          
+          let reader = new FileReader();
+
+          reader.readAsDataURL(this.source[0]);
+
+          reader.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview0')).src = reader.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+        }
+        else if(this.source.length == 2){
+          
+          let reader = new FileReader();
+          let reader1 = new FileReader();
+
+          reader.readAsDataURL(this.source[0]);
+          reader1.readAsDataURL(this.source[1]);
+          
+          reader.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview0')).src = reader.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader1.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview1')).src = reader1.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+        }
+        else if(this.source.length == 3){
+          
+          let reader = new FileReader();
+          let reader1 = new FileReader();
+          let reader2 = new FileReader();
+
+          reader.readAsDataURL(this.source[0]);
+          reader1.readAsDataURL(this.source[1]);
+          reader2.readAsDataURL(this.source[2]);
+
+          reader.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview0')).src = reader.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader1.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview1')).src = reader1.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader2.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview2')).src = reader2.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+        }
+        else if(this.source.length == 4){
+          
+          let reader = new FileReader();
+          let reader1 = new FileReader();
+          let reader2 = new FileReader();
+          let reader3 = new FileReader();
+
+          reader.readAsDataURL(this.source[0]);
+          reader1.readAsDataURL(this.source[1]);
+          reader2.readAsDataURL(this.source[2]);
+          reader3.readAsDataURL(this.source[3]);
+
+          reader.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview0')).src = reader.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader1.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview1')).src = reader1.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader2.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview2')).src = reader2.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader3.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview3')).src = reader3.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+        }
+        else if(this.source.length == 5){
+          
+          let reader = new FileReader();
+          let reader1 = new FileReader();
+          let reader2 = new FileReader();
+          let reader3 = new FileReader();
+          let reader4 = new FileReader();
+
+          reader.readAsDataURL(this.source[0]);
+          reader1.readAsDataURL(this.source[1]);
+          reader2.readAsDataURL(this.source[2]);
+          reader3.readAsDataURL(this.source[3]);
+          reader4.readAsDataURL(this.source[4]);
+
+          reader.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview0')).src = reader.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader1.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview1')).src = reader1.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader2.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview2')).src = reader2.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader3.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview3')).src = reader3.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+          reader4.onload = function(e){
+            (<HTMLImageElement>document.getElementById('preview4')).src = reader4.result;
+            document.getElementById("previewPic").style.display = 'block';
+          }
+        }
+        else if(this.source.length > 5){
+          console.log("too Many");
+        }
       }
       else{
+        document.getElementById('tooMany').innerText = "Max of 5 images, delete one to add another"
       }
-
-
-      reader.onload = function(){
-        (<HTMLImageElement>document.getElementById('preview')).src = reader.result;
-        document.getElementById("previewPic").style.display = 'block';
-      }
-
   }
 
+  clear(){
+       //document.getElementById("uploadButt").style.display = 'none';
+    document.getElementById("previewLabel").style.display = 'none';
+    (<HTMLImageElement>document.getElementById('preview0')).src = "";
+    (<HTMLImageElement>document.getElementById('preview1')).src = "";
+    (<HTMLImageElement>document.getElementById('preview2')).src = "";
+    (<HTMLImageElement>document.getElementById('preview3')).src = "";
+    (<HTMLImageElement>document.getElementById('preview4')).src = "";
+    this.source = [];
+  }
 
   ngOnInit() {
+    this.fileSize = 0;
     this.source = [];
     this.createFormControls();
     this.getPosterUsername();
@@ -214,6 +339,35 @@ export class CreatePropertyComponent implements OnInit {
                 //console.log(res);
                 if(!res['error']){
                   console.log("no error");
+
+                  let formData: FormData = new FormData();
+                  formData.append('username', localStorage.getItem('username'));
+                  formData.append('subleaseISUcookie', localStorage.getItem('subleaseISUcookie'));
+                  formData.append('propertyID', shaPropertyID);
+                  if(this.source.length > 0){
+                    let i = 0
+
+                    for(i; i< this.source.length; i++){
+                      formData.append('fileArray[]', this.source[i]);
+                    }
+
+                    this.http.post(URL + shaPropertyID, formData).subscribe(
+                            res => {
+                                //console.log(res);
+                                 if(!res['error']){
+                          console.log("no error");
+                        } else {
+                          console.log(res['error']);
+                        }
+                           //this.router.navigate(['login']);
+                            },
+                            err => {
+                            console.log("there was an error");
+                        console.log(err);
+                            }
+                          );    
+                  }
+
                   this.router.navigate(['main']);
                 } 
                 else {
