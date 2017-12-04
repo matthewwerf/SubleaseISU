@@ -340,6 +340,8 @@
 	 */
 // Implement Levels of Auth =========================================================================
 	exports.updateSpecificProperty = function(req, res) {
+		// Old, deprecated
+		/*
 		if (!req.body.subleaseISUcookie || !req.body.username){
 			res.status(401).send({
 				"error": "not authenticated"
@@ -363,6 +365,41 @@
 			}
 			res.status(200).json(property);
 		});
+		*/
+
+		if(req.params.propertyID) {
+			Property.find({propertyID: req.params.propertyID}, function(err, property) {
+				if(err) {
+					res.status(500).send(err);
+					return;
+				}
+				else if(property == null) {
+					res.status(404).json({
+						"error" : "propertyID does not match a property"
+					});
+					return;
+				}
+
+				ah.tieredPropertyAuth(req, res, property, function(approved) {
+					if(approved) {
+						Property.findOneAndUpdate({
+							propertyID: req.params.propertyID
+						},
+						req.body,
+						{new: true},
+						function(err, property){
+							if (err) {
+								res.status(500).send(err);
+								return;
+							}
+							res.status(200).json({message: 'Property successfully updated'});
+						});
+					}
+				});
+
+			});
+		}
+
 	};
 
 	/**
@@ -735,7 +772,7 @@
 		});
 	};
 
-	// Implement Levels of Auth =========================================================================
+// Implement Levels of Auth =========================================================================
 	exports.uploadPropertyPictures = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocations = [];
