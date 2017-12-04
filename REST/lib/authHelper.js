@@ -8,7 +8,7 @@
 	/*
 	 * Returns null on error, user on success
 	 */
-	exports.validateAuth = function(req, res, cb) {
+	var validateAuthInternal = function(req, res, cb) {
 	var queryUsername;
 		if(req.params.username != null) {
 			queryUsername = req.params.username;
@@ -74,8 +74,10 @@
 		});
 	};
 
+	exports.validateAuth = validateAuthInternal;
+
 	exports.tieredPropertyAuth = function(req, res, property, cb) {
-		validateAuth(req, res, function(user){
+		validateAuthInternal(req, res, function(user){
 			if(user != null) {
 				if(user.userType) {
 					// if admin, return property
