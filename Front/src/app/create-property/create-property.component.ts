@@ -194,7 +194,7 @@ export class CreatePropertyComponent implements OnInit {
         }
       }
       else{
-        document.getElementById('tooMany').innerText = "Max of 5 images, delete one to add another"
+        document.getElementById('tooMany').innerText = "Max of 5 images, use clear button to restart"
       }
   }
 
@@ -302,7 +302,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.newPropertyForm.valid && this.newAddressForm.valid) {
+    if ((this.newPropertyForm.valid && this.newAddressForm.valid) && (this.source.length > 0) ){
       //console.log(this.selectedFiles);
       console.log("New Property Request Submitted");
       this.getHousingType();
@@ -389,7 +389,10 @@ export class CreatePropertyComponent implements OnInit {
     }
     else {
       this.errorMessage = "Invalid entries at: \n";
-      
+
+      if(this.source.length < 1) {
+        this.errorMessage = this.errorMessage + "*Upload Pictures Please \n";
+      }
       if(this.streetAddress.invalid) {
         this.errorMessage = this.errorMessage + "*Street Address \n";
       }
