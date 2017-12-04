@@ -21,12 +21,16 @@
     Average Rating: {{avgRating}} {{ratingMessage}}<br/>
 
   </div>
+
+
+
   <form (ngSubmit)="onSubmit()" [formGroup]="newMessageForm">
     <div class="form-group">
       <input type="text" class="form-control" formControlName="textMessage" required placeholder="Enter Message Here">
     </div>
     <div><input type="submit" id="submit" value="Submit"></div>
   </form>
+
 
   <label>Rate this property:</label>
   <div id="rating">
@@ -44,6 +48,38 @@
   <div>
     <button id="submitRating" type="button" (click)="getRating()">Submit Rating</button>
   </div>
+
+  <label> {{imageMessage}}</label>
+  <div>
+    <img src="" id="prop0" width="300" height="200"/>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close">&times;</span>
+
+    <!-- The Next Button -->
+    <span class="next">&times;</span>
+
+    <!-- The Back Button -->
+    <span class="back">&times;</span>
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+
+  </div>
+
+
+  
+  <img src="" id="prop1" />
+  <img src="" id="prop2" />
+  <img src="" id="prop3" />
+  <img src="" id="prop4" />
+
 
   <table>
     <tr>

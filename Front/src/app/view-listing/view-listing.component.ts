@@ -33,11 +33,19 @@ export class ViewListingComponent implements OnInit {
   private ratingMessage: string ="Not Rated";
   private textMessage: FormControl;
   private newMessageForm: FormGroup;
-  
+  private pictureID: Array<any>;
+  private imageMessage: string;
+  private ratingArray: Array<any>;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
+    document.getElementById("prop1").style.display = 'none';
+    document.getElementById("prop2").style.display = 'none';
+    document.getElementById("prop3").style.display = 'none';
+    document.getElementById("prop4").style.display = 'none';
+    (<HTMLImageElement>document.getElementsByClassName("back")[0]).style.display = 'none';
+
     this.commentArray = [];
 
   	this.isLoaded = false;
@@ -48,17 +56,122 @@ export class ViewListingComponent implements OnInit {
   	this.getListing().subscribe(listing => {
   		this.currentListing = listing;
       this.commentArray = listing.comments;
+      this.pictureID = listing.linkedPictureIDs;
+      this.ratingArray = listing.ratings;
+      //console.log(this.pictureID.length);
+
+      if(this.pictureID.length < 1){
+        this.imageMessage = "Unfortunately, the property owner has not uploaded any pictures";
+        document.getElementById('prop0').style.display = 'none';
+      }
+      else if(this.pictureID.length == 1){
+        (<HTMLImageElement>document.getElementsByClassName("next")[0]).style.display = 'none';
+        this.imageMessage = "Click cover image below to view property image";
+      }else{
+        this.imageMessage = "Click cover image below to view all " + this.pictureID.length + " images";
+      }
+      for(let i = 0; i< this.pictureID.length; i++){
+        //console.log(this.pictureID[i]);
+        this.http.post('/retrievePropertyPicture', {
+          username: localStorage.getItem('username'),
+          subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+          pictureLocation: this.pictureID[i]
+        },
+        {
+          responseType: 'blob'
+        }).subscribe(res => {
+            if(!res['error']){
+              //console.log(res);
+
+              //Used to load all the images to hidden html elements so we can use them later
+              let reader2 = new FileReader();
+              let propertyStr = "prop" + i;
+              if(res){
+                //console.log("test")
+                reader2.readAsDataURL(res);
+              }else{
+                console.log("Aww man")
+              }
+              reader2.onload = function(){
+                //localStorage.setItem('profPic', JSON.stringify(inputEl.files[0]));
+                //console.log("test");
+                (<HTMLImageElement>document.getElementById(propertyStr)).src = reader2.result;
+              }
+
+              return res;
+            }else {
+              console.log(res['error']);
+            }
+          },
+          err => {
+            console.log("there was an error");
+            console.log(err);
+          });
+      }
+
+      var counter = 0;
+      var length = this.pictureID.length - 1;
+      // Get the modal
+      var modal = document.getElementById('myModal');
+
+      // Get the image and insert it inside the modal - use its "alt" text as a caption
+      var img = (<HTMLImageElement>document.getElementById('prop0'));
+      var modalImg = (<HTMLImageElement>document.getElementById("img01"));
+      var captionText = document.getElementById("caption");
+
+      img.onclick = function(){
+          modal.style.display = "block";
+          modalImg.src = (<HTMLImageElement>this).src;
+          captionText.innerHTML = (counter + 1) + "/" + (length + 1);
+      }
+
+      // Get the <span> element that closes the modal
+      var span = (<HTMLImageElement>document.getElementsByClassName("close")[0]);
+      var next = (<HTMLImageElement>document.getElementsByClassName("next")[0]);
+      var back = (<HTMLImageElement>document.getElementsByClassName("back")[0]);
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() { 
+        modal.style.display = "none";
+      }
+      next.onclick = function() {
+        (<HTMLImageElement>document.getElementsByClassName("back")[0]).style.display = 'block';
+        if(counter < length)
+        {
+          counter = counter + 1;
+          modalImg.src = (<HTMLImageElement>document.getElementById('prop' + counter)).src;
+          captionText.innerHTML = (counter + 1) + "/" + (length + 1);
+          if(counter == length){
+            (<HTMLImageElement>document.getElementsByClassName("next")[0]).style.display = 'none';
+          }
+        }
+      }
+
+      back.onclick = function() {
+        (<HTMLImageElement>document.getElementsByClassName("next")[0]).style.display = 'block';
+        if(counter > 0)
+        {
+          counter = counter - 1;
+          modalImg.src = (<HTMLImageElement>document.getElementById('prop' + counter)).src;
+          captionText.innerHTML = (counter + 1) + "/" + (length + 1);
+          if(counter == 0){
+            (<HTMLImageElement>document.getElementsByClassName("back")[0]).style.display = 'none';
+          }
+        }
+      }
+
+      if(this.ratingArray != null)
+      {
+        this.getAverage().subscribe(rating => {
+          this.avgRating = <number>rating;
+          this.avgRating = Math.round(this.avgRating * 10)/10;
+          if(this.avgRating == null)
+          {
+            //this.avgRating == 0;
+          }
+        });
+      }
   		this.isLoaded = true;
   	});
-
-    this.getAverage().subscribe(rating => {
-      this.avgRating = <number>rating;
-      this.avgRating = Math.round(this.avgRating * 10)/10;
-      if(this.avgRating == null)
-      {
-        //this.avgRating == 0;
-      }
-    });
 
   	  // Create the form used to send messages
       this.createFormControls();
@@ -191,13 +304,15 @@ export class ViewListingComponent implements OnInit {
       }
      }
 
+
+
 	getListing(): Observable<ListingInfo> {
   	// Get the json data string
   	return this.http.post<ListingInfo>('/property/' + this.propID, {
   		username: localStorage.getItem('username'),
 		subleaseISUcookie: localStorage.getItem('subleaseISUcookie')
   	}).map(res => {
-      //console.log(res);
+      console.log(res);
 
   		return new ListingInfo(
              res._id,
@@ -210,7 +325,9 @@ export class ViewListingComponent implements OnInit {
              res.bathroomQuantity,
              res.roommateQuantity,
              res.personalBathroom,
-             res.comments
+             res.comments,
+             res.linkedPictureIDs,
+             res.ratings
              );
       });
   }

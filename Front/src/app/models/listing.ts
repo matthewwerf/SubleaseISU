@@ -11,8 +11,10 @@ export class ListingInfo {
 	roommateQuantity: number;
 	personalBathroom: boolean;
 	comments: Array<any>;
+	linkedPictureIDs: Array<any>;
+	ratings: Array<any>;
 
-	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number, address: string, postingMessage: string, propertyId: string, bathroomQuantity: number, roommateQuantity: number, personalBathroom: boolean, comments: Array<any>) {
+	constructor(id: string, posterUsername: string, leasingAgency: string, rentValue: number, address: string, postingMessage: string, propertyId: string, bathroomQuantity: number, roommateQuantity: number, personalBathroom: boolean, comments: Array<any>, linkedPictureIDs: Array<any>, ratings: Array<any>) {
 		this._id = id;
 		this.posterUsername = posterUsername;
 		this.leasingAgency = leasingAgency;
@@ -24,5 +26,7 @@ export class ListingInfo {
 		this.roommateQuantity = roommateQuantity;
 		this.personalBathroom = personalBathroom;
 		this.comments = comments;
+		this.linkedPictureIDs = linkedPictureIDs;
+		this.ratings = ratings;
 	}
 }
