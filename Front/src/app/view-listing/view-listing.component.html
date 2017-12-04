@@ -1,5 +1,40 @@
 <p>
   showing listing info for: {{propID}}
+  <div>
+    <!-- Trigger/Open The Email Modal -->
+    <button id="myBtn">Email Listing Owner</button>
+  </div>
+  <!-- The Email Modal -->
+  <div id="myModal1" class="modal1">
+
+    <!-- Email Modal content -->
+    <div class="modal-content1">
+      <span class="close1">&times;</span>
+      <div class="emailBox">
+        <label>Send Property Owner an Email</label>
+        <div>
+          <textarea required class="txt-area" id="emailSubject" type="text" placeholder="Subject..." rows="1" cols="130"></textarea>
+        </div>
+        <div>
+          <textarea required class="txt-area" id="emailBody" type="text" placeholder="Body..." rows="5" cols="130"></textarea>
+        </div>
+        <div>
+          <button type="button" (click)="email()">send</button>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+
+  <div id="myModal2" class="modal2">
+
+    <!-- Modal content -->
+    <div class="modal-content2">
+      <span class="close2">&times;</span>
+      <p>Email Sent!..</p>
+    </div>
+
+  </div>
 
   <div *ngIf="isLoaded">
   	Poster Username: {{currentListing.posterUsername}} <br/>

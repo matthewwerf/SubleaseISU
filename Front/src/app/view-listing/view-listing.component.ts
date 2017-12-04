@@ -36,6 +36,8 @@ export class ViewListingComponent implements OnInit {
   private pictureID: Array<any>;
   private imageMessage: string;
   private ratingArray: Array<any>;
+  private emailSubject: string;
+  private emailBody: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -170,6 +172,35 @@ export class ViewListingComponent implements OnInit {
           }
         });
       }
+
+
+
+      // Get the modal
+      var modal1 = document.getElementById('myModal1');
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span1 = (<HTMLImageElement>document.getElementsByClassName("close1")[0]);
+
+      // When the user clicks on the button, open the modal 
+      btn.onclick = function() {
+          modal1.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span1.onclick = function() {
+          modal1.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == modal1) {
+              modal1.style.display = "none";
+          }
+      };
+
   		this.isLoaded = true;
   	});
 
@@ -177,6 +208,49 @@ export class ViewListingComponent implements OnInit {
       this.createFormControls();
       this.createForm();
 	}
+
+  email(){
+    document.getElementById('myModal1').style.display = "none";
+    this.emailSubject = (<HTMLInputElement>document.getElementById("emailSubject")).value;
+    this.emailBody = (<HTMLInputElement>document.getElementById("emailBody")).value;
+    console.log(this.emailSubject);
+    console.log(this.emailBody);
+
+    this.http.post('/emailOwner/' + this.propID, {
+      username: localStorage.getItem('username'),
+      subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+      subject: this.emailSubject,
+      messageHTML: this.emailBody
+    }).subscribe(
+      res => {
+        if(!res['error']){
+          console.log(res);
+        }else{
+          console.log(res['error']);
+        }
+      },
+      err => {
+        console.log("there was an error");
+        console.log(err);
+      }
+    );
+
+    // Get the modal
+    var modal2 = document.getElementById('myModal2');
+
+    // Get the <span> element that closes the modal
+    var span2 = (<HTMLImageElement>document.getElementsByClassName("close2")[0]);
+    
+    modal2.style.display = "block";
+    
+    // When the user clicks on <span> (x), close the modal
+    span2.onclick = function() {
+        modal2.style.display = "none";
+    };
+
+    (<HTMLInputElement>document.getElementById("emailSubject")).value = "";
+    (<HTMLInputElement>document.getElementById("emailBody")).value = "";
+  }
 
   getRating(){
     if((<HTMLInputElement>document.getElementById('one')).checked){
