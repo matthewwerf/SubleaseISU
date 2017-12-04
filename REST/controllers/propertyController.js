@@ -749,6 +749,20 @@
 			var sum = 0, count =0;
 			var usernamesOfRaters = []; // Used to ensure only most recent rating is used
 
+			try {
+				var arrayLength = property.ratings.length;
+			}
+			catch(error) {
+				var arrayLength = 0;
+			}
+
+			if(arrayLength == 0){
+				res.status(400).json({
+					"error" : "property has no ratings"
+				});
+				return;
+			}
+
 			for(var i = property.ratings.length-1; i >= 0; i--){
 				if(usernamesOfRaters.indexOf(property.ratings[i].ratingPosterUsername) == -1) {
 					sum += property.ratings[i].rating;
