@@ -6,6 +6,12 @@
 		app.route('/properties')
 			.post(property.createProperty);
 
+		app.route('/propertyPictures/:propertyID')
+			.post(property.uploadPropertyPictures);
+
+		app.route('/retrievePropertyPicture')
+			.post(property.retrievePropertyPicture);
+
 		app.route('/listAllProperties')
 			.post(property.listAllProperties);
 

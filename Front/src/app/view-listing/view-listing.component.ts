@@ -7,6 +7,8 @@ import { ListingInfo } from '../models/listing';
 //import { Headers, Http } from '@angular/http';
 import { CommentInfo } from '../models/commentInfo';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Headers, Http, RequestOptions } from '@angular/http';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 const URL = '/propertyComment/';
 @Component({
@@ -20,17 +22,17 @@ export class ViewListingComponent implements OnInit {
 	private sub: any;
 	private currentListing: ListingInfo;
 	private isLoaded: boolean;
-  //private address: string;
   private commentBody: string;
   private time: string;
   private newComment: CommentInfo;
   private isLoaded2: boolean;
-  //private subscription: any;
   private commentArray: Array<CommentInfo>;
   private URL2: string;
   private avgRating: number;
   private rating: number;
   private ratingMessage: string ="Not Rated";
+  private textMessage: FormControl;
+  private newMessageForm: FormGroup;
   
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
@@ -51,13 +53,16 @@ export class ViewListingComponent implements OnInit {
 
     this.getAverage().subscribe(rating => {
       this.avgRating = <number>rating;
-      console.log(this.avgRating);
       this.avgRating = Math.round(this.avgRating * 10)/10;
       if(this.avgRating == null)
       {
         //this.avgRating == 0;
       }
     });
+
+  	  // Create the form used to send messages
+      this.createFormControls();
+      this.createForm();
 	}
 
   getRating(){
@@ -115,16 +120,13 @@ export class ViewListingComponent implements OnInit {
     this.commentBody = (<HTMLInputElement>document.getElementById("comment")).value;
     this.time = (new Date().toLocaleDateString()) + " " +(new Date().toLocaleTimeString());
     this.newComment = new CommentInfo(localStorage.getItem('username'), this.time, this.commentBody);
-    //this.commentArray.push(this.newComment);
     this.URL2 = URL + this.propID;
-    console.log(this.newComment);
     this.http.post(this.URL2, {
       username: localStorage.getItem('username'),
       subleaseISUcookie: localStorage.getItem('subleaseISUcookie'), 
       message: this.commentBody
     }).subscribe(
               res => {
-                  //console.log(res);
                    if(!res['error']){
             console.log("no error");
             this.isLoaded = false;
@@ -159,6 +161,36 @@ export class ViewListingComponent implements OnInit {
       }
     });
   }
+    createFormControls() {
+      this.textMessage = new FormControl('');
+    }
+
+    createForm() {
+    this.newMessageForm = new FormGroup ({
+        textMessage: this.textMessage,
+     });
+    }
+
+    onSubmit(form: any): void{
+      if(this.textMessage.value != '') {
+        this.http.post('/messages/saveHistory', {
+          username: localStorage.getItem('username'),
+          subleaseISUcookie: localStorage.getItem('subleaseISUcookie'),
+          senderUsername: localStorage.getItem('username'),
+          receiverUsername: this.currentListing.posterUsername,
+          message: this.textMessage.value}
+        ).subscribe(res => {
+          if(!res['error']){
+          window.alert("Message sent, you can see your messages in messages tab.");
+          this.newMessageForm.reset(); // Clear the chat box
+        }
+        else {
+          window.alert("There was an error in sending the message.");
+        }
+      });
+      }
+     }
+
 	getListing(): Observable<ListingInfo> {
   	// Get the json data string
   	return this.http.post<ListingInfo>('/property/' + this.propID, {

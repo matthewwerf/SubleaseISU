@@ -106,7 +106,7 @@
 	/**
 	 * @api {post} /messages/saveHistory
 	 * @apiName saveHistory
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
@@ -164,7 +164,7 @@
 	/**
 	 * @api {post} /messages/getHistory/{usernameOfSender}
 	 * @apiName getHistory
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
@@ -273,7 +273,7 @@
 	/**
 	 * @api {post} /messages/getUsernamesOfSenders
 	 * @apiName getUsernamesOfSenders
-	 * @apiGroup message
+	 * @apiGroup Message
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} cookie Users upique cookie.
@@ -307,7 +307,7 @@
 						receiverUsername: req.body.username,
 					}, 'senderUsername', function(err, usernames) {
 						if(err) {
-							res.send(err);
+							res.status(500).send(err);
 							return;
 						}
 						var usernameArray = [];
@@ -317,7 +317,27 @@
 								usernameArray.push(usernames[j].senderUsername);
 							}
 						}
-						res.json(usernameArray);
+
+						Message.find({
+							senderUsername: req.body.username
+						}, 'receiverUsername', function(err, usernamesOfRecipients) {
+							if(err) {
+								res.status(500).send(err);
+								return;
+							}
+							if(usernameArray == null){
+								usernameArray = [];
+							}
+
+							for(j=0; j<usernamesOfRecipients.length; j++){
+								let name = usernamesOfRecipients[j].receiverUsername;
+								if(usernameArray.indexOf(name) == -1) {
+									usernameArray.push(usernamesOfRecipients[j].receiverUsername);
+								}
+							}
+
+							res.status(200).json(usernameArray);
+						});
 					});
 				}
 			});
