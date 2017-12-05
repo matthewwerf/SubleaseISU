@@ -96,53 +96,53 @@
 	 * @apiUse DatabaseError
 	 *
 	 * @apiSuccessExample Success-Response:
-	 *     HTTP/1.1 200 OK
-	 *     {
-	 *	  "_id": "5a1601b55de8fd2455f02392",
-	 *	  "personalBathroom": false,
-	 *	  "bathroomQuantity": 3,
-	 *	  "roommateQuantity": 1,
-	 *	  "posterUsername": "username",
-	 *	  "leasingAgency": "dfd",
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
 	 *    "milesFromMU": 0.8,
-	 *	  "rentValue": 2322222,
-	 *	  "address": "223 Lynn Avenue, Ames, Iowa 50014",
-	 *	  "postingMessage": "22",
-	 *	  "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
-	 *	  "longitude": "-93.64681569999999",
-	 *	  "latitude": "42.02074409999999",
-	 *	  "__v": 0,
-	 *	  "comments": [
-	 *	    {
-	 *	      "message": "This is a new comment ",
-	 *	      "timePosted": "2017:11:27:14:55:15",
-	 *	      "commentPosterUsername": "matt"
-	 *	    },
-	 *	    {
-	 *	      "commentPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:27:14:55:26",
-	 *	      "message": "This is a new comment 2"
-	 *	    }
-	 *	  ],
-	 *	  "ratings": [
-	 *	    {
-	 *	      "ratingPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:30:12:28:31",
-	 *	      "rating": 5
-	 *	    },
-	 *	    {
-	 *	      "rating": 3,
-	 *	      "timePosted": "2017:11:30:12:28:34",
-	 *	      "ratingPosterUsername": "matt"
-	 *	    },
-	 *	    {
-	 *	      "ratingPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:30:12:28:38",
-	 *	      "rating": 3
-	 *	    }
-	 *	  ],
-	 *	  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
-	 *	}
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
+	 *     {
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
 	 *
 	 */
 	exports.createProperty = function(req, res) {
@@ -244,54 +244,55 @@
 	 * @apiUse UsernameNotFoundError
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
-
+	 *
 	 * @apiSuccessExample Success-Response:
-	 *     HTTP/1.1 200 OK
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
 	 *     {
-	 *	  "_id": "5a1601b55de8fd2455f02392",
-	 *	  "personalBathroom": false,
-	 *	  "bathroomQuantity": 3,
-	 *	  "roommateQuantity": 1,
-	 *	  "posterUsername": "username",
-	 *	  "leasingAgency": "dfd",
-	 *	  "rentValue": 2322222,
-	 *	  "address": "223 Lynn Avenue, Ames, Iowa 50014",
-	 *	  "postingMessage": "22",
-	 *	  "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
-	 *	  "longitude": "-93.64681569999999",
-	 *	  "latitude": "42.02074409999999",
-	 *	  "__v": 0,
-	 *	  "comments": [
-	 *	    {
-	 *	      "message": "This is a new comment ",
-	 *	      "timePosted": "2017:11:27:14:55:15",
-	 *	      "commentPosterUsername": "matt"
-	 *	    },
-	 *	    {
-	 *	      "commentPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:27:14:55:26",
-	 *	      "message": "This is a new comment 2"
-	 *	    }
-	 *	  ],
-	 *	  "ratings": [
-	 *	    {
-	 *	      "ratingPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:30:12:28:31",
-	 *	      "rating": 5
-	 *	    },
-	 *	    {
-	 *	      "rating": 3,
-	 *	      "timePosted": "2017:11:30:12:28:34",
-	 *	      "ratingPosterUsername": "matt"
-	 *	    },
-	 *	    {
-	 *	      "ratingPosterUsername": "matt",
-	 *	      "timePosted": "2017:11:30:12:28:38",
-	 *	      "rating": 3
-	 *	    }
-	 *	  ],
-	 *	  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
-	 *	}
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
 	 *
 	 */
 	exports.getSpecificProperty = function(req, res) {
@@ -337,36 +338,56 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
+	 *     {
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
 	 */
-// Implement Levels of Auth =========================================================================
 	exports.updateSpecificProperty = function(req, res) {
-		// Old, deprecated
-		/*
-		if (!req.body.subleaseISUcookie || !req.body.username){
-			res.status(401).send({
-				"error": "not authenticated"
-			});
-			return;
-		} else {
-			User.findOne({username: req.body.username}, 'hashedPassword', function(err, user){
-				var localCookieToCheck = sha1(req.body.username + user.hashedPassword + config.salt);
-				if(localCookieToCheck != req.body.subleaseISUcookie) {
-					res.status(401).send({
-						"error": "authentication rejected"
-					});
-					return;
-				}
-			});
-		}
-
-		Property.findOneAndUpdate({propertyID: req.params.propertyID}, req.body, {new: true}, function (err, property){
-			if (err) {
-				res.status(500).send(err);
-			}
-			res.status(200).json(property);
-		});
-		*/
-
 		if(req.params.propertyID) {
 			Property.find({propertyID: req.params.propertyID}, function(err, property) {
 				if(err) {
@@ -417,8 +438,12 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "message" : "Property successfully deleted"
+	 * }
 	 */
-// Implement Levels of Auth =========================================================================
 	exports.deleteSpecificProperty = function(req, res){
 		if(req.params.propertyID) {
 			Property.find({propertyID: req.params.propertyID}, function(err, property) {
@@ -449,8 +474,6 @@
 
 			});
 		}
-		
-		
 	};
 
 
@@ -468,6 +491,149 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * [
+     *   {
+     *    "_id": "5a244a7e57b6131e280bb713",
+     *     "personalBathroom": true,
+     *     "bathroomQuantity": 3,
+     *     "roommateQuantity": 2,
+     *     "posterUsername": "username",
+     *     "leasingAgency": "LeonardLeasing",
+     *     "rentValue": 685,
+     *     "address": "135 Campus Ave, Ames, Iowa 50010",
+     *     "postingMessage": "A swell place, upstairs neighbors are kind of loud",
+     *     "propertyID": "988a43e205d218e3ef5a91bdf8dd8df78f181607",
+     *     "longitude": "-93.6573635",
+     *     "latitude": "42.02399459999999",
+     *     "milesFromMU": 1.1,
+     *     "__v": 0,
+     *     "ratings": [
+     *       {
+     *         "ratingPosterUsername": "LeonardLeasing",
+     *         "timePosted": "2017:12:03:18:13:29",
+     *         "rating": 4
+     *       },
+     *       {
+     *         "rating": 1,
+     *         "timePosted": "2017:12:03:18:13:34",
+     *         "ratingPosterUsername": "LeonardLeasing"
+     *       },
+     *       {
+     *         "ratingPosterUsername": "LeonardLeasing",
+     *         "timePosted": "2017:12:03:18:13:36",
+     *         "rating": 2
+     *       }
+     *     ],
+     *     "linkedPictureIDs": []
+     *   },
+     *   {
+     *     "_id": "5a244aed57b6131e280bb717",
+     *     "personalBathroom": true,
+     *     "bathroomQuantity": 3,
+     *     "roommateQuantity": 2,
+     *     "posterUsername": "username",
+     *     "leasingAgency": "FPM",
+     *     "rentValue": 500,
+     *     "address": "123 Sheldon Ave, Ames, Iowa 50010",
+     *     "postingMessage": "Upstairs Neighbors are lax bros so thats cool",
+     *     "propertyID": "df3b86873975af2dfbd8d5c2f02150652c8c651d",
+     *     "longitude": "-93.6546479",
+     *     "latitude": "42.0236491",
+     *     "milesFromMU": 0.8,
+     *     "__v": 0,
+     *     "comments": [
+     *       {
+     *         "commentPosterUsername": "username",
+     *         "timePosted": "2017:12:03:15:29:35",
+     *         "message": "McDouble"
+     *       }
+     *     ],
+     *     "ratings": [
+     *       {
+     *         "rating": 1,
+     *         "timePosted": "2017:12:03:15:29:39",
+     *         "ratingPosterUsername": "username"
+     *       },
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:15:29:42",
+     *         "rating": 2
+     *       },
+     *       {
+     *         "rating": 4,
+     *         "timePosted": "2017:12:03:15:29:45",
+     *         "ratingPosterUsername": "username"
+     *       },
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:17:59:23",
+     *         "rating": 3
+     *       },
+     *       {
+     *         "rating": 1,
+     *         "timePosted": "2017:12:03:17:59:26",
+     *         "ratingPosterUsername": "username"
+     *       },
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:17:59:28",
+     *         "rating": 5
+     *       }
+     *     ],
+     *     "linkedPictureIDs": []
+     *   },
+     *   {
+     *     "_id": "5a244d07171df51eb65b6bc3",
+     *     "personalBathroom": false,
+     *     "bathroomQuantity": 2,
+     *     "roommateQuantity": 2,
+     *     "posterUsername": "username",
+     *     "leasingAgency": "LeonardLeasing",
+     *     "rentValue": 1000,
+     *     "address": "3824 Tripp St, Ames, Iowa 50010",
+     *     "postingMessage": "Totally in the hood, cheap rent makes up for morning gun shots.",
+     *     "propertyID": "5c6f454cf9c8794f012ce118bac7de59c8bc0b9c",
+     *     "longitude": "-93.67011699999999",
+     *     "latitude": "42.019566",
+     *     "milesFromMU": 2.3,
+     *     "__v": 0,
+     *     "ratings": [
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:15:30:17",
+     *         "rating": 5
+     *       },
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:16:27:53",
+     *         "rating": 3
+     *       },
+     *       {
+     *         "rating": 5,
+     *         "timePosted": "2017:12:03:16:30:34",
+     *         "ratingPosterUsername": "username"
+     *       },
+     *       {
+     *         "ratingPosterUsername": "username",
+     *         "timePosted": "2017:12:03:18:09:37",
+     *         "rating": 5
+     *       }
+     *     ],
+     *     "comments": [
+     *       {
+     *         "message": "FiletOfish",
+     *         "timePosted": "2017:12:03:15:30:32",
+     *         "commentPosterUsername": "username"
+     *       }
+     *     ],
+     *     "linkedPictureIDs": [
+     *       "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.36 PM.png1512345496197",
+     *       "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.46 PM.png1512345496583"
+     *     ]
+     *   }
+     * ]
 	 */
 	exports.listAllProperties = function(req, res){
 		
@@ -498,7 +664,7 @@
 	/**
 	 * @api {post} /emailOwner/{propertyID}
 	 * @apiName sendEmailToPropertyOwner
-	 * @apiGroup Property
+	 * @apiGroup Property_Email
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users upique cookie.
@@ -512,6 +678,11 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "msg" : "Message Successfully sent"
+	 * }
 	 */
 	exports.sendEmailToPropertyOwner = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -570,7 +741,7 @@
 	/**
 	 * @api {post} /propertyComment/{propertyID}
 	 * @apiName addComment
-	 * @apiGroup Property
+	 * @apiGroup Property_Comments
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users upique cookie.
@@ -583,6 +754,54 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
+	 *     {
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
 	 */
 	exports.addComment = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -654,7 +873,7 @@
 	/**
 	 * @api {post} /propertyRating/{propertyID}
 	 * @apiName addRating
-	 * @apiGroup Property
+	 * @apiGroup Property_Ratings
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users upique cookie.
@@ -667,6 +886,54 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
+	 *     {
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
 	 */
 	exports.addRating = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -721,7 +988,7 @@
 	/**
 	 * @api {get} /propertyRating/{propertyID}
 	 * @apiName retrieveRating
-	 * @apiGroup Property
+	 * @apiGroup Property_Ratings
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users upique cookie.
@@ -732,6 +999,11 @@
 	 * @apiUse UsernameNotProvided
 	 * @apiUse DatabaseError
 	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "avgRating" : 3.75
+	 * }
 	 */
 	exports.retrieveRating = function(req, res) {
 		Property.findOne({propertyID: req.params.propertyID}, function(err, property){
@@ -786,7 +1058,70 @@
 		});
 	};
 
-// Implement Levels of Auth =========================================================================
+	/**
+	 * @api {get} /propertyPictures/{propertyID}
+	 * @apiName uploadPropertyPictures
+	 * @apiGroup Property_Pictures
+	 *
+	 * @apiParam {string} username Users unique ID. (formdata)
+	 * @apiParam {string} subleaseISUcookie Users upique cookie. (formdata)
+	 * @apiParam {File} fileArray Array of files sent through formdata.
+	 *
+	 * @apiSuccess {Property} res The updated property object is echoed back.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id": "5a1601b55de8fd2455f02392",
+	 *   "personalBathroom": false,
+	 *   "bathroomQuantity": 3,
+	 *   "roommateQuantity": 1,
+	 *   "posterUsername": "username",
+	 *   "leasingAgency": "dfd",
+	 *    "milesFromMU": 0.8,
+	 *   "rentValue": 2322222,
+	 *   "address": "223 Lynn Avenue, Ames, Iowa 50014",
+	 *   "postingMessage": "22",
+	 *   "propertyID": "94b730f94a0c72a2c023099a62c78f59a2bd097b",
+	 *   "longitude": "-93.64681569999999",
+	 *   "latitude": "42.02074409999999",
+	 *   "__v": 0,
+	 *   "comments": [
+	 *     {
+	 *       "message": "This is a new comment ",
+	 *       "timePosted": "2017:11:27:14:55:15",
+	 *       "commentPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "commentPosterUsername": "matt",
+	 *       "timePosted": "2017:11:27:14:55:26",
+	 *       "message": "This is a new comment 2"
+	 *     }
+	 *   ],
+	 *   "ratings": [
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:31",
+	 *       "rating": 5
+	 *     },
+	 *     {
+	 *       "rating": 3,
+	 *       "timePosted": "2017:11:30:12:28:34",
+	 *       "ratingPosterUsername": "matt"
+	 *     },
+	 *     {
+	 *       "ratingPosterUsername": "matt",
+	 *       "timePosted": "2017:11:30:12:28:38",
+	 *       "rating": 3
+	 *     }
+	 *  ],
+	 *  "linkedPictureIDs": ["/home/matthewv/SD_B_1_ProjectName/REST/controllers/profilePictures/KENNETH\ HO.jpg1511"]
+	 * }
+	 */
 	exports.uploadPropertyPictures = function(req, res) {
 		var form = formidable.IncomingForm();
 		var fileLocations = [];
@@ -835,8 +1170,8 @@
 						// if authentication is accepted add listeners to save file
 						console.log("Authentication Accepted");
 
-						Property.findOneAndUpdate({propertyID: fields.propertyID}, {linkedPictureIDs: fileLocations}, {new: true}, function(err, user) {
-							if(user == null) { // don't forget to check this is all functions
+						Property.findOneAndUpdate({propertyID: fields.propertyID}, {linkedPictureIDs: fileLocations}, {new: true}, function(err, finalProperty) {
+							if(finalProperty == null) { // don't forget to check this is all functions
 								res.status(401).send({
 									"error": "propertyID not recognized"
 								});
@@ -846,7 +1181,7 @@
 							if (err) {
 								res.status(500).send(err);
 							}
-						res.status(200).json(user);
+						res.status(200).json(finalProperty);
 						});
 					}
 				});
@@ -870,6 +1205,23 @@
 
 	};
 
+	/**
+	 * @api {get} /retrievePropertyPicture/{propertyID}
+	 * @apiName retrievePropertyPicture
+	 * @apiGroup Property_Pictures
+	 *
+	 * @apiParam {string} username Users unique ID.
+	 * @apiParam {string} subleaseISUcookie Users upique cookie.
+	 *
+	 * @apiSuccess {File} file The requested file is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 */
 	exports.retrievePropertyPicture = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {

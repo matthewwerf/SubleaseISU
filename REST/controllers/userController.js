@@ -29,6 +29,42 @@
 
 
 	/**
+	 * @apiDefine UsernameNotFoundError
+	 *
+	 * @apiError UsernameNotFound The username of the User was not found.
+	 *
+	 * @apiErrorExample UsernameNotFoundError-Error-Response:
+	 *     HTTP/1.1 401 Unauthorized
+	 *     {
+	 *       "error": "username not recognized"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine UsernameNotProvided
+	 *
+	 * @apiError UsernameNotProvided The username of the User was not in the request.
+	 *
+	 * @apiErrorExample UsernameNotProvided-Error-Response:
+	 *     HTTP/1.1 400 Bad request
+	 *     {
+	 *       "error": "username not provided in request"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine DatabaseError
+	 *
+	 * @apiError DatabaseError There was an error in the MongoDB query
+	 *
+	 * @apiErrorExample DatabaseError-Error-Response:
+	 *     HTTP/1.1 500 Internal Server Error
+	 *     {
+	 *       "error": error
+	 *     }
+	 */
+
+	/**
 	 * @api {post} /users
 	 * @apiName createUser
 	 * @apiGroup User
@@ -37,9 +73,29 @@
 	 * @apiParam {string} userType User's Account type. (Admin, Leaser, Renter)
 	 * @apiParam {string} hashedPassword SHA1 Hash of User's Password.
 	 * @apiParam {string} email User's email address. (Optional)
-	 * @apiParam {string} phoneNumber User's phone number.
+	 * @apiParam {string} phoneNumber User's phone number. (Optional)
+	 * @apiParam {string[]} favoriteProperties propertyIDs of User's favorite properties. (Initially null, optional)
 	 *
-	 * @apiSuccess {User} res The Object is echoed back in the response
+	 * @apiSuccess {User} res The User Object is echoed back in the response
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id" : ObjectId("59f8eb5fefc008260848e563"),
+	 *   "username" : "matthewv",
+	 *   "userType" : "admin",
+	 *   "favoriteProperties" : [],
+	 *   "userTypeApproved" : false,
+	 *   "email" : "test@test.test",
+	 *   "phoneNumber" : "1212121212",
+	 *   "__v" : 0,
+	 *   "profilePictureLocation" : "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.46 PM.png1512336951925"
+	 * }
+ 	 *		
 	 */
 	exports.createUser = function(req, res) {
 		var newUser = new User(req.body);
@@ -83,6 +139,25 @@
 	 * @apiParam {string} userName Users unique ID.
 	 *
 	 * @apiSuccess {User} res The User Object is returned in the response.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "_id" : ObjectId("59f8eb5fefc008260848e563"),
+	 *   "username" : "matthewv",
+	 *   "userType" : "admin",
+	 *   "favoriteProperties" : [],
+	 *   "userTypeApproved" : false,
+	 *   "email" : "test@test.test",
+	 *   "phoneNumber" : "1212121212",
+	 *   "__v" : 0,
+	 *   "profilePictureLocation" : "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.46 PM.png1512336951925"
+	 * }
+ 	 *		
 	 */
 	exports.getSpecificUser = function(req, res) {
 		User.findOne({username: req.params.username}, function (err, user) {
@@ -105,13 +180,36 @@
 	 * @apiName updateSpecificUser
 	 * @apiGroup User
 	 *
-	 * @apiParam {string} userName Users unique ID.
-	 * @apiParam {string} subleaseISUcookie Users unique cookie.
-	 * @apiParam {string} email Users email.
-	 * @apiParam {string} password Users password.
-	 * @apiParam {string} email Users phone.
+	 * @apiParam {string} userName Users unique ID, of the account to be updated.
+	 * @apiParam {string} username Users unique ID, of the account making the request.
+	 * @apiParam {string} subleaseISUcookie Users unique session cookie.
+	 * @apiParam {string} userType User's Account type. (Admin, Leaser, Renter) (Optional)
+	 * @apiParam {string} userTypeApproved Boolean representing approval of userType. (Initially null, Optional)
+	 * @apiParam {string} hashedPassword SHA1 Hash of User's Password. (Optional)
+	 * @apiParam {string} email User's email address. (Optional)
+	 * @apiParam {string} phoneNumber User's phone number. (Optional)
+	 * @apiParam {string[]} favoriteProperties propertyIDs of User's favorite properties. (Initially null, optional)
 	 *
-	 * @apiSuccess {User} res The User Object is returned in the response
+	 * @apiSuccess {User} res The updated User Object is echoed in the response
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+     *   "_id" : ObjectId("59f8eb5fefc008260848e563"),
+     *   "username" : "johnSmith34",
+     *   "userType" : "regular",
+     *   "favoriteProperties" : [],
+     *   "userTypeApproved" : null,
+     *   "email" : "test@test.test",
+     *   "phoneNumber" : "1212121212",
+     *   "__v" : 0,
+     *   "profilePictureLocation" : "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.46 PM.png1512336951925"
+	 * }
+ 	 *	
 	 */
 	exports.updateSpecificUser = function(req, res) {
 		ah.validateAuth(req, res, function(user){
@@ -138,10 +236,21 @@
 	 * @apiName deleteSpecificUser
 	 * @apiGroup User
 	 *
-	 * @apiParam {string} userName Users unique ID.
-	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 * @apiParam {string} userName Users unique ID, of the account to be deleted.
+	 * @apiParam {string} username Users unique ID, of the account making the request.
+	 * @apiParam {string} subleaseISUcookie Users unique session cookie.
 	 *
-	 * @apiSuccess {User} res The success message is returned
+	 * @apiSuccess {string} msg The success message is returned
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+     *   "msg" : "User successfully deleted"
+	 * }
 	 */
 	exports.deleteSpecificUser = function(req, res){
 		ah.validateAuth(req, res, function(user){
@@ -161,12 +270,22 @@
 	/**
 	 * @api {post} /login/{username}
 	 * @apiName authAndReturnCookie
-	 * @apiGroup User
+	 * @apiGroup User_Authentication
 	 *
 	 * @apiParam {string} username Users unique ID.
 	 * @apiParam {string} hashedPassword Users hased password.
 	 *
-	 * @apiSuccess {User} res Users username and cookie is echoed back in the response.
+	 * @apiSuccess {string} subleaseISUcookie Users session cookie is sent in the response.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+     *   "subleaseISUcookie" : "00bd65bab3b91ebce7693789c8478940cd61c330"
+	 * }
 	 */
 	exports.authAndReturnCookie = function(req, res){
 		User.findOne({username: req.params.username}, 'hashedPassword', function (err, user) {
@@ -196,12 +315,22 @@
 	/**
 	 * @api {post} /users/{userName}
 	 * @apiName allowRouting
-	 * @apiGroup User
+	 * @apiGroup User_Authentication
 	 *
 	 * @apiParam {string} userName Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users unique cookie.
 	 *
-	 * @apiSuccess {User} res The success message "authentication accepted" is returned
+	 * @apiSuccess {string} msg The success message "authentication accepted" is returned
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+     *   "msg" : "authentication accepted"
+	 * }
 	 */
 	exports.allowRouting = function(req, res) {
 		ah.validateAuth(req, res, function(user){
@@ -216,12 +345,33 @@
 	/**
 	 * @api {post} /uploadProfilePicture/{userName}
 	 * @apiName uploadProfilePicture
-	 * @apiGroup User
+	 * @apiGroup User_Profile_Picture
 	 *
 	 * @apiParam {string} userName Users unique ID.
-	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 * @apiParam {string} username Users unique ID, is also provided in the formdata.
+	 * @apiParam {string} subleaseISUcookie Users unique cookie (formdata).
+	 * @apiParam {File} fileName Profile picture is sent through formdata.
 	 *
-	 * @apiSuccess {User} res The User Object is echoed back in the response
+	 * @apiSuccess {User} res The User Object is echoed back in the response with the new pictureLocation updated.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+     *   "_id" : ObjectId("59f8eb5fefc008260848e563"),
+     *   "username" : "johnSmith34",
+     *   "userType" : "regular",
+     *   "favoriteProperties" : [],
+     *   "userTypeApproved" : null,
+     *   "email" : "test@test.test",
+     *   "phoneNumber" : "1212121212",
+     *   "__v" : 0,
+     *   "profilePictureLocation" : "/home/matthewv/SD_B_1_ProjectName/REST/controllers/propertyPictures/Screen Shot 2017-12-03 at 1.05.46 PM.png1512336951925"
+	 * }
+ 	 *	
 	 */
 	exports.uploadProfilePicture = function(req, res) {
 		var form = formidable.IncomingForm();
@@ -298,12 +448,20 @@
 	/**
 	 * @api {post} /retrieveProfilePicture/{userName}
 	 * @apiName retrieveProfilePic
-	 * @apiGroup User
+	 * @apiGroup User_Profile_Picture
 	 *
 	 * @apiParam {string} userName Users unique ID.
 	 * @apiParam {string} subleaseISUcookie Users unique cookie.
 	 *
-	 * @apiSuccess {User} res The profilePictureLocation property of the User object is returned
+	 * @apiSuccess {File} fileName The profilePictureLocation file (image) is sent back asynchronously to the caller.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+ 	 *	
 	 */
 	exports.retrieveProfilePic = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -320,6 +478,47 @@
 		});
 	};
 
+	/**
+	 * @api {post} /getApprovals
+	 * @apiName getPendingApprovals
+	 * @apiGroup UserType_Approvals
+	 *
+	 * @apiParam {string} username Users unique ID, of the account making the request.
+	 * @apiParam {string} subleaseISUcookie Users unique session cookie.
+	 *
+	 * @apiSuccess {User[]} res An array of User Objects (only leasers or admins) is returned.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * [
+	 *  {
+	 *    "_id": "5a230d29f4aa487aae78f9d5",
+	 *    "username": "testleasingAgency",
+	 *    "hashedPassword": "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8",
+	 *    "email": "abc@gmail.com",
+	 *    "phoneNumber": "1234123412",
+	 *    "userType": "leasing",
+	 *    "__v": 0,
+	 *    "userTypeApproved": false,
+	 *    "favoriteProperties": []
+	 *  },
+	 *  {
+	 *    "_id": "5a230d6af4aa487aae78f9d6",
+	 *    "username": "testAdmin",
+	 *    "hashedPassword": "38f2279f58fdd8ad2b6f6f62095658ab9a896c96",
+	 *    "email": "test@test.com",
+	 *    "phoneNumber": "1234123412",
+	 *    "userType": "admin",
+	 *    "__v": 0,
+	 *    "userTypeApproved": null,
+	 *    "favoriteProperties": []
+	 *  }
+	 * ]
+	 */
 	exports.getPendingApprovals = function(req, res) {
 		var queryUsername;
 		if(req.body.username != null) {
@@ -379,6 +578,27 @@
 		
 	};
 
+	/**
+	 * @api {post} /approve/{accountUsername}
+	 * @apiName approveUserType
+	 * @apiGroup UserType_Approvals
+	 *
+	 * @apiParam {string} accountUsername Users unique ID, of the account to be updated.
+	 * @apiParam {string} username Users unique ID, of the account making the request.
+	 * @apiParam {string} subleaseISUcookie Users unique session cookie.
+	 *
+	 * @apiSuccess {string} msg A success message of 'user updated' is returned
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 * HTTP/1.1 200 OK
+	 * {
+	 *   "msg" : "user updated"
+	 * }
+	 */
 	exports.approveUserType = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
 			if(user != null) {
