@@ -39,6 +39,44 @@
 	};
 	*/
 
+
+	/**
+	 * @apiDefine UsernameNotFoundError
+	 *
+	 * @apiError UsernameNotFound The username of the User was not found.
+	 *
+	 * @apiErrorExample UsernameNotFoundError-Error-Response:
+	 *     HTTP/1.1 401 Unauthorized
+	 *     {
+	 *       "error": "username not recognized"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine UsernameNotProvided
+	 *
+	 * @apiError UsernameNotProvided The username of the User was not in the request.
+	 *
+	 * @apiErrorExample UsernameNotProvided-Error-Response:
+	 *     HTTP/1.1 400 Bad request
+	 *     {
+	 *       "error": "username not provided in request"
+	 *     }
+	 */
+
+	 /**
+	 * @apiDefine DatabaseError
+	 *
+	 * @apiError DatabaseError There was an error in the MongoDB query
+	 *
+	 * @apiErrorExample DatabaseError-Error-Response:
+	 *     HTTP/1.1 500 Internal Server Error
+	 *     {
+	 *       "error": error
+	 *     }
+	 */
+
+
 	/* //depricated
 	exports.maintainSocket = function(socket) {
 		// establish socket connection
@@ -108,13 +146,23 @@
 	 * @apiName saveHistory
 	 * @apiGroup Message
 	 *
-	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} username Users unique ID (of the user making the request).
+	 * @apiParam {string} subleaseISUcookie Users unique session cookie.
 	 * @apiParam {string} senderUsername Unique username of the person who sent the message.
 	 * @apiParam {string} receiverUsername Unique username of the person who is receiving the message.
-	 * @apiParam {string} message The message that is to be sent
+	 * @apiParam {string} message The message that is to be sent.
 	 *
-	 * @apiSuccess {string} res Message saying that the message is saved in the history.
+	 * @apiSuccess {string} msg Message saying that the message is saved in the history.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *		{
+	 *			"msg": "Messaged saved"
+	 *		}
 	 */
 	exports.saveHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -166,11 +214,48 @@
 	 * @apiName getHistory
 	 * @apiGroup Message
 	 *
-	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
-	 * @apiParam {string} usernameOfSender Unique ID associated the user.
+	 * @apiParam {string} username Users unique ID (of the user making the request).
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
+	 * @apiParam {string} usernameOfSender Unique ID associated the user (that the requesting user would like their history with).
 	 *
-	 * @apiSuccess {Message} res Message history with the user is echoed in the response.
+	 * @apiSuccess {Message[]} res Message history with the user is echoed in the response.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *		[
+	 *		  {
+	 *		    "_id": "5a206e7e18f49761ae2db0d1",
+	 *		    "jsTime": "2017-11-30T20:47:58.425Z",
+	 *		    "timeSent": "2017:11:30:14:47:58",
+	 *		    "message": "asdf",
+	 *		    "senderUsername": "username",
+	 *		    "receiverUsername": "matthewv",
+	 *		    "__v": 0
+	 *		  },
+	 *		  {
+	 *		    "_id": "5a206ea318f49761ae2db0d2",
+	 *		    "jsTime": "2017-11-30T20:48:35.796Z",
+	 *		    "timeSent": "2017:11:30:14:48:35",
+	 *		    "senderUsername": "username",
+	 *		    "receiverUsername": "matthewv",
+	 *		    "message": "initial message",
+	 *		    "__v": 0
+	 *		  },
+	 *		  {
+	 *		    "_id": "5a206ef391391761c2e17dd8",
+	 *		    "jsTime": "2017-11-30T20:49:55.520Z",
+	 *		    "timeSent": "2017:11:30:14:49:55",
+	 *		    "message": "asdasdasdasd",
+	 *		    "senderUsername": "matthewv",
+	 *		    "receiverUsername": "username",
+	 *		    "__v": 0
+	 *		  }
+	 *		]
+	 *
 	 */
 	exports.getHistory = function(req, res) {
 		ah.validateAuth(req, res, function(user) {
@@ -275,10 +360,25 @@
 	 * @apiName getUsernamesOfSenders
 	 * @apiGroup Message
 	 *
-	 * @apiParam {string} username Users unique ID.
-	 * @apiParam {string} cookie Users upique cookie.
+	 * @apiParam {string} username Users unique ID (of the user making the request).
+	 * @apiParam {string} subleaseISUcookie Users unique cookie.
 	 *
-	 * @apiSuccess {User} res Array of users that the current user has chatted with.
+	 * @apiSuccess {string[]} res Array of usernames that the current user has chatted with.
+	 *
+	 * @apiUse UsernameNotFoundError
+	 * @apiUse UsernameNotProvided
+	 * @apiUse DatabaseError
+	 *
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *
+	 * [
+	 *     "BobJohnson12",
+	 *     "Matt",
+	 *     "JoeJergerSucks",
+	 *     "Timmy2"
+	 * ]
+	 *
 	 */
 	exports.getUsernamesOfSenders = function(req, res) {
 		if(!req.body.subleaseISUcookie || !req.body.username) {
