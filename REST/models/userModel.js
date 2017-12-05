@@ -13,7 +13,7 @@
 		venmoEncryptedPassword: String,
 		paypalUsername: String,
 		paypalEncryptedPassword: String,
-		favoriteProperties: Object,
+		favoriteProperties: Array,
 		profilePictureLocation: String
 	});
 
